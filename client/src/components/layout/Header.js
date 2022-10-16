@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -42,7 +42,6 @@ const HeaderContainer = styled.header`
 
       .under-bar {
         position: absolute;
-        /* transform: translate(15%, 0); */
         width: 100%;
         height: 2px;
         margin: 0 auto;
@@ -63,24 +62,33 @@ const HeaderContainer = styled.header`
 `;
 
 const Header = () => {
+  let location = useLocation();
+  console.log(location.pathname);
+
   return (
     <HeaderContainer>
       <div className="inner flex-box">
         <div className="title">
-          <img src={title} alt="모구" />
-          <Link to="/" className="blind-text">
-            <h1>MOGU!</h1>
+          <Link to="/">
+            <img src={title} alt="모구" />
+            <h1 className="blind-text">MOGU!</h1>
           </Link>
         </div>
 
         <nav className="navbar flex-box">
-          <NavLink to="/" className="menu">
+          <NavLink to="/product" className="menu">
             공구모아요
-            <div className="under-bar" />
+            <div
+              className="under-bar"
+              style={{ display: location.pathname === "/product" ? "block" : "none" }}
+            />
           </NavLink>
-          <NavLink to="/" className="menu">
+          <NavLink to="/seek" className="menu">
             총대찾아요
-            <div className="under-bar" />
+            <div
+              className="under-bar"
+              style={{ display: location.pathname === "/seek" ? "block" : "none" }}
+            />
           </NavLink>
         </nav>
 

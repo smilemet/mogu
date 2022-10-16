@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const FooterContainer = styled.footer`
-  padding: 5rem 0;
+  margin-top: 2rem;
+  padding: 5rem 7rem;
   text-align: center;
   font-size: 12px;
   background-color: ${(props) => props.theme.pointColorToneDown};
@@ -14,7 +15,7 @@ const FooterContainer = styled.footer`
     margin: 0 auto;
     justify-content: space-between;
     font-size: 14px;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
   }
 
   .description {

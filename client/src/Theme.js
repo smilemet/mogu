@@ -13,6 +13,7 @@ const variable = {
   darkGray: "#555",
   ivory: "#f7f6f4",
   skyblue: "#dbeef5",
+  yellow: "#ffc107",
 };
 
 const theme = {
@@ -32,6 +33,7 @@ const theme = {
   darkGray: `${variable.darkGray}`,
   ivory: `${variable.ivory}`,
   skyblue: `${variable.skyblue}`,
+  yellow: `${variable.yellow}`,
 
   // 글씨크기
   smallFont: `0.75rem`,

@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import notice1 from "../assets/img/notice.png";
-import ProductItem from "../components/ProductItem";
+import ProductItem from "../components/ProductItem.js";
+import ListItem from "../components/ListItem.js";
 
 const MainContainer = styled.main`
+  padding-top: 1rem;
+
   .section-title {
     text-align: center;
-    padding-top: 1rem;
     background-color: #f7f6f4;
 
     img {
@@ -21,25 +23,30 @@ const MainContainer = styled.main`
     padding: 2.2rem 0;
 
     .categories {
+      margin-bottom: 2.5rem;
+
       li {
-        font-size: 1.2rem;
-        font-weight: bold;
         margin-right: 2rem;
+        font-size: 1rem;
+        font-weight: bold;
       }
     }
 
     .posts {
+      margin-bottom: 2.5rem;
       padding: 1rem 0;
 
-      ul {
-        ${(props) => props.theme.textOverflow}
-        li {
-          margin-right: 1rem;
+      h2 {
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        font-weight: bold;
+      }
 
-          &:last-of-type {
-            margin-right: 0;
-          }
-        }
+      ul {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0px, 1fr));
+        grid-column-gap: 1.5rem;
+        row-gap: 1rem;
       }
     }
   }
@@ -52,7 +59,7 @@ const Main = () => {
         <img className="notice-img" src={notice1} alt="모두의 공구 정식 서비스 오픈!" />
       </section>
 
-      {/* <section className="section-main">
+      <section className="section-main">
         <div className="inner">
           <ul className="categories flex-box">
             {Array(6)
@@ -67,8 +74,49 @@ const Main = () => {
           </ul>
 
           <div className="posts">
-            <ul className="flex-box">
-              {Array(6)
+            <h2>지금 인기 있는 공구</h2>
+            <ul>
+              {Array(5)
+                .fill(true)
+                .map((v) => {
+                  return (
+                    <li>
+                      <ProductItem
+                      // url=""
+                      // name="이름"
+                      // title="타이틀"
+                      // category={["카테1", "카테2"]}
+                      />
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+
+          <div className="posts ">
+            <h2>이런 공구는 어때요?</h2>
+            <ul>
+              {Array(5)
+                .fill(true)
+                .map((v) => {
+                  return (
+                    <li>
+                      <ProductItem
+                      // url=""
+                      // name="이름"
+                      // title="타이틀"
+                      // category={["카테1", "카테2"]}
+                      />
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+
+          <div className="posts ">
+            <h2>총대 찾아요</h2>
+            <ul>
+              {Array(5)
                 .fill(true)
                 .map((v) => {
                   return (
@@ -80,13 +128,27 @@ const Main = () => {
             </ul>
           </div>
 
-          <div className="posts "></div>
-
-          <div className="posts "></div>
-
-          <div className="posts "></div>
+          <div className="posts ">
+            <h2>새로 등록된 공구</h2>
+            <ul>
+              {Array(5)
+                .fill(true)
+                .map((v) => {
+                  return (
+                    <li>
+                      <ProductItem
+                      // url=""
+                      // name="이름"
+                      // title="타이틀"
+                      // category={["카테1", "카테2"]}
+                      />
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
         </div>
-      </section> */}
+      </section>
     </MainContainer>
   );
 };
