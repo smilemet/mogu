@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import Selection from "../components/Selection.js";
-import CommentList from "../components/CommentList.js";
 import GridList from "../components/GridList.js";
 import ProductItem from "../components/ProductItem.js";
 
@@ -50,6 +48,8 @@ const DetailContainer = styled.main`
       }
 
       .post-title {
+        flex-grow: 1;
+
         .title-box {
           justify-content: space-between;
           align-items: center;
@@ -85,46 +85,30 @@ const DetailContainer = styled.main`
         }
       }
 
-      .post-process table {
-        margin-bottom: 1.5rem;
+      .post-btn {
+        margin: 0 auto;
+        margin-top: 1rem;
+        margin-bottom: 3rem;
 
-        tr {
-          line-height: 1.7;
+        button {
+          width: 100%;
+          font-size: 0.875rem;
         }
 
-        td:first-of-type {
-          width: 37%;
-        }
-      }
-
-      .post-date {
-        flex-grow: 1;
-
-        div {
-          padding: 1.5rem 1rem;
-          font-size: 1rem;
-          border-top: 1px solid ${(props) => props.theme.lightGray};
-          border-bottom: 1px solid ${(props) => props.theme.lightGray};
-          margin-bottom: 0.7rem;
-
-          table {
-            tr {
-              line-height: 1.7;
-            }
-
-            td:first-of-type {
-              width: 47%;
-            }
-          }
-        }
-
-        p {
-          font-size: ${(props) => props.theme.smallFont};
-          text-align: right;
+        .together-btn {
+          ${(props) => props.theme.button}
+          padding: 1.5rem 0;
+          margin-bottom: 0.5rem;
+          font-weight: normal;
 
           span {
             color: ${(props) => props.theme.alertText};
           }
+        }
+
+        .letsgo-btn {
+          ${(props) => props.theme.buttonFill}
+          padding: 1.5rem 0;
         }
       }
 
@@ -149,10 +133,6 @@ const DetailContainer = styled.main`
           background-color: ${(props) => props.theme.gray};
         }
 
-        .name {
-          /* ${(props) => props.theme.textOverflow} */
-        }
-
         .more {
           margin-left: 1rem;
           display: inline-block;
@@ -175,35 +155,13 @@ const DetailContainer = styled.main`
     margin-bottom: 3rem;
   }
 
-  .selection {
-    .item {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-      grid-column-gap: 0.5rem;
-      grid-row-gap: 0.5rem;
-    }
-
-    .order-btn {
-      /* width: 50%; */
-      margin: 0 auto;
-      margin-top: 1rem;
-
-      button {
-        width: 100%;
-        height: 2.5rem;
-        ${(props) => props.theme.buttonFill}
-      }
-    }
-  }
-
   .text-content {
     padding: 1rem 1rem;
     text-align: justify;
     word-break: keep-all;
   }
 
-  .content,
-  .FAQ {
+  .content {
     p {
       margin-bottom: 0.5rem;
       font-size: 0.95rem;
@@ -211,26 +169,7 @@ const DetailContainer = styled.main`
     }
   }
 
-  .FAQ {
-    & > h3,
-    & > p {
-      display: inline-block;
-    }
-
-    & > p {
-      margin-left: 1rem;
-      font-size: 0.875rem;
-      color: ${(props) => props.theme.alertText};
-    }
-
-    .text-content {
-      & > div {
-        margin-bottom: 1.5rem;
-      }
-    }
-  }
-
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.medium} {
     .heading {
       display: block;
 
@@ -242,20 +181,24 @@ const DetailContainer = styled.main`
         width: 100%;
         padding-left: 0;
       }
-
-      .post-date {
-        & > div {
-          padding-left: 0;
-        }
-
-        p {
-          margin-bottom: 2rem;
-        }
-      }
     }
 
     .heading + hr {
       margin-top: 1rem;
+    }
+
+    .otherItem {
+      ul {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    .otherItem {
+      ul {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
   }
 `;
@@ -283,39 +226,14 @@ const Detail = () => {
                 <span>#20cm</span>
               </div>
             </div>
-            <div className="post-process">
-              <table>
-                <tbody>
-                  <tr>
-                    <td>공구방식</td>
-                    <td colSpan={3}>1차 입금 &gt; 현물도착 &gt; 2차 입금</td>
-                  </tr>
-                  <tr>
-                    <td>배송정보</td>
-                    <td colSpan={3}>국내 배송비 별도</td>
-                  </tr>
-                </tbody>
-              </table>
+
+            <div className="post-btn">
+              <button className="together-btn">
+                같이할래요 <span>★28</span>
+              </button>
+              <button className="letsgo-btn">총대 매고 공구글 작성하기!</button>
             </div>
-            <div className="post-date">
-              <div>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>공구 시작일</td>
-                      <td>2022.10.01 pm 08:00</td>
-                    </tr>
-                    <tr>
-                      <td>공구 종료일</td>
-                      <td>2022.10.03 pm 08:00</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p>
-                공구 마감이 <span>3일</span> 남았습니다.
-              </p>
-            </div>
+
             <div className="post-by">
               <div className="flex-box">
                 <span className="icon" />
@@ -332,24 +250,8 @@ const Detail = () => {
 
         <hr />
 
-        <section className="selection">
-          <h3>공구 물품</h3>
-          <div className="item">
-            {Array(3)
-              .fill(true)
-              .map((v) => {
-                return <Selection setCount={setCount} />;
-              })}
-          </div>
-          <div className="order-btn">
-            <button type="button">주문하기</button>
-          </div>
-        </section>
-
-        <hr />
-
         <section className="content">
-          <h3>제품 안내</h3>
+          <h3>요청 사항</h3>
           <div className="text-content">
             <p>
               오늘도 또 우리 수탉이 막 쫓기었다. 내가 점심을 먹고 나무를 하러 갈 양으로 나올
@@ -377,40 +279,8 @@ const Detail = () => {
 
         <hr />
 
-        <section className="FAQ">
-          <h3>많이 묻는 질문</h3>
-          <p>*질문 전에 꼭 확인해주세요.</p>
-          <div className="text-content">
-            <div>
-              <p className="bold">Q. 여기에는 무엇을 적나요?</p>
-              <p>
-                A. 판매자가 FAQ 답변을 적어두는 곳이에요. 자주 들어오는 문의사항에 대한 것은 이곳에
-                적어요.
-              </p>
-            </div>
-            <div>
-              <p className="bold">Q. 여기에는 무엇을 적나요?</p>
-              <p>
-                A. 판매자가 FAQ 답변을 적어두는 곳이에요. 자주 들어오는 문의사항에 대한 것은 이곳에
-                적어요.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <hr />
-
-        <section className="QNA">
-          <h3>문의하기</h3>
-          <div className="text-content">
-            <CommentList data={Array(3).fill(true)} />
-          </div>
-        </section>
-
-        <hr />
-
-        <section className="FAQ">
-          <h3>같은 카테고리의 다른 상품</h3>
+        <section className="otherItem">
+          <h3>같은 카테고리의 다른 요청</h3>
           <GridList data={Array(3).fill(true)}>
             <ProductItem
             // url=""

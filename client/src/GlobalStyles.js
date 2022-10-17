@@ -30,6 +30,12 @@ const GlobalStyles = createGlobalStyle`
     margin: 0 auto;
   }
 
+  
+  .inner3 {
+    max-width: 390px;
+    margin: 0 auto;
+  }
+
   .flex-box {
     display: flex;
   }

@@ -6,7 +6,7 @@ import ListItem from "./layout/ListItem.js";
 const SeekItemContainer = styled(ListItem)``;
 
 const SeekItem = (props) => {
-  return <SeekItemContainer {...props}></SeekItemContainer>;
+  return <SeekItemContainer url="/seek/detail" {...props}></SeekItemContainer>;
 };
 
 export default SeekItem;

@@ -121,6 +121,7 @@ const DetailContainer = styled.main`
         p {
           font-size: ${(props) => props.theme.smallFont};
           text-align: right;
+          margin-bottom: 2rem;
 
           span {
             color: ${(props) => props.theme.alertText};
@@ -190,8 +191,8 @@ const DetailContainer = styled.main`
 
       button {
         width: 100%;
-        height: 2.5rem;
         ${(props) => props.theme.buttonFill}
+        font-size: 1rem;
       }
     }
   }
@@ -230,7 +231,7 @@ const DetailContainer = styled.main`
     }
   }
 
-  @media ${(props) => props.theme.mobile} {
+  @media ${(props) => props.theme.medium} {
     .heading {
       display: block;
 
@@ -247,15 +248,29 @@ const DetailContainer = styled.main`
         & > div {
           padding-left: 0;
         }
-
-        p {
-          margin-bottom: 2rem;
-        }
       }
     }
 
     .heading + hr {
       margin-top: 1rem;
+    }
+
+    .otherItem {
+      ul {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    * {
+      word-break: normal;
+    }
+
+    .otherItem {
+      ul {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
   }
 `;
@@ -409,7 +424,7 @@ const Detail = () => {
 
         <hr />
 
-        <section className="FAQ">
+        <section className="otherItem">
           <h3>같은 카테고리의 다른 상품</h3>
           <GridList data={Array(3).fill(true)}>
             <ProductItem

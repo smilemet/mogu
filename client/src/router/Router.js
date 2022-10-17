@@ -8,6 +8,9 @@ import Seek from "../pages/Seek.js";
 import ProductDetail from "../pages/ProductDetail.js";
 import SeekDetail from "../pages/SeekDetail.js";
 
+import Login from "../pages/Login.js";
+import LoginReset from "../pages/LoginReset.js";
+
 const Router = () => {
   return (
     <>
@@ -20,6 +23,9 @@ const Router = () => {
           <Route path="/product/detail" element={<ProductDetail />} />
           <Route path="/seek/detail" element={<SeekDetail />} />
         </Route>
+
+        <Route path="/account/login" element={<Login />} />
+        <Route path="/account/password/reset" element={<LoginReset />} />
       </Routes>
     </>
   );
