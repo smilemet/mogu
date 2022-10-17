@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import notice1 from "../assets/img/notice.png";
+import GridList from "../components/GridList";
 import ProductItem from "../components/ProductItem.js";
-import ListItem from "../components/ListItem.js";
+import SeekItem from "../components/SeekItem.js";
 
 const MainContainer = styled.main`
   padding-top: 1rem;
@@ -41,13 +42,6 @@ const MainContainer = styled.main`
         font-size: 1rem;
         font-weight: bold;
       }
-
-      ul {
-        display: grid;
-        grid-template-columns: repeat(5, minmax(0px, 1fr));
-        grid-column-gap: 1.5rem;
-        row-gap: 1rem;
-      }
     }
   }
 `;
@@ -75,77 +69,55 @@ const Main = () => {
 
           <div className="posts">
             <h2>지금 인기 있는 공구</h2>
-            <ul>
-              {Array(5)
-                .fill(true)
-                .map((v) => {
-                  return (
-                    <li>
-                      <ProductItem
-                      // url=""
-                      // name="이름"
-                      // title="타이틀"
-                      // category={["카테1", "카테2"]}
-                      />
-                    </li>
-                  );
-                })}
-            </ul>
+            <GridList data={Array(5).fill(true)}>
+              <ProductItem
+              // url=""
+              // name="이름"
+              // join="숫자주세요"
+              // title="타이틀"
+              // category={["카테1", "카테2"]}
+              />
+            </GridList>
           </div>
 
           <div className="posts ">
             <h2>이런 공구는 어때요?</h2>
-            <ul>
-              {Array(5)
-                .fill(true)
-                .map((v) => {
-                  return (
-                    <li>
-                      <ProductItem
-                      // url=""
-                      // name="이름"
-                      // title="타이틀"
-                      // category={["카테1", "카테2"]}
-                      />
-                    </li>
-                  );
-                })}
-            </ul>
+            <GridList data={Array(5).fill(true)}>
+              <ProductItem
+              // url=""
+              // name="이름"
+              // join="숫자주세요"
+              // title="타이틀"
+              // category={["카테1", "카테2"]}
+              />
+            </GridList>
           </div>
 
           <div className="posts ">
             <h2>총대 찾아요</h2>
-            <ul>
-              {Array(5)
-                .fill(true)
-                .map((v) => {
-                  return (
-                    <li>
-                      <ProductItem />
-                    </li>
-                  );
-                })}
-            </ul>
+            <GridList data={Array(5).fill(true)}>
+              <SeekItem
+              // url=""
+              // name="이름"
+              // join="숫자주세요"
+              // title="타이틀"
+              // category={["카테1", "카테2"]}
+              />
+            </GridList>
           </div>
 
           <div className="posts ">
             <h2>새로 등록된 공구</h2>
-            <ul>
-              {Array(5)
-                .fill(true)
-                .map((v) => {
-                  return (
-                    <li>
-                      <ProductItem
-                      // url=""
-                      // name="이름"
-                      // title="타이틀"
-                      // category={["카테1", "카테2"]}
-                      />
-                    </li>
-                  );
-                })}
-            </ul>
+
+            <GridList data={Array(5).fill(true)}>
+              <ProductItem
+              // url=""
+              // name="이름"
+              // join="숫자주세요"
+              // title="타이틀"
+              // category={["카테1", "카테2"]}
+              />
+            </GridList>
           </div>
         </div>
       </section>

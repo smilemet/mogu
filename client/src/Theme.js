@@ -1,6 +1,6 @@
 const variable = {
-  mobile: "650px",
-  desktop: "651px",
+  mobile: "720px",
+  desktop: "721px",
 
   pointColor: "#e2bbe9",
   pointColorToneDown: "#e5d3e8",
@@ -10,7 +10,8 @@ const variable = {
 
   gray: "#ddd",
   lightGray: "#eee",
-  darkGray: "#555",
+  whiteGray: "#f3f3f3",
+  darkGray: "#888888",
   ivory: "#f7f6f4",
   skyblue: "#dbeef5",
   yellow: "#ffc107",
@@ -34,6 +35,7 @@ const theme = {
   ivory: `${variable.ivory}`,
   skyblue: `${variable.skyblue}`,
   yellow: `${variable.yellow}`,
+  whiteGray: `${variable.whiteGray}`,
 
   // 글씨크기
   smallFont: `0.75rem`,
@@ -43,6 +45,23 @@ const theme = {
     overflow: hidden;
     text-overflow: ellipsis;
   }`,
+
+  buttonFill: () => `
+    border: none;
+    outline: none;
+    background-color:${variable.pointColor};
+    font-weight: bold;
+    font-size: 1rem;
+  `,
+
+  icon: () => `
+    flex-shrink: 0;
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.2rem;
+    border-radius: 50%;
+    background-color: ${variable.gray};`,
 };
 
 export default theme;

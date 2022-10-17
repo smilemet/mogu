@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import bookmark from "../assets/img/bookmark.png";
-import bookmarkFill from "../assets/img/bookmark-fill.png";
-import fakeImg from "../assets/img/fakeImg.png";
+import bookmark from "../../assets/img/bookmark.png";
+import bookmarkFill from "../../assets/img/bookmark-fill.png";
+import fakeImg from "../../assets/img/fakeImg.png";
 import { Link } from "react-router-dom";
 
 const ListItemContainer = styled(Link)`
@@ -36,13 +36,7 @@ const ListItemContainer = styled(Link)`
     align-items: center;
 
     .icon {
-      flex-shrink: 0;
-      display: inline-block;
-      width: 1.5rem;
-      height: 1.5rem;
-      margin-right: 0.2rem;
-      border-radius: 50%;
-      background-color: ${(props) => props.theme.gray};
+      ${(props) => props.theme.icon}
     }
 
     .name {
@@ -50,6 +44,7 @@ const ListItemContainer = styled(Link)`
     }
 
     .mark {
+      white-space: nowrap;
       color: ${(props) => props.theme.yellow};
 
       span:first-of-type {
@@ -103,9 +98,10 @@ const ListItem = (props) => {
 };
 
 ListItem.defaultProps = {
-  url: "/detail",
+  url: "/product/detail",
   thumbnail: fakeImg,
   name: "이름이름이름이름이름이름이름이름이름이름이름",
+  join: 0,
   title: "타이틀타이틀타이틀타이틀타이틀타이틀타이틀타이틀",
   category: ["카테고리", "카테고리", "카테고리", "카테고리"],
 };

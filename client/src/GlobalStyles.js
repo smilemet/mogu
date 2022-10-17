@@ -11,7 +11,7 @@ const GlobalStyles = createGlobalStyle`
   body {
     position: relative;
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 
   a {
@@ -21,7 +21,7 @@ const GlobalStyles = createGlobalStyle`
 
   .inner {
     max-width: 1280px;
-    padding: 0 1rem;
+    padding: 0 1.5rem;
     margin: 0 auto;
   }
 
@@ -34,6 +34,10 @@ const GlobalStyles = createGlobalStyle`
     display: flex;
   }
 
+  .bold {
+    font-weight: bold;
+  }
+
   .blind-text {
     position: absolute;
     width: 1px;
@@ -42,9 +46,7 @@ const GlobalStyles = createGlobalStyle`
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     clip-path: inset(50%);
-  }
-
-  
+  }  
 `;
 
 export default GlobalStyles;

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import ListItem from "./ListItem.js";
+import ListItem from "./layout/ListItem.js";
 
 const ProductItemContainer = styled(ListItem)``;
 

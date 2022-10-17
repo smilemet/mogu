@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 import styled from "styled-components";
+import { animateScroll } from "react-scroll";
 
 import title from "../../assets/img/title2.png";
 import SearchBox from "../SearchBox.js";
@@ -46,6 +47,7 @@ const HeaderContainer = styled.header`
         height: 2px;
         margin: 0 auto;
         margin-top: 0.3rem;
+        border-radius: 1rem;
         background-color: ${(props) => props.theme.pointColorDarker};
       }
     }
@@ -63,7 +65,6 @@ const HeaderContainer = styled.header`
 
 const Header = () => {
   let location = useLocation();
-  console.log(location.pathname);
 
   return (
     <HeaderContainer>
