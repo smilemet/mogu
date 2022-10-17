@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import titleImg from "../assets/img/title.png";
 
-const LoginResetContainer = styled.div`
+const JoinContainer = styled.div`
   padding-top: 4rem;
   text-align: center;
 
@@ -67,14 +67,14 @@ const LoginResetContainer = styled.div`
   }
 `;
 
-const LoginReset = () => {
+const Join = () => {
   return (
-    <LoginResetContainer>
+    <JoinContainer>
       <div className="inner3">
-        <h1>비밀번호 찾기</h1>
+        <h1>회원가입</h1>
 
         <div className="email">
-          <h2>이메일 입력</h2>
+          <h2>이메일 인증</h2>
           <div>
             <input type="email" placeholder="이메일" />
           </div>
@@ -96,8 +96,8 @@ const LoginReset = () => {
           </p>
         </div>
       </div>
-    </LoginResetContainer>
+    </JoinContainer>
   );
 };
 
-export default LoginReset;
+export default Join;

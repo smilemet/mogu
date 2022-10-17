@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const LoginContainer = styled.div`
-  padding-top: 5rem;
+  padding-top: 4rem;
   text-align: center;
 
   * {
@@ -18,7 +18,7 @@ const LoginContainer = styled.div`
     margin-bottom: 0.7rem;
     text-align: left;
     font-size: 1rem;
-    font-weight: bold;
+    font-weight: 500;
   }
 
   .login {
@@ -49,10 +49,12 @@ const LoginContainer = styled.div`
     background-color: ${(props) => props.theme.pointColor};
     border: none;
     color: #fff;
+    cursor: pointer;
   }
 
   .normal-btn {
     ${(props) => props.theme.input};
+    cursor: pointer;
   }
 `;
 
@@ -65,10 +67,10 @@ const Login = () => {
         <form className="login">
           <h2>로그인</h2>
           <div>
-            <input placeholder="이메일" />
+            <input type="email" placeholder="이메일" />
           </div>
           <div>
-            <input placeholder="비밀번호" />
+            <input type="password" placeholder="비밀번호" />
             <p>로그인에 어려움이 있나요?</p>
           </div>
           <button className="fill-btn" type="submit">

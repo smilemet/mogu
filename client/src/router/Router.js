@@ -10,6 +10,9 @@ import SeekDetail from "../pages/SeekDetail.js";
 
 import Login from "../pages/Login.js";
 import LoginReset from "../pages/LoginReset.js";
+import LoginNewPw from "../pages/LoginNewPw.js";
+import Join from "../pages/Join.js";
+import JoinInfo from "../pages/JoinInfo.js";
 
 const Router = () => {
   return (
@@ -26,6 +29,9 @@ const Router = () => {
 
         <Route path="/account/login" element={<Login />} />
         <Route path="/account/password/reset" element={<LoginReset />} />
+        <Route path="/account/password/reset/token" element={<LoginNewPw />} />
+        <Route path="/account/join" element={<Join />} />
+        <Route path="/account/join/token" element={<JoinInfo />} />
       </Routes>
     </>
   );
