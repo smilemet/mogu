@@ -17,6 +17,8 @@ import JoinInfo from "../pages/JoinInfo.js";
 import UserPage from "../pages/UserPage.js";
 import Favorite from "../pages/Favorite.js";
 import UserEdit from "../pages/UserEdit.js";
+import RecordBuy from "../pages/RecordBuy.js";
+import RecordSell from "../pages/RecordBuy.js";
 
 const Router = () => {
   return (
@@ -33,8 +35,8 @@ const Router = () => {
           <Route path="/userid" element={<UserPage />} />
           <Route path="/mypage/favorite" element={<Favorite />} />
           <Route path="/mypage/edit" element={<UserEdit />} />
-          <Route path="/mypage/buy" element={<Favorite />} />
-          <Route path="/mypage/sell" element={<Favorite />} />
+          <Route path="/mypage/buy" element={<RecordBuy />} />
+          <Route path="/mypage/sell" element={<RecordSell />} />
         </Route>
 
         <Route path="/account/login" element={<Login />} />

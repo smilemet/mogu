@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "styled-components";
 
-const RecordListContainer = styled.main`
+const MypageListContainer = styled.main`
   padding-top: 6rem;
 
   h2 {
@@ -41,28 +41,31 @@ const RecordListContainer = styled.main`
   }
 `;
 
-const RecordList = ({ children, ...props }) => {
+const MypageList = ({ children, ...props }) => {
   return (
-    <RecordListContainer>
+    <MypageListContainer>
       <div className="wrapper">
         <div className="inner">
-          <h2>찜 목록</h2>
+          <h2>{props.title}</h2>
 
           <div className="flex-box">
             <div className="option">
-              {props.option.map((v) => {
-                return (
+              {props.option.map((v, i) => {
+                return i === 0 ? (
                   <>
-                    <input type="radio" id={v.id} name={v.name} checked />
-                    <label className={v.name} htmlFor={v.id}>
-                      {v.option}
-                    </label>
+                    <input type="radio" id={v.id} name="selection" checked />
+                    <label htmlFor={v.id}>{v.option}</label>
+                  </>
+                ) : (
+                  <>
+                    <input type="radio" id={v.id} name="selection" />
+                    <label htmlFor={v.id}>{v.option}</label>
                   </>
                 );
               })}
             </div>
 
-            {props.data ? (
+            {props.date ? (
               <select name="years" className="years">
                 <option value="2022">2022년</option>
                 <option value="2021">2021년</option>
@@ -74,8 +77,8 @@ const RecordList = ({ children, ...props }) => {
           {children}
         </div>
       </div>
-    </RecordListContainer>
+    </MypageListContainer>
   );
 };
 
-export default RecordList;
+export default MypageList;
