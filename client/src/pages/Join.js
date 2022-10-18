@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import titleImg from "../assets/img/title.png";
 
-const JoinContainer = styled.div`
+const JoinContainer = styled.main`
   padding-top: 4rem;
   text-align: center;
 
@@ -47,10 +47,6 @@ const JoinContainer = styled.div`
     margin-top: 5rem;
     line-height: 2;
 
-    span {
-      color: ${(props) => props.theme.alertText};
-    }
-
     &.send {
       display: block;
     }
@@ -70,30 +66,32 @@ const JoinContainer = styled.div`
 const Join = () => {
   return (
     <JoinContainer>
-      <div className="inner3">
-        <h1>회원가입</h1>
+      <div className="wrapper">
+        <div className="inner3">
+          <h1>회원가입</h1>
 
-        <div className="email">
-          <h2>이메일 인증</h2>
-          <div>
-            <input type="email" placeholder="이메일" />
+          <div className="email">
+            <h2>이메일 인증</h2>
+            <div>
+              <input type="email" placeholder="이메일" />
+            </div>
+            <button className="fill-btn" type="button">
+              인증 메일 보내기
+            </button>
           </div>
-          <button className="fill-btn" type="button">
-            인증 메일 보내기
-          </button>
-        </div>
 
-        <div className="to-main">
-          <Link to="/">
-            <img src={titleImg} alt="메인화면 돌아가기" />
-          </Link>
-        </div>
+          <div className="to-main">
+            <Link to="/">
+              <img src={titleImg} alt="메인화면 돌아가기" />
+            </Link>
+          </div>
 
-        <div className="notice-msg send">
-          <p>인증 메일을 보냈습니다!</p>
-          <p>
-            <span>메일함</span>을 확인해주세요.
-          </p>
+          <div className="notice-msg send">
+            <p>인증 메일을 보냈습니다!</p>
+            <p>
+              <span className="alert">메일함</span>을 확인해주세요.
+            </p>
+          </div>
         </div>
       </div>
     </JoinContainer>

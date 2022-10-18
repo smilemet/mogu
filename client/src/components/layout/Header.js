@@ -96,7 +96,7 @@ const Header = () => {
         <SearchBox />
 
         <div className="login">
-          <Link to="/">로그인</Link>
+          <Link to="/account/login">로그인</Link>
         </div>
       </div>
     </HeaderContainer>

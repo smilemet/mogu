@@ -11,7 +11,7 @@
 - 내 구매현황 관리
 - 내 공구모집현황 관리
 - 공구 참여자 송장 excel로 일괄 내보내기 외 부가기능들
-> **Demo** : 현재 개발중...
+> **Demo** : [현재 개발중...](https://mogu-gonggu.netlify.app)
 
 &nbsp;
 

@@ -14,6 +14,10 @@ import LoginNewPw from "../pages/LoginNewPw.js";
 import Join from "../pages/Join.js";
 import JoinInfo from "../pages/JoinInfo.js";
 
+import UserPage from "../pages/UserPage.js";
+import Favorite from "../pages/Favorite.js";
+import UserEdit from "../pages/UserEdit.js";
+
 const Router = () => {
   return (
     <>
@@ -25,6 +29,12 @@ const Router = () => {
 
           <Route path="/product/detail" element={<ProductDetail />} />
           <Route path="/seek/detail" element={<SeekDetail />} />
+
+          <Route path="/userid" element={<UserPage />} />
+          <Route path="/mypage/favorite" element={<Favorite />} />
+          <Route path="/mypage/edit" element={<UserEdit />} />
+          <Route path="/mypage/buy" element={<Favorite />} />
+          <Route path="/mypage/sell" element={<Favorite />} />
         </Route>
 
         <Route path="/account/login" element={<Login />} />

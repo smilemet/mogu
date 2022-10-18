@@ -44,6 +44,14 @@ const MainContainer = styled.main`
       }
     }
   }
+
+  @media ${(props) => props.theme.desktop} {
+    .posts ul {
+      li:last-of-type {
+        display: none;
+      }
+    }
+  }
 `;
 
 const Main = () => {
@@ -53,74 +61,76 @@ const Main = () => {
         <img className="notice-img" src={notice1} alt="모두의 공구 정식 서비스 오픈!" />
       </section>
 
-      <section className="section-main">
-        <div className="inner">
-          <ul className="categories flex-box">
-            {Array(6)
-              .fill(true)
-              .map((v) => {
-                return (
-                  <li>
-                    <Link to="/">#카테고리명</Link>
-                  </li>
-                );
-              })}
-          </ul>
+      <div className="wrapper">
+        <section className="section-main">
+          <div className="inner">
+            <ul className="categories flex-box">
+              {Array(6)
+                .fill(true)
+                .map((v) => {
+                  return (
+                    <li>
+                      <Link to="/">#카테고리명</Link>
+                    </li>
+                  );
+                })}
+            </ul>
 
-          <div className="posts">
-            <h2>지금 인기 있는 공구</h2>
-            <GridList data={Array(5).fill(true)}>
-              <ProductItem
-              // url=""
-              // name="이름"
-              // join="숫자주세요"
-              // title="타이틀"
-              // category={["카테1", "카테2"]}
-              />
-            </GridList>
+            <div className="posts">
+              <h2>지금 인기 있는 공구</h2>
+              <GridList data={Array(6).fill(true)}>
+                <ProductItem
+                // url=""
+                // name="이름"
+                // join="숫자주세요"
+                // title="타이틀"
+                // category={["카테1", "카테2"]}
+                />
+              </GridList>
+            </div>
+
+            <div className="posts ">
+              <h2>이런 공구는 어때요?</h2>
+              <GridList data={Array(6).fill(true)}>
+                <ProductItem
+                // url=""
+                // name="이름"
+                // join="숫자주세요"
+                // title="타이틀"
+                // category={["카테1", "카테2"]}
+                />
+              </GridList>
+            </div>
+
+            <div className="posts ">
+              <h2>총대 찾아요</h2>
+              <GridList data={Array(6).fill(true)}>
+                <SeekItem
+                // url=""
+                // name="이름"
+                // join="숫자주세요"
+                // title="타이틀"
+                // category={["카테1", "카테2"]}
+                />
+              </GridList>
+            </div>
+
+            <div className="posts ">
+              <h2>새로 등록된 공구</h2>
+
+              <GridList data={Array(6).fill(true)}>
+                <ProductItem
+                // url=""
+                // name="이름"
+                // join="숫자주세요"
+                // title="타이틀"
+                // category={["카테1", "카테2"]}
+                />
+              </GridList>
+            </div>
           </div>
-
-          <div className="posts ">
-            <h2>이런 공구는 어때요?</h2>
-            <GridList data={Array(5).fill(true)}>
-              <ProductItem
-              // url=""
-              // name="이름"
-              // join="숫자주세요"
-              // title="타이틀"
-              // category={["카테1", "카테2"]}
-              />
-            </GridList>
-          </div>
-
-          <div className="posts ">
-            <h2>총대 찾아요</h2>
-            <GridList data={Array(5).fill(true)}>
-              <SeekItem
-              // url=""
-              // name="이름"
-              // join="숫자주세요"
-              // title="타이틀"
-              // category={["카테1", "카테2"]}
-              />
-            </GridList>
-          </div>
-
-          <div className="posts ">
-            <h2>새로 등록된 공구</h2>
-
-            <GridList data={Array(5).fill(true)}>
-              <ProductItem
-              // url=""
-              // name="이름"
-              // join="숫자주세요"
-              // title="타이틀"
-              // category={["카테1", "카테2"]}
-              />
-            </GridList>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </MainContainer>
   );
 };

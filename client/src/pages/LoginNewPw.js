@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import titleImg from "../assets/img/title.png";
 
-const LoginNewPwContainer = styled.div`
+const LoginNewPwContainer = styled.main`
   padding-top: 4rem;
   text-align: center;
 
@@ -54,10 +54,6 @@ const LoginNewPwContainer = styled.div`
     margin-top: 5rem;
     line-height: 2;
 
-    span {
-      color: ${(props) => props.theme.alertText};
-    }
-
     &.send {
       display: block;
     }
@@ -104,29 +100,31 @@ const LoginNewPw = () => {
 
   return (
     <LoginNewPwContainer>
-      <div className="inner3">
-        <h1>비밀번호 재설정</h1>
+      <div className="wrapper">
+        <div className="inner3">
+          <h1>비밀번호 재설정</h1>
 
-        <form className="new-pw">
-          <h2>새 비밀번호 입력</h2>
-          <div>
-            <input type="password" ref={ref} onBlur={onSetPw} placeholder="새 비밀번호 입력" />
-            <input type="password" ref={ref2} onBlur={onPwCheck} placeholder="비밀번호 확인" />
-            <p>{alertMsg}</p>
+          <form className="new-pw">
+            <h2>새 비밀번호 입력</h2>
+            <div>
+              <input type="password" ref={ref} onBlur={onSetPw} placeholder="새 비밀번호 입력" />
+              <input type="password" ref={ref2} onBlur={onPwCheck} placeholder="비밀번호 확인" />
+              <p>{alertMsg}</p>
+            </div>
+            <button className="fill-btn" type="submit">
+              비밀번호 변경
+            </button>
+          </form>
+
+          <div className="to-main">
+            <Link to="/">
+              <img src={titleImg} alt="메인화면 돌아가기" />
+            </Link>
           </div>
-          <button className="fill-btn" type="submit">
-            비밀번호 변경
-          </button>
-        </form>
 
-        <div className="to-main">
-          <Link to="/">
-            <img src={titleImg} alt="메인화면 돌아가기" />
-          </Link>
-        </div>
-
-        <div className="notice-msg send">
-          <p>비밀번호를 변경했습니다!</p>
+          <div className="notice-msg send">
+            <p>비밀번호를 변경했습니다!</p>
+          </div>
         </div>
       </div>
     </LoginNewPwContainer>

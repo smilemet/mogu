@@ -1,8 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
+import fakeImg from "../assets/img/fakeImg.png";
+
 const CommentContainer = styled.div`
   justify-content: space-between;
+  align-items: center;
 
   .ballon {
     max-width: 100%;
@@ -54,7 +57,7 @@ const Comment = () => {
         <p className="date">2022-10-26</p>
       </div>
       <div className="user">
-        <span className="icon" />
+        <img className="icon" src={fakeImg} alt="유저 아이콘" />
         <p>닉네임최대길이열다섯글자</p>
       </div>
     </CommentContainer>

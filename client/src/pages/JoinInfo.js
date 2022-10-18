@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import titleImg from "../assets/img/title.png";
 
-const JoinInfoContainer = styled.div`
+const JoinInfoContainer = styled.main`
   padding-top: 4rem;
   text-align: center;
 
@@ -30,7 +30,6 @@ const JoinInfoContainer = styled.div`
       p {
         text-align: right;
         font-size: ${(props) => props.theme.smallFont};
-        color: ${(props) => props.theme.alertText};
       }
     }
 
@@ -53,10 +52,6 @@ const JoinInfoContainer = styled.div`
     margin-top: 1rem;
     line-height: 2;
     margin-bottom: 3rem;
-
-    span {
-      color: ${(props) => props.theme.alertText};
-    }
 
     &.send {
       display: block;
@@ -116,33 +111,35 @@ const JoinInfo = () => {
 
   return (
     <JoinInfoContainer>
-      <div className="inner3">
-        <h1>회원가입</h1>
+      <div className="wrapper">
+        <div className="inner3">
+          <h1>회원가입</h1>
 
-        <div className="notice-msg send">
-          <span>이메일이 인증되었습니다.</span>
-        </div>
-
-        <div className="user-info">
-          <h2>회원정보 입력</h2>
-          <div>
-            <input type="password" ref={ref} onBlur={onSetPw} placeholder="새 비밀번호 입력" />
-            <input type="password" ref={ref2} onBlur={onPwCheck} placeholder="비밀번호 확인" />
-            <p>{alertMsg}</p>
+          <div className="notice-msg send">
+            <span className="alert">이메일이 인증되었습니다.</span>
           </div>
-          <div>
-            <input type="text" onBlur={onNameCheck} placeholder="닉네임 입력" />
-            <p>{alertMsg2}</p>
-          </div>
-          <button className="fill-btn" type="button">
-            회원가입 완료!
-          </button>
-        </div>
 
-        <div className="to-main">
-          <Link to="/">
-            <img src={titleImg} alt="메인화면 돌아가기" />
-          </Link>
+          <div className="user-info">
+            <h2>회원정보 입력</h2>
+            <div>
+              <input type="password" ref={ref} onBlur={onSetPw} placeholder="새 비밀번호 입력" />
+              <input type="password" ref={ref2} onBlur={onPwCheck} placeholder="비밀번호 확인" />
+              <p className="alert">{alertMsg}</p>
+            </div>
+            <div>
+              <input type="text" onBlur={onNameCheck} placeholder="닉네임 입력" />
+              <p className="alert">{alertMsg2}</p>
+            </div>
+            <button className="fill-btn" type="button">
+              회원가입 완료!
+            </button>
+          </div>
+
+          <div className="to-main">
+            <Link to="/">
+              <img src={titleImg} alt="메인화면 돌아가기" />
+            </Link>
+          </div>
         </div>
       </div>
     </JoinInfoContainer>

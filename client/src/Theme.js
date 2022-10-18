@@ -1,41 +1,32 @@
 const variable = {
   mobile: "480px",
   medium: "768px",
+  desktop: "769px",
 
   pointColor: "#e2bbe9",
-  pointColorToneDown: "#e5d3e8",
-  pointColorDarker: "#cb54e5",
-  pointFontColor: "#fff",
-  alertText: "#ff4f4f",
-
   gray: "#ddd",
-  lightGray: "#eee",
-  whiteGray: "#f3f3f3",
-  darkGray: "#888888",
-  ivory: "#f7f6f4",
-  skyblue: "#dbeef5",
-  yellow: "#ffc107",
 };
 
 const theme = {
   // 반응형
   mobile: `(max-width: ${variable.mobile})`,
   medium: `(max-width: ${variable.medium})`,
+  desktop: `(min-width: ${variable.desktop})`,
 
   // 컬러
   pointColor: `${variable.pointColor}`,
-  pointColorToneDown: `${variable.pointColorToneDown}`,
-  pointColorDarker: `${variable.pointColorDarker}`,
-  pointFontColor: `${variable.pointFontColor}`,
-  alertText: `${variable.alertText}`,
+  pointColorToneDown: "#e5d3e8",
+  pointColorDarker: "#cb54e5",
+  pointFontColor: "#fff",
+  alertText: "#ff4f4f",
 
   gray: `${variable.gray}`,
-  lightGray: `${variable.lightGray}`,
-  darkGray: `${variable.darkGray}`,
-  ivory: `${variable.ivory}`,
-  skyblue: `${variable.skyblue}`,
-  yellow: `${variable.yellow}`,
-  whiteGray: `${variable.whiteGray}`,
+  lightGray: "#eee",
+  whiteGray: "#f3f3f3",
+  darkGray: "#888888",
+  ivory: "#f7f6f4",
+  skyblue: "#dbeef5",
+  yellow: "#ffc107",
 
   // 글씨크기
   smallFont: `0.75rem`,
@@ -77,7 +68,7 @@ const theme = {
     height: 1.5rem;
     margin-right: 0.2rem;
     border-radius: 50%;
-    background-color: ${variable.gray};`,
+  `,
 };
 
 export default theme;
