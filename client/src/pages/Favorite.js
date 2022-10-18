@@ -1,8 +1,8 @@
 import React from "react";
-
 import styled from "styled-components";
-import GridList from "../components/GridList";
-import ProductItem from "../components/ProductItem";
+
+import GridList from "../components/GridList.js";
+import ProductItem from "../components/ProductItem.js";
 
 const FavoriteContainer = styled.main`
   padding-top: 6rem;
