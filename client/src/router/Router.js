@@ -18,7 +18,7 @@ import UserPage from "../pages/UserPage.js";
 import Favorite from "../pages/Favorite.js";
 import UserEdit from "../pages/UserEdit.js";
 import RecordBuy from "../pages/RecordBuy.js";
-import RecordSell from "../pages/RecordBuy.js";
+import RecordSell from "../pages/RecordSell.js";
 
 const Router = () => {
   return (

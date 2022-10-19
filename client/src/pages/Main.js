@@ -9,7 +9,7 @@ import ProductItem from "../components/ProductItem.js";
 import SeekItem from "../components/SeekItem.js";
 
 const MainContainer = styled.main`
-  padding-top: 1rem;
+  margin-top: 3.7rem;
 
   .section-title {
     text-align: center;

@@ -39,6 +39,10 @@ const FooterContainer = styled.footer`
       text-decoration: underline;
     }
   }
+
+  @media ${(props) => props.theme.mobile} {
+    padding: 5rem 1.5rem;
+  }
 `;
 
 const Footer = () => {

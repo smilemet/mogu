@@ -36,7 +36,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   .inner {
-    max-width: 1280px;
+    max-width: 1150px;
     margin: 0 auto;
   }
 

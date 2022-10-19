@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 import styled from "styled-components";
@@ -6,13 +6,14 @@ import { animateScroll } from "react-scroll";
 
 import title from "../../assets/img/title2.png";
 import SearchBox from "../SearchBox.js";
+import useWindowWidth from "../../hooks/useWindowWidth";
 
 const HeaderContainer = styled.header`
-  position: fixed;
   width: 100%;
+  padding: 0.75rem 0;
   background-color: #fff;
   box-shadow: 0 0 5px #ccc;
-  padding: 0.75rem 0;
+  position: fixed;
   z-index: 1;
 
   .inner {
@@ -30,7 +31,7 @@ const HeaderContainer = styled.header`
     }
 
     .navbar {
-      width: 38rem;
+      flex-grow: 1;
       padding: 0 1rem;
 
       .menu {
@@ -53,18 +54,44 @@ const HeaderContainer = styled.header`
     }
 
     .login {
+      flex-shrink: 0;
       text-align: right;
-      width: 9rem;
+      width: 10%;
     }
   }
 
   .flex-box {
     align-items: center;
   }
+
+  @media screen and (${(props) => props.theme.medium}) {
+    .search-box {
+      display: none;
+    }
+  }
+
+  @media screen and (${(props) => props.theme.mobile}) {
+    .inner {
+      .title {
+        width: 9rem;
+      }
+
+      .navbar .menu:first-of-type {
+        margin-right: 1rem;
+      }
+
+      .login {
+        text-align: right;
+        width: 3rem;
+      }
+    }
+  }
 `;
 
 const Header = () => {
   let location = useLocation();
+  const [menu, setMenu] = useState({ gonggu: "공구모아요", chongdae: "총대구해요" });
+  const windowWidth = useWindowWidth();
 
   return (
     <HeaderContainer>
@@ -78,14 +105,14 @@ const Header = () => {
 
         <nav className="navbar flex-box">
           <NavLink to="/product" className="menu">
-            공구모아요
+            {windowWidth <= 550 ? <p>공구</p> : <p>공구모아요</p>}
             <div
               className="under-bar"
               style={{ display: location.pathname === "/product" ? "block" : "none" }}
             />
           </NavLink>
           <NavLink to="/seek" className="menu">
-            총대찾아요
+            {windowWidth <= 550 ? <p>총대</p> : <p>총대구해요</p>}
             <div
               className="under-bar"
               style={{ display: location.pathname === "/seek" ? "block" : "none" }}
@@ -93,7 +120,9 @@ const Header = () => {
           </NavLink>
         </nav>
 
-        <SearchBox />
+        <div className="search-box">
+          <SearchBox />
+        </div>
 
         <div className="login">
           <Link to="/account/login">로그인</Link>

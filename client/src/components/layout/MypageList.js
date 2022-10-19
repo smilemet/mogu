@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment, useCallback, useState } from "react";
 
 import styled from "styled-components";
 
@@ -11,7 +11,7 @@ const MypageListContainer = styled.main`
     margin-bottom: 1rem;
   }
 
-  .flex-box {
+  .option-list {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.5rem;
@@ -42,25 +42,44 @@ const MypageListContainer = styled.main`
 `;
 
 const MypageList = ({ children, ...props }) => {
+  const [option, setOption] = useState("");
+
+  const onSetOption = (e) => {
+    setOption(e.currentTarget.value);
+  };
+
   return (
     <MypageListContainer>
       <div className="wrapper">
         <div className="inner">
           <h2>{props.title}</h2>
 
-          <div className="flex-box">
+          <div className="option-list flex-box">
             <div className="option">
               {props.option.map((v, i) => {
                 return i === 0 ? (
-                  <>
-                    <input type="radio" id={v.id} name="selection" checked />
+                  <Fragment key={i}>
+                    <input
+                      type="radio"
+                      id={v.id}
+                      name="selection"
+                      value={v.id}
+                      onChange={onSetOption}
+                      defaultChecked
+                    />
                     <label htmlFor={v.id}>{v.option}</label>
-                  </>
+                  </Fragment>
                 ) : (
-                  <>
-                    <input type="radio" id={v.id} name="selection" />
+                  <Fragment key={i}>
+                    <input
+                      type="radio"
+                      id={v.id}
+                      name="selection"
+                      value={v.id}
+                      onChange={onSetOption}
+                    />
                     <label htmlFor={v.id}>{v.option}</label>
-                  </>
+                  </Fragment>
                 );
               })}
             </div>
