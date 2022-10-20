@@ -44,12 +44,12 @@ const OrderList = (props) => {
   ];
 
   return (
-    <MypageList title={props.pageTitle} option={option} date={true}>
+    <MypageList title={props.pageTitle} option={option} date={props.data}>
       <OrderListContainer>
         <ul className="order-list">
           {props.data?.map((v, i) => (
             <li>
-              <OrderItem key={i} />
+              <OrderItem key={i} data={v} />
             </li>
           )) || <p className="no-data">데이터가 없습니다.</p>}
         </ul>

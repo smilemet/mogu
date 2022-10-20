@@ -76,8 +76,8 @@ const ListItemContainer = styled.li`
 const ListItem = (props) => {
   return (
     <ListItemContainer>
+      <img className="bookmark" src={bookmark} alt="즐겨찾기 하기" />
       <Link to={props.url}>
-        <img className="bookmark" src={bookmark} alt="즐겨찾기 하기" />
         <div className="thumbnail">
           <img className="item-img" src={props.thumbnail} alt="" />
         </div>

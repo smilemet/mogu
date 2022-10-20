@@ -1,8 +1,9 @@
 import React from "react";
-import { Link } from "react-scroll";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import fakeImg from "../assets/img/fakeImg.png";
+import { stringMoney } from "../utils/StringFormat.js";
 
 const OrderItemContainer = styled.div`
   border: 1px solid ${(props) => props.theme.gray};
@@ -33,6 +34,10 @@ const OrderItemContainer = styled.div`
 
     th {
       text-align: left;
+
+      div {
+        justify-content: space-between;
+      }
     }
 
     col:nth-child(1) {
@@ -81,7 +86,7 @@ const OrderItemContainer = styled.div`
       button {
         ${(props) => props.theme.buttonFill};
         margin-top: 0.5rem;
-        padding: 0.3rem 0.7rem;
+        padding: 0.5rem 0.7rem;
         font-size: ${(props) => props.theme.smallFont};
         color: #fff;
         border-radius: 0.2rem;
@@ -90,46 +95,60 @@ const OrderItemContainer = styled.div`
   }
 `;
 
-const OrderItem = () => {
+const OrderItem = (props) => {
+  const order = props.data;
+  const orderItem = props.data.item;
+
   return (
     <OrderItemContainer>
-      <Link to="/">
-        <p className="date">2022-10-07</p>
-        <div className="table-container">
-          <table>
-            <colgroup>
-              <col />
-              <col />
-              <col />
-            </colgroup>
-            <thead>
-              <tr>
-                <th colSpan="3">주문번호 #23879</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="order-info">
-                  <div className="flex-box">
-                    <img src={fakeImg} alt="상품 이미지"></img>
-                    <div className="post">
-                      <p className="bold">게시글 제목제목제목제목제목제목제목제목제목제목</p>
-                      <p>20cm 말랑말랑 솜인형옷 ★한정상품★ 외 1건</p>
-                    </div>
+      <p className="date">2022-10-07</p>
+      <div className="table-container">
+        <table>
+          <colgroup>
+            <col />
+            <col />
+            <col />
+          </colgroup>
+          <thead>
+            <tr>
+              <th colSpan="3">
+                <div className="flex-box">
+                  <p>주문번호 #{order.orderno}</p>
+                  <p>
+                    <Link to="/">자세히 보기</Link>
+                  </p>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="order-info">
+                <div className="flex-box">
+                  <img src={fakeImg} alt="상품 이미지"></img>
+                  <div className="post">
+                    <p className="bold">{order.postTitle}</p>
+                    <p>
+                      {orderItem.length > 1
+                        ? orderItem[0].name + " 외 " + orderItem.length + "건"
+                        : orderItem[0].name + "1건"}
+                    </p>
                   </div>
-                </td>
-                <td className="order-total">
-                  <p>총 60,300원</p>
-                </td>
-                <td className="order-status">
-                  <p className="alert">입금확인중</p>
-                  <button>게시글로 이동</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </Link>
+                </div>
+              </td>
+              <td className="order-total">
+                <p>{stringMoney(orderItem.reduce((a, b) => (a += b.price), 0))}원</p>
+              </td>
+              <td className="order-status">
+                <p className="alert">{order.status}</p>
+                <button>
+                  <Link to="/product/detail">게시글로 이동</Link>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </OrderItemContainer>
   );
 };
