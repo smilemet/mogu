@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import MypageList from "../components/layout/MypageList.js";
@@ -13,6 +14,17 @@ const OrderListContainer = styled.div`
 
       &:last-of-type {
         margin-bottom: 0;
+      }
+
+      .order-item {
+        border: 1px solid ${(props) => props.theme.gray};
+        padding: 0.5rem 0.5rem;
+        padding-bottom: 0.7rem;
+
+        .date {
+          margin-bottom: 0.5rem;
+          font-size: 1rem;
+        }
       }
     }
 
@@ -49,7 +61,12 @@ const OrderList = (props) => {
         <ul className="order-list">
           {props.data?.map((v, i) => (
             <li>
-              <OrderItem key={i} data={v} />
+              <Link to="/mypage/buy/id">
+                <div className="order-item">
+                  <p className="date">2022-10-07</p>
+                  <OrderItem key={i} data={v} />
+                </div>
+              </Link>
             </li>
           )) || <p className="no-data">데이터가 없습니다.</p>}
         </ul>

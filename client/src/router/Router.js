@@ -20,6 +20,9 @@ import UserEdit from "../pages/UserEdit.js";
 import RecordBuy from "../pages/RecordBuy.js";
 import RecordSell from "../pages/RecordSell.js";
 
+import RecordBuyDetail from "../pages/RecordBuyDetail.js";
+import RecordSellDetail from "../pages/RecordSelllDetail.js";
+
 const Router = () => {
   return (
     <>
@@ -37,6 +40,9 @@ const Router = () => {
           <Route path="/mypage/edit" element={<UserEdit />} />
           <Route path="/mypage/buy" element={<RecordBuy />} />
           <Route path="/mypage/sell" element={<RecordSell />} />
+
+          <Route path="/mypage/buy/id" element={<RecordBuyDetail />} />
+          <Route path="/mypage/sell/id" element={<RecordSellDetail />} />
         </Route>
 
         <Route path="/account/login" element={<Login />} />

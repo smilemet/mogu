@@ -10,6 +10,7 @@ import fakeImg from "../assets/img/fakeImg.png";
 import optionIcon from "../assets/img/option-icon.png";
 import moreArrow from "../assets/img/more-arrow.png";
 import MyInfo from "../components/MyInfo.js";
+import SeekItem from "../components/SeekItem.js";
 
 const UserPageContainer = styled.main`
   padding-top: 1rem;
@@ -99,7 +100,7 @@ const UserPageContainer = styled.main`
       border-bottom: 1px solid ${(props) => props.theme.gray};
 
       input[name="tab-item"] {
-        /* display: none; */
+        display: none;
       }
 
       input + .tab-item {
@@ -167,11 +168,10 @@ const UserPageContainer = styled.main`
 `;
 
 const UserPage = () => {
-  console.log("hello");
-  const [tab, setTab] = useState();
+  const [tab, setTab] = useState("product-tab");
 
   const onChangeTab = useCallback((e) => {
-    console.log(e.currentTarget.id);
+    setTab(e.currentTarget.id);
   }, []);
 
   return (
@@ -206,34 +206,56 @@ const UserPage = () => {
 
           <section className="user-post">
             <nav className="flex-box">
-              <input type="radio" id="product-tab" name="tab-item" checked />
+              <input
+                type="radio"
+                id="product-tab"
+                name="tab-item"
+                onClick={onChangeTab}
+                defaultChecked
+              />
               <label className="tab-item" htmlFor="product-tab">
                 공구모아요
               </label>
 
-              <input type="radio" id="seek-tab" name="tab-item" />
+              <input type="radio" id="seek-tab" name="tab-item" onClick={onChangeTab} />
               <label className="tab-item" htmlFor="seek-tab">
                 총대찾아요
               </label>
 
-              <input type="radio" id="my-tab" name="tab-item" />
+              <input type="radio" id="my-tab" name="tab-item" onClick={onChangeTab} />
               <label className="tab-item" htmlFor="my-tab">
                 내 정보
               </label>
             </nav>
 
             <article>
-              <GridList data={Array(2).fill(true)}>
-                <ProductItem />
-              </GridList>
+              {tab === "seek-tab" ? (
+                <>
+                  <GridList data={Array(2).fill(true)}>
+                    <SeekItem />
+                  </GridList>
 
-              <div className="more-btn">
-                <Link to="/">
-                  <button>더 보기</button>
-                </Link>
-              </div>
+                  <div className="more-btn">
+                    <Link to="/">
+                      <button>더 보기</button>
+                    </Link>
+                  </div>
+                </>
+              ) : tab === "my-tab" ? (
+                <MyInfo />
+              ) : (
+                <>
+                  <GridList data={Array(2).fill(true)}>
+                    <ProductItem />
+                  </GridList>
 
-              {/* <MyInfo /> */}
+                  <div className="more-btn">
+                    <Link to="/">
+                      <button>더 보기</button>
+                    </Link>
+                  </div>
+                </>
+              )}
             </article>
           </section>
 
