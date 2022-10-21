@@ -55,12 +55,8 @@ const DetailHeadingContainer = styled.div`
       .category {
         margin-bottom: 2.5rem;
 
-        span {
-          margin-right: 1rem;
-
-          &:last-of-type {
-            margin-right: 0;
-          }
+        span + span {
+          margin-left: 1rem;
         }
       }
     }

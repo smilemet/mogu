@@ -23,6 +23,7 @@ import RecordSell from "../pages/RecordSell.js";
 import RecordBuyDetail from "../pages/RecordBuyDetail.js";
 import RecordSellDetail from "../pages/RecordSelllDetail.js";
 import RecordSellCheck from "../pages/RecordSellCheck.js";
+import ProductCreate from "../pages/ProductCreate.js";
 
 const Router = () => {
   return (
@@ -36,7 +37,7 @@ const Router = () => {
           <Route path="/product/detail" element={<ProductDetail />} />
           <Route path="/seek/detail" element={<SeekDetail />} />
 
-          <Route path="/product/write" element={<ProductDetail />} />
+          <Route path="/product/write" element={<ProductCreate />} />
           <Route path="/seek/write" element={<ProductDetail />} />
 
           <Route path="/product/id/edit" element={<ProductDetail />} />

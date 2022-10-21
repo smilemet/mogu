@@ -55,15 +55,12 @@ const OrderJoinContainer = styled.table`
   .td3 {
     padding: 0.5rem 1rem;
 
-    .items {
-      display: grid;
-      grid-template-columns: 3rem auto minmax(0px, 6rem) minmax(0, 4rem);
-      align-items: center;
+    .items + .items {
       margin-bottom: 0.5rem;
+    }
 
-      &:last-of-type {
-        margin-bottom: 0;
-      }
+    .items {
+      align-items: center;
 
       p {
         text-align: right;
@@ -134,7 +131,7 @@ const OrderJoin = () => {
             </div>
           </td>
           <td className="td3">
-            <div className="items">
+            <div className="items flex-box">
               <img src={fakeImg} alt="상품 이미지"></img>
               <p>
                 <span className="bold">20cm 말랑말랑 솜인형옷 ★한정상품★</span>
@@ -144,7 +141,7 @@ const OrderJoin = () => {
                 <span>1개</span>
               </p>
             </div>
-            <div className="items">
+            <div className="items flex-box">
               <img src={fakeImg} alt="상품 이미지"></img>
               <p>
                 <span className="bold">20cm 말랑말랑 솜인형옷 ★한정상품★</span>
@@ -154,7 +151,7 @@ const OrderJoin = () => {
                 <span>1개</span>
               </p>
             </div>
-            <div className="items">
+            <div className="items flex-box">
               <img src={fakeImg} alt="상품 이미지"></img>
               <p>
                 <span className="bold">20cm 말랑말랑 솜인형옷 ★한정상품★</span>

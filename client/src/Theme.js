@@ -5,6 +5,7 @@ const variable = {
 
   pointColor: "#e2bbe9",
   gray: "#ddd",
+  lightGray: "#eee",
 };
 
 const theme = {
@@ -21,7 +22,7 @@ const theme = {
   alertText: "#ff4f4f",
 
   gray: `${variable.gray}`,
-  lightGray: "#eee",
+  lightGray: `${variable.lightGray}`,
   whiteGray: "#f3f3f3",
   darkGray: "#888888",
   ivory: "#f7f6f4",
@@ -40,17 +41,31 @@ const theme = {
   button: () => `
     padding: 1rem 0;
     border: 1px solid ${variable.pointColor};
+    border-radius: 0.3rem;
     outline: none;
     background-color:#fff;
     font-weight: bold;
+    cursor: pointer;
   `,
 
   buttonFill: () => `
     padding: 1rem 0;
-    border: none;
+    border: 1px solid ${variable.pointColor};
+    border-radius: 0.3rem;
     outline: none;
     background-color:${variable.pointColor};
     font-weight: bold;
+    cursor: pointer;
+  `,
+
+  buttonPlus: () => `
+    padding: 1rem 0;
+    border: 2px solid ${variable.gray};
+    border-radius: 0.3rem;
+    outline: none;
+    background-color: #fff;
+    font-weight: bold;
+    cursor: pointer;
   `,
 
   input: () => `
@@ -72,6 +87,14 @@ const theme = {
 
   mainPadding: () => `
     padding-top: 5rem;
+  `,
+
+  inputSomething: () => `
+    outline: none;
+    border: none;
+    padding: 0.7rem 1rem;
+    background-color: ${variable.lightGray};
+    border-radius: 0.3rem;
   `,
 
   detailPage: () => `

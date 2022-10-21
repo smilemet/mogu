@@ -137,7 +137,7 @@ const ProductDetail = () => {
   return (
     <ProductDetailContainer data={data}>
       <div className="wrapper">
-        <div className="inner">
+        <div className="inner2">
           <section>
             <DetailHeading
               className="heading"

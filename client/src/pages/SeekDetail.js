@@ -65,7 +65,7 @@ const Detail = () => {
   return (
     <DetailContainer>
       <div className="wrapper">
-        <div className="inner">
+        <div className="inner2">
           <section>
             <DetailHeading className="heading" title={data.title} category={data.category}>
               <div className="post-btn">
