@@ -6,170 +6,48 @@ import CommentList from "../components/CommentList.js";
 import GridList from "../components/GridList.js";
 import ProductItem from "../components/ProductItem.js";
 
-import fakeImg from "../assets/img/fakeImg.png";
-import moreArrow from "../assets/img/more-arrow.png";
-import bookmark from "../assets/img/bookmark.png";
-import bookmarkFill from "../assets/img/bookmark-fill.png";
+import DetailHeading from "../components/DetailHeading.js";
 
-const DetailContainer = styled.main`
-  padding-top: 5rem;
-
-  hr {
-    margin: 2.5rem 0 1.5rem;
-    border: none;
-    border-top: 1px solid ${(props) => props.theme.gray};
-  }
-
-  h3 {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
+const ProductDetailContainer = styled.main`
+  ${(props) => props.theme.mainPadding}
+  ${(props) => props.theme.detailPage}
 
   .heading {
-    .h-left {
-      width: 55%;
-      height: 100%;
-      aspect-ratio: 4 / 3.5;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+    table {
+      tr {
+        line-height: 1.7;
       }
     }
 
-    .h-right {
-      width: 45%;
-      padding: 1rem 0 1rem 2.5rem;
-      position: relative;
-      flex-direction: column;
+    .post-process {
+      margin-bottom: 1.5rem;
 
-      & > * {
-        width: 100%;
-      }
-
-      .post-title {
-        .title-box {
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 1.2rem;
-
-          h2 {
-            font-size: 1.5rem;
-            font-weight: bold;
-          }
-
-          .bookmark {
-            width: 1.5rem;
-            top: 0.5rem;
-            right: 0.7rem;
-          }
-        }
-
-        p {
-          font-size: 1.75rem;
-          margin-bottom: 1.2rem;
-        }
-
-        .category {
-          margin-bottom: 2.5rem;
-
-          span {
-            margin-right: 1rem;
-
-            &:last-of-type {
-              margin-right: 0;
-            }
-          }
-        }
-      }
-
-      .post-process table {
-        margin-bottom: 1.5rem;
-
-        tr {
-          line-height: 1.7;
-        }
-
-        td:first-of-type {
-          width: 37%;
-        }
-      }
-
-      .post-date {
-        flex-grow: 1;
-
-        div {
-          padding: 1.5rem 1rem;
-          font-size: 1rem;
-          border-top: 1px solid ${(props) => props.theme.lightGray};
-          border-bottom: 1px solid ${(props) => props.theme.lightGray};
-          margin-bottom: 0.7rem;
-
-          table {
-            tr {
-              line-height: 1.7;
-            }
-
-            td:first-of-type {
-              width: 47%;
-            }
-          }
-        }
-
-        p {
-          font-size: ${(props) => props.theme.smallFont};
-          text-align: right;
-          margin-bottom: 2rem;
-        }
-      }
-
-      .post-by {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        right: 0;
-        bottom: 2rem;
-
-        & > div {
-          align-items: center;
-        }
-
-        .icon {
-          flex-shrink: 0;
-          display: inline-block;
-          width: 2rem;
-          height: 2rem;
-          margin-right: 0.5rem;
-          border-radius: 50%;
-          background-color: ${(props) => props.theme.gray};
-        }
-
-        .name {
-          /* ${(props) => props.theme.textOverflow} */
-        }
-
-        .more-arrow {
-          margin-left: 1rem;
-          display: inline-block;
-          width: 0.6rem;
-          height: 0.6rem;
-          transform: translate(0, 15%);
-          background: no-repeat center/contain url(${moreArrow});
-        }
-
-        .rate {
-          text-align: right;
-          right: 0;
-          bottom: 2rem;
-        }
+      table td:first-of-type {
+        width: 37%;
       }
     }
-  }
 
-  section ~ section {
-    margin-bottom: 3rem;
+    .post-date {
+      flex-grow: 1;
+
+      div {
+        padding: 1.5rem 1rem;
+        font-size: 1rem;
+        border-top: 1px solid ${(props) => props.theme.lightGray};
+        border-bottom: 1px solid ${(props) => props.theme.lightGray};
+        margin-bottom: 0.7rem;
+
+        table td:first-of-type {
+          width: 47%;
+        }
+      }
+
+      p {
+        font-size: ${(props) => props.theme.smallFont};
+        text-align: right;
+        margin-bottom: 2rem;
+      }
+    }
   }
 
   .selection {
@@ -181,7 +59,6 @@ const DetailContainer = styled.main`
     }
 
     .order-btn {
-      /* width: 50%; */
       margin: 0 auto;
       margin-top: 1rem;
 
@@ -190,21 +67,6 @@ const DetailContainer = styled.main`
         ${(props) => props.theme.buttonFill}
         font-size: 1rem;
       }
-    }
-  }
-
-  .text-content {
-    padding: 1rem 1rem;
-    text-align: justify;
-    word-break: keep-all;
-  }
-
-  .content,
-  .FAQ {
-    p {
-      margin-bottom: 0.5rem;
-      font-size: 0.95rem;
-      line-height: 1.5;
     }
   }
 
@@ -223,65 +85,66 @@ const DetailContainer = styled.main`
       & > div {
         margin-bottom: 1.5rem;
       }
-    }
-  }
 
-  @media ${(props) => props.theme.medium} {
-    .heading {
-      display: block;
-
-      .h-left {
-        width: 100%;
+      p {
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+        line-height: 1.5;
       }
-
-      .h-right {
-        width: 100%;
-        padding-left: 0;
-      }
-
-      .post-date {
-        & > div {
-          padding-left: 0;
-        }
-      }
-    }
-
-    .heading + hr {
-      margin-top: 1rem;
-    }
-  }
-
-  @media ${(props) => props.theme.mobile} {
-    * {
-      word-break: normal;
     }
   }
 `;
 
-const Detail = () => {
+const ProductDetail = () => {
   const [count, setCount] = useState({});
 
+  const data = {
+    title: "노랑공방 에디션 공구 열어주실 분!",
+    createAt: "2020-10-26",
+    updateAt: "2020-10-26",
+    category: ["인형옷", "드레스", "20cm"],
+    user: {
+      id: "goggu@gmail.com",
+      name: "공구하다가사탕진",
+      rate: 4.54,
+    },
+    items: [
+      {
+        name: "상품 제목을 입력하세요.",
+        price: 18900,
+        limit: 2,
+        stock: 100,
+      },
+      {
+        name: "상품 제목을 입력하세요.",
+        price: 18900,
+        limit: 2,
+        stock: 100,
+      },
+    ],
+    process: "1차 입금 > 현물도착 > 2차 입금",
+    shipping: true,
+    startDate: "2022.10.01 20:00",
+    endDate: "2022.10.04 20:00",
+    content: "긴 장문",
+    faq: [
+      { q: "질문", a: "내용" },
+      { q: "질문", a: "내용" },
+      { q: "질문", a: "내용" },
+    ],
+  };
+
   return (
-    <DetailContainer>
+    <ProductDetailContainer data={data}>
       <div className="wrapper">
         <div className="inner">
-          <section className="heading flex-box">
-            <div className="h-left">
-              <img src={fakeImg} alt="상품이미지" />
-            </div>
-            <div className="h-right flex-box">
-              <div className="post-title">
-                <div className="title-box flex-box">
-                  <h2>노랑공방 에디션 공구 열어주실 분!</h2>
-                  <img className="bookmark" src={bookmark} alt="즐겨찾기 하기" />
-                </div>
-                <p>21,000원~</p>
-                <div className="category">
-                  <span>#인형옷</span>
-                  <span>#드레스</span>
-                  <span>#20cm</span>
-                </div>
-              </div>
+          <section>
+            <DetailHeading
+              className="heading"
+              title={data.title}
+              price={Math.min(...data.items.map((v) => v.price))}
+              category={data.category}
+            >
               <div className="post-process">
                 <table>
                   <tbody>
@@ -296,6 +159,7 @@ const Detail = () => {
                   </tbody>
                 </table>
               </div>
+
               <div className="post-date">
                 <div>
                   <table>
@@ -311,22 +175,12 @@ const Detail = () => {
                     </tbody>
                   </table>
                 </div>
+
                 <p>
                   공구 마감이 <span className="alert">3일</span> 남았습니다.
                 </p>
               </div>
-              <div className="post-by">
-                <div className="flex-box">
-                  <span className="icon" />
-                  <span className="name">공구하다가사탕진</span>
-                  <span className="more-arrow" />
-                </div>
-                <div className="rate">
-                  <span>★★★★☆</span>
-                  <span>(5)</span>
-                </div>
-              </div>
-            </div>
+            </DetailHeading>
           </section>
 
           <hr />
@@ -334,11 +188,9 @@ const Detail = () => {
           <section className="selection">
             <h3>공구 물품</h3>
             <div className="item">
-              {Array(3)
-                .fill(true)
-                .map((v) => {
-                  return <Selection setCount={setCount} />;
-                })}
+              {data.items.map((v) => {
+                return <Selection setCount={setCount} />;
+              })}
             </div>
             <div className="order-btn">
               <button type="button">주문하기</button>
@@ -422,8 +274,8 @@ const Detail = () => {
           </section>
         </div>
       </div>
-    </DetailContainer>
+    </ProductDetailContainer>
   );
 };
 
-export default Detail;
+export default ProductDetail;

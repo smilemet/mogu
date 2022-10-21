@@ -69,6 +69,52 @@ const theme = {
     margin-right: 0.2rem;
     border-radius: 50%;
   `,
+
+  mainPadding: () => `
+    padding-top: 5rem;
+  `,
+
+  detailPage: () => `
+    hr {
+      margin: 2.5rem 0 1.5rem;
+      border: none;
+      border-top: 1px solid ${variable.gray};
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    section ~ section {
+      margin-bottom: 3rem;
+    }
+
+    .text-content {
+      padding: 1rem 1rem;
+      text-align: justify;
+      word-break: keep-all;
+    }
+
+    .content p {
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    @media ${variable.medium} {
+      .heading + hr {
+        margin-top: 1rem;
+      }
+    }
+
+    @media ${variable.mobile} {
+      * {
+        word-break: normal;
+      }
+    }
+  `,
 };
 
 export default theme;

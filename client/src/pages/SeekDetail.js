@@ -8,192 +8,37 @@ import fakeImg from "../assets/img/fakeImg.png";
 import moreArrow from "../assets/img/more-arrow.png";
 import bookmark from "../assets/img/bookmark.png";
 import bookmarkFill from "../assets/img/bookmark-fill.png";
+import DetailHeading from "../components/DetailHeading.js";
 
 const DetailContainer = styled.main`
-  padding-top: 5rem;
-
-  hr {
-    margin: 2.5rem 0 1.5rem;
-    border: none;
-    border-top: 1px solid ${(props) => props.theme.gray};
-  }
-
-  h3 {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
+  ${(props) => props.theme.mainPadding}
+  ${(props) => props.theme.detailPage}
 
   .heading {
-    .h-left {
-      width: 55%;
-      height: 100%;
-      aspect-ratio: 4 / 3.5;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+    .post-title {
+      flex-grow: 1;
     }
 
-    .h-right {
-      width: 45%;
-      padding: 1rem 0 1rem 2.5rem;
-      position: relative;
-      flex-direction: column;
-
-      & > * {
-        width: 100%;
-      }
-
-      .post-title {
-        flex-grow: 1;
-
-        .title-box {
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 1.2rem;
-
-          h2 {
-            font-size: 1.5rem;
-            font-weight: bold;
-          }
-
-          .bookmark {
-            width: 1.5rem;
-            top: 0.5rem;
-            right: 0.7rem;
-          }
-        }
-
-        p {
-          font-size: 1.75rem;
-          margin-bottom: 1.2rem;
-        }
-
-        .category {
-          margin-bottom: 2.5rem;
-
-          span {
-            margin-right: 1rem;
-
-            &:last-of-type {
-              margin-right: 0;
-            }
-          }
-        }
-      }
-
-      .post-btn {
-        margin: 0 auto;
-        margin-top: 1rem;
-        margin-bottom: 3rem;
-
-        button {
-          width: 100%;
-          font-size: 0.875rem;
-        }
-
-        .together-btn {
-          ${(props) => props.theme.button}
-          padding: 1.5rem 0;
-          margin-bottom: 0.5rem;
-          font-weight: normal;
-        }
-
-        .letsgo-btn {
-          ${(props) => props.theme.buttonFill}
-          padding: 1.5rem 0;
-        }
-      }
-
-      .post-by {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        right: 0;
-        bottom: 2rem;
-
-        & > div {
-          align-items: center;
-        }
-
-        .icon {
-          flex-shrink: 0;
-          display: inline-block;
-          width: 2rem;
-          height: 2rem;
-          margin-right: 0.5rem;
-          border-radius: 50%;
-          background-color: ${(props) => props.theme.gray};
-        }
-
-        .more-arrow {
-          margin-left: 1rem;
-          display: inline-block;
-          width: 0.6rem;
-          height: 0.6rem;
-          transform: translate(0, 15%);
-          background: no-repeat center/contain url(${moreArrow});
-        }
-
-        .rate {
-          text-align: right;
-          right: 0;
-          bottom: 2rem;
-        }
-      }
-    }
-  }
-
-  section ~ section {
-    margin-bottom: 3rem;
-  }
-
-  .text-content {
-    padding: 1rem 1rem;
-    text-align: justify;
-    word-break: keep-all;
-  }
-
-  .content {
-    p {
-      margin-bottom: 0.5rem;
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
-  }
-
-  @media ${(props) => props.theme.medium} {
-    .heading {
-      display: block;
-
-      .h-left {
-        width: 100%;
-      }
-
-      .h-right {
-        width: 100%;
-        padding-left: 0;
-      }
-    }
-
-    .heading + hr {
+    .post-btn {
+      margin: 0 auto;
       margin-top: 1rem;
-    }
+      margin-bottom: 3rem;
 
-    .otherItem {
-      ul {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+      button {
+        width: 100%;
+        font-size: 0.875rem;
       }
-    }
-  }
 
-  @media ${(props) => props.theme.mobile} {
-    .otherItem {
-      ul {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .together-btn {
+        ${(props) => props.theme.button}
+        padding: 1.5rem 0;
+        margin-bottom: 0.5rem;
+        font-weight: normal;
+      }
+
+      .letsgo-btn {
+        ${(props) => props.theme.buttonFill}
+        padding: 1.5rem 0;
       }
     }
   }
@@ -202,47 +47,34 @@ const DetailContainer = styled.main`
 const Detail = () => {
   const [count, setCount] = useState({});
 
+  const data = {
+    title: "노랑공방 에디션 공구 열어주실 분!",
+    createAt: "2020-10-26",
+    updateAt: "2020-10-26",
+    category: ["인형옷", "드레스", "20cm"],
+    price: 10500,
+    user: {
+      id: "goggu@gmail.com",
+      name: "공구하다가사탕진",
+      rate: 4.54,
+    },
+    content: "긴 장문",
+    joinUsers: 35,
+  };
+
   return (
     <DetailContainer>
       <div className="wrapper">
         <div className="inner">
-          <section className="heading flex-box">
-            <div className="h-left">
-              <img src={fakeImg} alt="상품이미지" />
-            </div>
-            <div className="h-right flex-box">
-              <div className="post-title">
-                <div className="title-box flex-box">
-                  <h2>노랑공방 에디션 공구 열어주실 분!</h2>
-                  <img className="bookmark" src={bookmark} alt="즐겨찾기 하기" />
-                </div>
-                <p>21,000원~</p>
-                <div className="category">
-                  <span>#인형옷</span>
-                  <span>#드레스</span>
-                  <span>#20cm</span>
-                </div>
-              </div>
-
+          <section>
+            <DetailHeading className="heading" title={data.title} category={data.category}>
               <div className="post-btn">
                 <button className="together-btn">
-                  같이할래요 <span className="alert">★28</span>
+                  같이할래요 <span className="alert">★{data.joinUsers}</span>
                 </button>
                 <button className="letsgo-btn">총대 매고 공구글 작성하기!</button>
               </div>
-
-              <div className="post-by">
-                <div className="flex-box">
-                  <span className="icon" />
-                  <span className="name">공구하다가사탕진</span>
-                  <span className="more-arrow" />
-                </div>
-                <div className="rate">
-                  <span>★★★★☆</span>
-                  <span>(5)</span>
-                </div>
-              </div>
-            </div>
+            </DetailHeading>
           </section>
 
           <hr />

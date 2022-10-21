@@ -22,6 +22,7 @@ import RecordSell from "../pages/RecordSell.js";
 
 import RecordBuyDetail from "../pages/RecordBuyDetail.js";
 import RecordSellDetail from "../pages/RecordSelllDetail.js";
+import RecordSellCheck from "../pages/RecordSellCheck.js";
 
 const Router = () => {
   return (
@@ -35,6 +36,12 @@ const Router = () => {
           <Route path="/product/detail" element={<ProductDetail />} />
           <Route path="/seek/detail" element={<SeekDetail />} />
 
+          <Route path="/product/write" element={<ProductDetail />} />
+          <Route path="/seek/write" element={<ProductDetail />} />
+
+          <Route path="/product/id/edit" element={<ProductDetail />} />
+          <Route path="/seek/id/edit" element={<ProductDetail />} />
+
           <Route path="/userid" element={<UserPage />} />
           <Route path="/mypage/favorite" element={<Favorite />} />
           <Route path="/mypage/edit" element={<UserEdit />} />
@@ -43,6 +50,7 @@ const Router = () => {
 
           <Route path="/mypage/buy/id" element={<RecordBuyDetail />} />
           <Route path="/mypage/sell/id" element={<RecordSellDetail />} />
+          <Route path="/mypage/sell/id/check" element={<RecordSellCheck />} />
         </Route>
 
         <Route path="/account/login" element={<Login />} />

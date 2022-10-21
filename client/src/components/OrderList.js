@@ -64,7 +64,9 @@ const OrderList = (props) => {
               <Link to="/mypage/buy/id">
                 <div className="order-item">
                   <p className="date">2022-10-07</p>
-                  <OrderItem key={i} data={v} />
+                  <div>
+                    <OrderItem key={i} data={v} />
+                  </div>
                 </div>
               </Link>
             </li>

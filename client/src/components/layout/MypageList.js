@@ -34,7 +34,7 @@ const MypageListContainer = styled.main`
       }
     }
 
-    .years {
+    .sort {
       border: none;
       outline: none;
     }
@@ -85,7 +85,7 @@ const MypageList = ({ children, ...props }) => {
             </div>
 
             {props.date ? (
-              <select name="years" className="years">
+              <select name="sort" className="sort">
                 <option value="2022">2022년</option>
                 <option value="2021">2021년</option>
                 <option value="2020">2020년</option>
