@@ -74,13 +74,17 @@ const Footer = () => {
 
         <div className="address">
           <span>
-            <a href="/" target="_blank">
+            <a href="https://github.com/smilemet/mogu" target="_blank" rel="noreferrer">
               Github
             </a>
           </span>
           <span> | </span>
           <span>
-            <a href="/" target="_blank">
+            <a
+              href="https://smilemet.notion.site/c2b6a3d118e6415ab525c9db8273b672?v=44b4754dff064b69a37ca39df7c92840"
+              target="_blank"
+              rel="noreferrer"
+            >
               Notion
             </a>
           </span>

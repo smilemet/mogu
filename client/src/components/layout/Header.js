@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 import styled from "styled-components";
-import { animateScroll } from "react-scroll";
 
 import title from "../../assets/img/title2.png";
 import SearchBox from "../SearchBox.js";
@@ -89,9 +88,9 @@ const HeaderContainer = styled.header`
 `;
 
 const Header = () => {
-  let location = useLocation();
   const [menu, setMenu] = useState({ gonggu: "공구모아요", chongdae: "총대구해요" });
   const windowWidth = useWindowWidth();
+  const location = useLocation();
 
   return (
     <HeaderContainer>

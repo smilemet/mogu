@@ -23,13 +23,6 @@ const SideNavContainer = styled.nav`
     img {
       width: 50%;
     }
-
-    p {
-      width: 100%;
-      position: absolute;
-      font-size: ${(props) => props.theme.smallFont};
-      transform: translate(-13%);
-    }
   }
 
   @media screen and (min-width: 1329px) {
@@ -39,6 +32,9 @@ const SideNavContainer = styled.nav`
 `;
 
 const SideNav = () => {
+  // 로그인했다면 새글쓰기로
+  // 아니라면 로그인화면으로
+
   return (
     <SideNavContainer>
       <Link to="/product/write">
