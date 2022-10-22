@@ -7,6 +7,8 @@ import bookmark from "../assets/img/bookmark.png";
 import bookmarkFill from "../assets/img/bookmark-fill.png";
 
 const DetailHeadingContainer = styled.div`
+  display: flex;
+
   .h-left {
     width: 55%;
     height: 100%;
@@ -125,7 +127,7 @@ const DetailHeadingContainer = styled.div`
 
 const DetailHeading = ({ children, ...props }) => {
   return (
-    <DetailHeadingContainer className="heading flex-box">
+    <DetailHeadingContainer className="heading">
       <div className="h-left">
         <img src={fakeImg} alt="상품이미지" />
       </div>

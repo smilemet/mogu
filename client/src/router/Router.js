@@ -19,11 +19,14 @@ import Favorite from "../pages/Favorite.js";
 import UserEdit from "../pages/UserEdit.js";
 import RecordBuy from "../pages/RecordBuy.js";
 import RecordSell from "../pages/RecordSell.js";
+import ProductCreate from "../pages/ProductCreate.js";
 
 import RecordBuyDetail from "../pages/RecordBuyDetail.js";
 import RecordSellDetail from "../pages/RecordSelllDetail.js";
 import RecordSellCheck from "../pages/RecordSellCheck.js";
-import ProductCreate from "../pages/ProductCreate.js";
+
+import Order from "../pages/Order.js";
+import OrderSuccess from "../pages/OrderSuccess.js";
 
 const Router = () => {
   return (
@@ -42,6 +45,9 @@ const Router = () => {
 
           <Route path="/product/id/edit" element={<ProductDetail />} />
           <Route path="/seek/id/edit" element={<ProductDetail />} />
+
+          <Route path="/order/id" element={<Order />} />
+          <Route path="/order/success" element={<OrderSuccess />} />
 
           <Route path="/userid" element={<UserPage />} />
           <Route path="/mypage/favorite" element={<Favorite />} />

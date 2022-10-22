@@ -76,8 +76,13 @@ const ProductCreateContainer = styled.main`
 `;
 
 const ProductCreate = () => {
-  const [selections, setSelections] = useState(1);
+  const [count, setCount] = useState();
+  const [selections, setSelections] = useState([]);
   const [qnas, setQnas] = useState(1);
+
+  const onPlusSelection = () => {
+    setSelections([...selections, count]);
+  };
 
   const onPlusQna = () => {};
 
@@ -131,8 +136,8 @@ const ProductCreate = () => {
               <div className="added-item">
                 {Array(selections)
                   .fill(true)
-                  .map((v) => (
-                    <SelectionAdd />
+                  .map((v, i) => (
+                    <SelectionAdd key={i} />
                   ))}
               </div>
               <div className="add-btn">

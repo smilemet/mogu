@@ -8,7 +8,7 @@ const FooterContainer = styled.footer`
   padding: 5rem 7rem;
   text-align: center;
   font-size: 12px;
-  background-color: ${(props) => props.theme.pointColorToneDown};
+  background-color: ${(props) => props.theme.ivory};
 
   .footer-nav {
     max-width: 43rem;

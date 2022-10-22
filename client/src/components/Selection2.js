@@ -34,6 +34,9 @@ const Selection2Container = styled.div`
   }
 
   .selection-count {
+    text-align: center;
+    width: 10%;
+    min-width: 4rem;
   }
 `;
 

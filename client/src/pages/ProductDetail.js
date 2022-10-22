@@ -7,6 +7,7 @@ import GridList from "../components/GridList.js";
 import ProductItem from "../components/ProductItem.js";
 
 import DetailHeading from "../components/DetailHeading.js";
+import { Link } from "react-router-dom";
 
 const ProductDetailContainer = styled.main`
   ${(props) => props.theme.mainPadding}
@@ -193,7 +194,9 @@ const ProductDetail = () => {
               })}
             </div>
             <div className="order-btn">
-              <button type="button">주문하기</button>
+              <Link to="/order/id">
+                <button type="button">주문하기</button>
+              </Link>
             </div>
           </section>
 

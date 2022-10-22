@@ -6,6 +6,7 @@ const variable = {
   pointColor: "#e2bbe9",
   gray: "#ddd",
   lightGray: "#eee",
+  ivory: "#f7f6f4",
 };
 
 const theme = {
@@ -25,7 +26,7 @@ const theme = {
   lightGray: `${variable.lightGray}`,
   whiteGray: "#f3f3f3",
   darkGray: "#888888",
-  ivory: "#f7f6f4",
+  ivory: `${variable.ivory}`,
   skyblue: "#dbeef5",
   yellow: "#ffc107",
 

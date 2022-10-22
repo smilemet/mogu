@@ -7,13 +7,14 @@ import notice1 from "../assets/img/notice.png";
 import GridList from "../components/GridList";
 import ProductItem from "../components/ProductItem.js";
 import SeekItem from "../components/SeekItem.js";
+import SideNav from "../components/SideNav";
 
 const MainContainer = styled.main`
   margin-top: 3.7rem;
 
   .section-title {
     text-align: center;
-    background-color: #f7f6f4;
+    background-color: ${(props) => props.theme.ivory};
 
     img {
       max-width: 100%;
@@ -64,6 +65,8 @@ const Main = () => {
       <div className="wrapper">
         <section className="section-main">
           <div className="inner">
+            <SideNav />
+
             <ul className="categories flex-box">
               {Array(6)
                 .fill(true)

@@ -4,6 +4,8 @@ import styled from "styled-components";
 import fakeImg from "../assets/img/fakeImg.png";
 
 const CreateHeadingContainer = styled.div`
+  display: flex;
+
   .h-left {
     width: 55%;
     height: 100%;
@@ -86,7 +88,7 @@ const CreateHeadingContainer = styled.div`
 
 const CreateHeading = ({ children, ...props }) => {
   return (
-    <CreateHeadingContainer className="heading flex-box">
+    <CreateHeadingContainer className="heading">
       <div className="h-left">{/* <img src={fakeImg} alt="상품이미지" /> */}</div>
       <div className="h-right flex-box">
         <div className="post-item">

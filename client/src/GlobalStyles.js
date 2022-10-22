@@ -38,16 +38,19 @@ const GlobalStyles = createGlobalStyle`
   .inner {
     max-width: 1150px;
     margin: 0 auto;
+    position: relative;
   }
 
   .inner2 {
     max-width: 1024px;
     margin: 0 auto;
+    position: relative;
   }
 
   .inner3 {
     max-width: 390px;
     margin: 0 auto;
+    position: relative;
   }
 
   .flex-box {
