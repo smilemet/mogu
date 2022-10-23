@@ -3,10 +3,20 @@
   "version": "1.0.0",
   "description": "node.js-server",
   "main": "server.js",
+  "type": "module",
   "license": "MIT",
   "scripts": {
     "client": "cd ../client && yarn start",
     "server": "nodemon --exec node server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.3.3",
+    "nunjucks": "^3.2.3",
+    "sequelize": "^6.25.3"
   }
 }
