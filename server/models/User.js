@@ -5,9 +5,27 @@ export default class User extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
       {
-        id: {},
+        id: {
+          autoIncrement: true,
+          type: DataTypes.BIGINT,
+          allowNull: false,
+          primaryKey: true,
+        },
+        email: {
+          type: DataTypes.STRING(50),
+          allowNull: false,
+          unique: true,
+        },
+        password: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
+        },
+        nickname: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
+        },
       },
-      { tableName: "users", timestamps: true, indexes: [] }
+      { tableName: "User", timestamps: true, indexes: [] }
     );
   }
 }
