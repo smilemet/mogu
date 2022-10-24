@@ -1,7 +1,7 @@
 import _sequelize from "sequelize";
 const { Model, Sequelize } = _sequelize;
 
-export default class user_address extends Model {
+export default class user_account extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
       {
@@ -11,24 +11,20 @@ export default class user_address extends Model {
           allowNull: false,
           primaryKey: true,
         },
-        name: {
+        bank: {
+          type: DataTypes.STRING(10),
+          allowNull: false,
+        },
+        holder: {
           type: DataTypes.STRING(20),
           allowNull: false,
         },
-        address1: {
-          type: DataTypes.STRING(50),
-          allowNull: false,
-        },
-        address2: {
-          type: DataTypes.STRING(50),
-          allowNull: false,
-        },
-        postcode: {
-          type: DataTypes.CHAR(5),
+        accountno: {
+          type: DataTypes.STRING(20),
           allowNull: false,
         },
       },
-      { sequelize, tableName: "user_address", timestamps: true, indexes: [] }
+      { sequelize, tableName: "user_account", timestamps: true, indexes: [] }
     );
   }
 }

@@ -1,13 +1,13 @@
 import _sequelize from "sequelize";
 const { Model, Sequelize } = _sequelize;
 
-export default class User extends Model {
+export default class user extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
       {
         id: {
           autoIncrement: true,
-          type: DataTypes.BIGINT,
+          type: DataTypes.BIGINT(20),
           allowNull: false,
           primaryKey: true,
         },
@@ -26,12 +26,13 @@ export default class User extends Model {
         },
         user_icon: {
           type: DataTypes.STRING(2083),
-          allowNull: false,
+          allowNull: true,
           defaultValue: "기본 아이콘 url",
         },
         status: {
-          type: DataTypes.CHAR(1),
+          type: DataTypes.STRING(10),
           allowNull: false,
+          defaultValue: "ACTIVE",
         },
         report: {
           type: DataTypes.TINYINT(30),
@@ -40,9 +41,15 @@ export default class User extends Model {
         auth: {
           type: DataTypes.BOOLEAN,
           allowNull: false,
+          defaultValue: 0,
+        },
+        manager: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false,
+          defaultValue: 0,
         },
       },
-      { sequelize, tableName: "User", timestamps: true, indexes: [] }
+      { sequelize, tableName: "user", timestamps: true, indexes: [] }
     );
   }
 }

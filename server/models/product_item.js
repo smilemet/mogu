@@ -1,34 +1,34 @@
 import _sequelize from "sequelize";
 const { Model, Sequelize } = _sequelize;
 
-export default class user_address extends Model {
+export default class product_item extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
       {
         id: {
           autoIncrement: true,
-          type: DataTypes.BIGINT(20),
+          type: DataTypes.BIGINT,
           allowNull: false,
           primaryKey: true,
         },
         name: {
-          type: DataTypes.STRING(20),
+          type: DataTypes.STRING(255),
           allowNull: false,
         },
-        address1: {
-          type: DataTypes.STRING(50),
+        price: {
+          type: DataTypes.INTEGER,
           allowNull: false,
         },
-        address2: {
-          type: DataTypes.STRING(50),
+        stuck: {
+          type: DataTypes.INTEGER,
           allowNull: false,
         },
-        postcode: {
-          type: DataTypes.CHAR(5),
-          allowNull: false,
+        img_url: {
+          type: DataTypes.TEXT,
+          allowNull: true,
         },
       },
-      { sequelize, tableName: "user_address", timestamps: true, indexes: [] }
+      { sequelize, tableName: "product_item", timestamps: true, indexes: [] }
     );
   }
 }

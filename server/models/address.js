@@ -1,7 +1,7 @@
 import _sequelize from "sequelize";
 const { Model, Sequelize } = _sequelize;
 
-export default class user_address extends Model {
+export default class address extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
       {
@@ -28,7 +28,7 @@ export default class user_address extends Model {
           allowNull: false,
         },
       },
-      { sequelize, tableName: "user_address", timestamps: true, indexes: [] }
+      { sequelize, tableName: "address", timestamps: true, indexes: [] }
     );
   }
 }

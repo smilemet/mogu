@@ -1,34 +1,38 @@
 import _sequelize from "sequelize";
 const { Model, Sequelize } = _sequelize;
 
-export default class user_address extends Model {
+export default class deposit extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
       {
         id: {
           autoIncrement: true,
-          type: DataTypes.BIGINT(20),
+          type: DataTypes.BIGINT,
           allowNull: false,
           primaryKey: true,
         },
-        name: {
+        bank: {
+          type: DataTypes.STRING(10),
+          allowNull: false,
+        },
+        holder: {
           type: DataTypes.STRING(20),
           allowNull: false,
         },
-        address1: {
-          type: DataTypes.STRING(50),
+        accountno: {
+          type: DataTypes.STRING(20),
           allowNull: false,
         },
-        address2: {
-          type: DataTypes.STRING(50),
+        deposit_date: {
+          type: DataTypes.DATE,
           allowNull: false,
         },
-        postcode: {
-          type: DataTypes.CHAR(5),
+        deposit_time: {
+          type: DataTypes.DATE,
           allowNull: false,
         },
       },
-      { sequelize, tableName: "user_address", timestamps: true, indexes: [] }
+      { sequelize, tableName: "deposit", timestamps: true, indexes: [] }
     );
   }
 }
