@@ -23,6 +23,7 @@
 *.env
 
 Test.js
+**/_files/
 
 yarn.lock
 

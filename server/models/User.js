@@ -12,7 +12,7 @@ export default class User extends Model {
           primaryKey: true,
         },
         email: {
-          type: DataTypes.STRING(50),
+          type: DataTypes.STRING(45),
           allowNull: false,
           unique: true,
         },
@@ -21,11 +21,28 @@ export default class User extends Model {
           allowNull: false,
         },
         nickname: {
-          type: DataTypes.STRING(255),
+          type: DataTypes.STRING(20),
+          allowNull: false,
+        },
+        user_icon: {
+          type: DataTypes.STRING(2083),
+          allowNull: false,
+          defaultValue: "기본 아이콘 url",
+        },
+        status: {
+          type: DataTypes.CHAR(1),
+          allowNull: false,
+        },
+        report: {
+          type: DataTypes.TINYINT(30),
+          allowNull: false,
+        },
+        auth: {
+          type: DataTypes.BOOLEAN,
           allowNull: false,
         },
       },
-      { tableName: "User", timestamps: true, indexes: [] }
+      { sequelize, tableName: "User", timestamps: true, indexes: [] }
     );
   }
 }

@@ -1,10 +1,14 @@
-import setDotenv from "../util/setDotenv.js";
+import dotenv from "dotenv";
+import path from "path";
+
+const __dirname = path.resolve();
+dotenv.config({ path: path.join(__dirname, "../config.env") });
 
 const config = {
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  host: process.env.localhost,
+  username: process.env.DATABASE_USERNAME,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_SCHEMA,
+  host: process.env.DATABASE_HOST,
   dialect: "mysql",
 };
 
