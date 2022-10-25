@@ -2,7 +2,6 @@
 
 # dependencies
 **/node_modules/
-**/build/
 /.pnp
 .pnp.js
 
@@ -10,7 +9,7 @@
 /coverage
 
 # production
-/build
+**/build/
 
 # misc
 .DS_Store
@@ -22,6 +21,9 @@
 .env.production.local
 .env.production
 *.env
+
+server/migrations/
+server/seeders/
 
 Test.js
 **/_files/

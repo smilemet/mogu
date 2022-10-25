@@ -1,10 +1,11 @@
-/**
- * @Description : 파일, 폴더 처리 유틸리티 함수
- * 경로를 순차적으로 타고 들어가면서 중간 디렉토리를 모두 생성한다.
- */
 import fs from "fs";
 import { join } from "path";
 
+/**
+ * @param target       타겟 디렉토리
+ * @param permission   권한설정(숫자)
+ * @description        파일, 폴더 처리 유틸리티 함수 (경로생성)
+ */
 const mkdirs = (target, permission = "0755") => {
   if (target === undefined || target === null) return;
 
