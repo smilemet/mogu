@@ -25,18 +25,18 @@ export default class user extends Model {
           allowNull: false,
         },
         user_icon: {
-          type: DataTypes.STRING(2083),
+          type: DataTypes.TEXT,
           allowNull: true,
-          defaultValue: "기본 아이콘 url",
         },
         status: {
-          type: DataTypes.STRING(10),
+          type: DataTypes.BOOLEAN,
           allowNull: false,
-          defaultValue: "ACTIVE",
+          defaultValue: 0,
         },
         report: {
           type: DataTypes.TINYINT(30),
           allowNull: false,
+          defaultValue: 0,
         },
         auth: {
           type: DataTypes.BOOLEAN,

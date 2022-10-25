@@ -23,7 +23,7 @@ export default class rate extends Model {
           type: DataTypes.TINYINT,
           allowNull: true,
         },
-        content: {
+        comment: {
           type: DataTypes.TEXT,
           allowNull: true,
         },

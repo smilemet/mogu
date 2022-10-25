@@ -15,7 +15,7 @@ export default class comment extends Model {
           type: DataTypes.TEXT,
           allowNull: false,
         },
-        hidden: {
+        secret: {
           type: DataTypes.BOOLEAN,
           allowNull: false,
           defaultValue: 0,

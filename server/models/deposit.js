@@ -23,10 +23,6 @@ export default class deposit extends Model {
           type: DataTypes.STRING(20),
           allowNull: false,
         },
-        deposit_date: {
-          type: DataTypes.DATE,
-          allowNull: false,
-        },
         deposit_time: {
           type: DataTypes.DATE,
           allowNull: false,

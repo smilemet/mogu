@@ -26,15 +26,16 @@ export default class seek extends Model {
         view_count: {
           type: DataTypes.INTEGER,
           allowNull: false,
+          defaultValue: 0,
         },
         img_url: {
           type: DataTypes.TEXT,
           allowNull: true,
         },
         status: {
-          type: DataTypes.STRING(10),
+          type: DataTypes.BOOLEAN,
           allowNull: false,
-          defaultValue: "ACTIVE",
+          defaultValue: 0,
         },
       },
       { sequelize, tableName: "seek", timestamps: true, indexes: [] }
