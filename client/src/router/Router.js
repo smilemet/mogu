@@ -27,6 +27,7 @@ import RecordSellCheck from "../pages/RecordSellCheck.js";
 
 import Order from "../pages/Order.js";
 import OrderSuccess from "../pages/OrderSuccess.js";
+import NotFound from "../pages/NotFound.js";
 
 const Router = () => {
   return (
@@ -58,6 +59,8 @@ const Router = () => {
           <Route path="/mypage/buy/id" element={<RecordBuyDetail />} />
           <Route path="/mypage/sell/id" element={<RecordSellDetail />} />
           <Route path="/mypage/sell/id/check" element={<RecordSellCheck />} />
+
+          <Route path="*" element={<NotFound />} />
         </Route>
 
         <Route path="/account/login" element={<Login />} />
