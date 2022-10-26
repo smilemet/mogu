@@ -1,7 +1,7 @@
 import _sequelize from "sequelize";
 const { Model, Sequelize } = _sequelize;
 
-export default class follow extends Model {
+export default class role extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
       {
@@ -11,8 +11,12 @@ export default class follow extends Model {
           allowNull: false,
           primaryKey: true,
         },
+        authority: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
+        },
       },
-      { sequelize, tableName: "follow", timestamps: true, updatedAt: false, indexes: [] }
+      { sequelize, tableName: "role", timestamps: false, indexes: [] }
     );
   }
 }

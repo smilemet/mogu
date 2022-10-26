@@ -49,7 +49,12 @@ export default class user extends Model {
           defaultValue: 0,
         },
       },
-      { sequelize, tableName: "user", timestamps: true, indexes: [] }
+      {
+        sequelize,
+        tableName: "user",
+        timestamps: true,
+        indexes: [],
+      }
     );
   }
 }

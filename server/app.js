@@ -70,18 +70,14 @@ app.use((req, res, next) => {
   next();
 });
 
-// sequelize
-//   .sync({ force: false }) //true면 서버 실행마다 테이블 재생성
-//   .then(() => {
-//     console.log("데이터베이스 연결 성공!!");
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   });
-
-app.get("/", (req, res) => {
-  res.json("Hello world!");
-});
+sequelize
+  .sync({ force: true }) //true면 서버 실행마다 테이블 재생성
+  .then(() => {
+    console.log("데이터베이스 연결 성공!!");
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 // 에러 핸들링
 app.use((err, req, res, next) => {
@@ -94,6 +90,10 @@ app.use((err, req, res, next) => {
 
 app.use((req, res, next) => {
   res.status(404).json("Not Found");
+});
+
+app.get("/", (req, res) => {
+  res.json("Hello world!");
 });
 
 /** 서버 가동 */

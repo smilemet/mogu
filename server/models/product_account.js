@@ -1,7 +1,7 @@
 import _sequelize from "sequelize";
 const { Model, Sequelize } = _sequelize;
 
-export default class product_item extends Model {
+export default class product_account extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
       {
@@ -11,24 +11,20 @@ export default class product_item extends Model {
           allowNull: false,
           primaryKey: true,
         },
-        name: {
-          type: DataTypes.STRING(255),
+        bank: {
+          type: DataTypes.STRING(10),
           allowNull: false,
         },
-        price: {
-          type: DataTypes.INTEGER,
+        holder: {
+          type: DataTypes.STRING(20),
           allowNull: false,
         },
-        stuck: {
-          type: DataTypes.INTEGER,
+        accountno: {
+          type: DataTypes.STRING(20),
           allowNull: false,
-        },
-        img_url: {
-          type: DataTypes.TEXT,
-          allowNull: true,
         },
       },
-      { sequelize, tableName: "product_item", timestamps: true, indexes: [] }
+      { sequelize, tableName: "product_account", timestamps: false, indexes: [] }
     );
   }
 }

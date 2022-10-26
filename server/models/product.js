@@ -7,7 +7,7 @@ export default class product extends Model {
       {
         id: {
           autoIncrement: true,
-          type: DataTypes.BIGINT,
+          type: DataTypes.BIGINT(20),
           allowNull: false,
           primaryKey: true,
         },
@@ -40,6 +40,10 @@ export default class product extends Model {
           allowNull: true,
         },
         view_count: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        },
+        favorite_count: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },

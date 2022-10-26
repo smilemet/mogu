@@ -7,7 +7,7 @@ export default class deposit extends Model {
       {
         id: {
           autoIncrement: true,
-          type: DataTypes.BIGINT,
+          type: DataTypes.BIGINT(20),
           allowNull: false,
           primaryKey: true,
         },

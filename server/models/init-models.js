@@ -4,10 +4,14 @@ const DataTypes = _sequelize.DataTypes;
 import _user from "./user.js";
 import _user_address from "./user_address.js";
 import _user_account from "./user_account.js";
+import _user_role from "./user_role.js";
+import _role from "./role.js";
 import _follow from "./follow.js";
 import _product from "./product.js";
 import _product_img from "./product_img.js";
 import _product_item from "./product_item.js";
+import _product_qna from "./product_qna.js";
+import _product_account from "./product_account.js";
 import _seek from "./seek.js";
 import _favorite from "./favorite.js";
 import _want from "./want.js";
@@ -23,10 +27,14 @@ const initModel = (sequelize) => {
   const user = _user.init(sequelize, DataTypes);
   const user_address = _user_address.init(sequelize, DataTypes);
   const user_account = _user_account.init(sequelize, DataTypes);
+  const user_role = _user_role.init(sequelize, DataTypes);
+  const role = _role.init(sequelize, DataTypes);
   const follow = _follow.init(sequelize, DataTypes);
   const product = _product.init(sequelize, DataTypes);
   const product_img = _product_img.init(sequelize, DataTypes);
   const product_item = _product_item.init(sequelize, DataTypes);
+  const product_qna = _product_qna.init(sequelize, DataTypes);
+  const product_account = _product_account.init(sequelize, DataTypes);
   const seek = _seek.init(sequelize, DataTypes);
   const favorite = _favorite.init(sequelize, DataTypes);
   const want = _want.init(sequelize, DataTypes);
@@ -44,10 +52,16 @@ const initModel = (sequelize) => {
   user_account.belongsTo(user, { as: "user", foreignKey: "user_id" });
   user.hasMany(user_account, { as: "user_account", foreignKey: "user_id" });
 
+  user.belongsToMany(role, { through: user_role, foreignKey: "user_id" });
+  role.belongsToMany(user, { through: user_role, foreignKey: "role_id" });
+
   follow.belongsTo(user, { as: "follower", foreignKey: "follower_id" });
   user.hasMany(follow, { as: "follow_follower", foreignKey: "follower_id" });
   follow.belongsTo(user, { as: "followee", foreignKey: "followee_id" });
   user.hasMany(follow, { as: "follow_followee", foreignKey: "followee_id" });
+
+  user.belongsToMany(product, { through: favorite, foreignKey: "user_id" });
+  product.belongsToMany(user, { through: favorite, foreignKey: "product_id" });
 
   product.belongsTo(user, { as: "writer", foreignKey: "user_id" });
   user.hasMany(product, { as: "product", foreignKey: "user_id" });
@@ -60,20 +74,19 @@ const initModel = (sequelize) => {
   product_item.belongsTo(product, { as: "product", foreignKey: "product_id" });
   product.hasMany(product_item, { as: "product_item", foreignKey: "product_id" });
 
+  product_qna.belongsTo(product, { as: "product", foreignKey: "product_id" });
+  product.hasMany(product_qna, { as: "product_qna", foreignKey: "product_id" });
+
+  product_account.belongsTo(product, { as: "product", foreignKey: "product_id" });
+  product.hasMany(product_account, { as: "product_account", foreignKey: "product_id" });
+
+  user.belongsToMany(seek, { through: want, foreignKey: "user_id" });
+  seek.belongsToMany(user, { through: want, foreignKey: "seek_id" });
+
   seek.belongsTo(user, { as: "writer", foreignKey: "user_id" });
   user.hasMany(seek, { as: "seek", foreignKey: "user_id" });
   seek.belongsTo(category, { as: "category", foreignKey: "category_id" });
   category.hasMany(seek, { as: "seek", foreignKey: "category_id" });
-
-  favorite.belongsTo(user, { as: "user", foreignKey: "user_id" });
-  user.hasMany(favorite, { as: "favorite", foreignKey: "user_id" });
-  favorite.belongsTo(product, { as: "product", foreignKey: "product_id" });
-  product.hasMany(favorite, { as: "favorite", foreignKey: "product_id" });
-
-  want.belongsTo(user, { as: "user", foreignKey: "user_id" });
-  user.hasMany(want, { as: "want", foreignKey: "user_id" });
-  want.belongsTo(seek, { as: "seek", foreignKey: "seek_id" });
-  seek.hasMany(want, { as: "want", foreignKey: "seek_id" });
 
   comment.belongsTo(user, { as: "user", foreignKey: "user_id" });
   user.hasMany(comment, { as: "comment", foreignKey: "user_id" });
