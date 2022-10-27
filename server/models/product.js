@@ -48,9 +48,9 @@ export default class product extends Model {
           allowNull: false,
         },
         status: {
-          type: DataTypes.STRING(10),
+          type: DataTypes.BOOLEAN,
           allowNull: false,
-          defaultValue: "ACTIVE",
+          defaultValue: 0,
         },
       },
       { sequelize, tableName: "product", timestamps: true, indexes: [] }

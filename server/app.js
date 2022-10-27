@@ -71,7 +71,7 @@ app.use((req, res, next) => {
 });
 
 sequelize
-  .sync({ force: true }) //true면 서버 실행마다 테이블 재생성
+  .sync({ force: false }) //true면 서버 실행마다 테이블 재생성
   .then(() => {
     console.log("데이터베이스 연결 성공!!");
   })

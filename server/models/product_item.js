@@ -19,6 +19,11 @@ export default class product_item extends Model {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
+        limit: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          defaultValue: 0,
+        },
         stuck: {
           type: DataTypes.INTEGER,
           allowNull: false,
