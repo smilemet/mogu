@@ -1,11 +1,15 @@
 import jwt from "jsonwebtoken";
 
-import dotenv from "dotenv";
-import path from "path";
+/**
+ * JWT 유효성을 검사하고, 완료되면 유저 정보를 디코딩한다.
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const authMiddleware = (req, res, next) => {
+  const token = req.query.token || req.headers["x-access-token"];
 
-const __dirname = path.resolve();
-dotenv.config({ path: path.join(__dirname, "../config.env") });
-
-const secret = process.env.SECRET;
-
-const authMiddleware = (req, res, next) => {};
+  if (!token) {
+    return res.status(401);
+  }
+};

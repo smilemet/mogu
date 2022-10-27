@@ -1,10 +1,9 @@
 import multer from "multer";
 
 import dotenv from "dotenv";
-import path from "path";
+import { join, resolve } from "path";
 
-const __dirname = path.resolve();
-dotenv.config({ path: path.join(__dirname, "../config.env") });
+dotenv.config({ path: join(resolve(), "../config.env") });
 
 // 클라이언트에서 넘길 때 헤더에 multipart/form-data 명시!
 const uploadImage = multer({

@@ -10,10 +10,9 @@ import logger from "./utils/LogHelper.js";
 import BadRequestException from "./utils/BadRequestException.js";
 
 import dotenv from "dotenv";
-import path from "path";
+import { join, resolve } from "path";
 
-const __dirname = path.resolve();
-dotenv.config({ path: path.join(__dirname, "../config.env") });
+dotenv.config({ path: join(resolve(), "../config.env") });
 
 const app = express();
 
