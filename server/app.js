@@ -8,6 +8,7 @@ import { sequelize } from "./models/index.js";
 import { myip, urlFormat } from "./utils/UtilHelper.js";
 import logger from "./utils/LogHelper.js";
 import BadRequestException from "./utils/BadRequestException.js";
+import api from "./api/index.js";
 
 import dotenv from "dotenv";
 import { join, resolve } from "path";
@@ -87,12 +88,15 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.use((req, res, next) => {
-  res.status(404).json("Not Found");
-});
-
 app.get("/", (req, res) => {
   res.json("Hello world!");
+});
+
+app.use("/api", api);
+
+/** 예외처리 */
+app.use((req, res, next) => {
+  res.status(404).json("Not Found");
 });
 
 /** 서버 가동 */

@@ -8,7 +8,7 @@ import _user_role from "./user_role.js";
 import _role from "./role.js";
 import _follow from "./follow.js";
 import _product from "./product.js";
-import _product_img from "./product_img.js";
+import _product_image from "./product_image.js";
 import _product_item from "./product_item.js";
 import _product_qna from "./product_qna.js";
 import _product_account from "./product_account.js";
@@ -31,7 +31,7 @@ const initModel = (sequelize) => {
   const role = _role.init(sequelize, DataTypes);
   const follow = _follow.init(sequelize, DataTypes);
   const product = _product.init(sequelize, DataTypes);
-  const product_img = _product_img.init(sequelize, DataTypes);
+  const product_image = _product_image.init(sequelize, DataTypes);
   const product_item = _product_item.init(sequelize, DataTypes);
   const product_qna = _product_qna.init(sequelize, DataTypes);
   const product_account = _product_account.init(sequelize, DataTypes);
@@ -68,8 +68,8 @@ const initModel = (sequelize) => {
   product.belongsTo(category, { as: "category", foreignKey: "category_id" });
   category.hasMany(product, { as: "product", foreignKey: "category_id" });
 
-  product_img.belongsTo(product, { as: "product", foreignKey: "product_id" });
-  product.hasMany(product_img, { as: "product_img", foreignKey: "product_id" });
+  product_image.belongsTo(product, { as: "product", foreignKey: "product_id" });
+  product.hasMany(product_image, { as: "product_image", foreignKey: "product_id" });
 
   product_item.belongsTo(product, { as: "product", foreignKey: "product_id" });
   product.hasMany(product_item, { as: "product_item", foreignKey: "product_id" });
@@ -122,7 +122,7 @@ const initModel = (sequelize) => {
     user_account,
     follow,
     product,
-    product_img,
+    product_image,
     product_item,
     seek,
     favorite,

@@ -11,7 +11,19 @@ export default class product_img extends Model {
           allowNull: false,
           primaryKey: true,
         },
-        img_url: {
+        path: {
+          type: DataTypes.TEXT,
+          allowNull: false,
+        },
+        name: {
+          type: DataTypes.TEXT,
+          allowNull: false,
+        },
+        type: {
+          type: DataTypes.TEXT,
+          allowNull: false,
+        },
+        size: {
           type: DataTypes.TEXT,
           allowNull: false,
         },

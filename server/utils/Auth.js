@@ -23,6 +23,8 @@ const generateToken = (user) => {
   });
 };
 
+const generateTokenP = promisify(generateToken);
+
 /**
  * 리프레쉬 토큰 발급 (비동기)
  * @param {object} payload
@@ -37,7 +39,6 @@ const generateRefreshToken = (user) => {
   );
 };
 
-const generateTokenP = promisify(generateToken);
 const generateRefreshTokenP = promisify(generateRefreshToken);
 
 export { generateTokenP, generateRefreshTokenP };
