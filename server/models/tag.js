@@ -1,7 +1,6 @@
 import _sequelize from "sequelize";
 const { Model, Sequelize } = _sequelize;
 
-// 관계설정해야함
 export default class tag extends Model {
   static init(sequelize, DataTypes) {
     return super.init(

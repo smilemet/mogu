@@ -43,11 +43,6 @@ export default class user extends Model {
           allowNull: false,
           defaultValue: 0,
         },
-        manager: {
-          type: DataTypes.BOOLEAN,
-          allowNull: false,
-          defaultValue: 0,
-        },
       },
       {
         sequelize,

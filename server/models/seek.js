@@ -19,10 +19,6 @@ export default class seek extends Model {
           type: DataTypes.TEXT,
           allowNull: false,
         },
-        tag_array: {
-          type: DataTypes.STRING(255),
-          allowNull: true,
-        },
         view_count: {
           type: DataTypes.INTEGER,
           allowNull: false,

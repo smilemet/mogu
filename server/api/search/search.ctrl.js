@@ -9,7 +9,7 @@ const { product, product_img, seek, user } = db;
  *
  */
 export const getSearchResult = async (req, res) => {
-  let result = "hello";
+  let result = null;
 
   try {
     const size = parseInt(req.query.size) || 30;

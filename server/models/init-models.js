@@ -16,6 +16,9 @@ import _seek from "./seek.js";
 import _favorite from "./favorite.js";
 import _want from "./want.js";
 import _category from "./category.js";
+import _tag from "./tag.js";
+import _product_tag from "./product_tag.js";
+import _seek_tag from "./seek_tag.js";
 import _comment from "./comment.js";
 import _rate from "./rate.js";
 import _order from "./order.js";
@@ -39,6 +42,9 @@ const initModel = (sequelize) => {
   const favorite = _favorite.init(sequelize, DataTypes);
   const want = _want.init(sequelize, DataTypes);
   const category = _category.init(sequelize, DataTypes);
+  const tag = _tag.init(sequelize, DataTypes);
+  const product_tag = _product_tag.init(sequelize, DataTypes);
+  const seek_tag = _seek_tag.init(sequelize, DataTypes);
   const comment = _comment.init(sequelize, DataTypes);
   const rate = _rate.init(sequelize, DataTypes);
   const order = _order.init(sequelize, DataTypes);
@@ -67,6 +73,8 @@ const initModel = (sequelize) => {
   user.hasMany(product, { as: "product", foreignKey: "user_id" });
   product.belongsTo(category, { as: "category", foreignKey: "category_id" });
   category.hasMany(product, { as: "product", foreignKey: "category_id" });
+  product.belongsTo(tag, { as: "tag", foreignKey: "tag_id" });
+  tag.hasMany(product, { as: "product", foreignKey: "tag_id" });
 
   product_image.belongsTo(product, { as: "product", foreignKey: "product_id" });
   product.hasMany(product_image, { as: "product_image", foreignKey: "product_id" });
@@ -80,6 +88,9 @@ const initModel = (sequelize) => {
   product_account.belongsTo(product, { as: "product", foreignKey: "product_id" });
   product.hasMany(product_account, { as: "product_account", foreignKey: "product_id" });
 
+  tag.belongsToMany(product, { through: product_tag, foreignKey: "tag_id" });
+  product.belongsToMany(tag, { through: product_tag, foreignKey: "product_id" });
+
   user.belongsToMany(seek, { through: want, foreignKey: "user_id" });
   seek.belongsToMany(user, { through: want, foreignKey: "seek_id" });
 
@@ -87,6 +98,11 @@ const initModel = (sequelize) => {
   user.hasMany(seek, { as: "seek", foreignKey: "user_id" });
   seek.belongsTo(category, { as: "category", foreignKey: "category_id" });
   category.hasMany(seek, { as: "seek", foreignKey: "category_id" });
+  seek.belongsTo(tag, { as: "tag", foreignKey: "tag_id" });
+  tag.hasMany(seek, { as: "seek", foreignKey: "tag_id" });
+
+  tag.belongsToMany(seek, { through: seek_tag, foreignKey: "tag_id" });
+  seek.belongsToMany(tag, { through: seek_tag, foreignKey: "seek_id" });
 
   comment.belongsTo(user, { as: "user", foreignKey: "user_id" });
   user.hasMany(comment, { as: "comment", foreignKey: "user_id" });
@@ -128,6 +144,7 @@ const initModel = (sequelize) => {
     favorite,
     want,
     category,
+    tag,
     comment,
     rate,
     order,
