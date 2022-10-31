@@ -21,7 +21,7 @@ export const getSearchResult = async (req, res) => {
       result = await product.findAll({
         where: {
           title: {
-            [Op.substring]: req.query.query,
+            [Op.substring]: req.query?.query,
           },
         },
         limit: size,

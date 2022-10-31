@@ -4,19 +4,23 @@ import { BrowserRouter } from "react-router-dom";
 
 import App from "./App.js";
 import GlobalStyles from "./GlobalStyles.js";
+import store from "./store.js";
 
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import Meta from "./Meta.js";
+import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <GlobalStyles />
-    <Meta />
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Provider store={store}>
+      <GlobalStyles />
+      <Meta />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 

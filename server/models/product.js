@@ -35,17 +35,15 @@ export default class product extends Model {
           type: DataTypes.DATE,
           allowNull: false,
         },
-        tag_array: {
-          type: DataTypes.STRING(255),
-          allowNull: true,
-        },
         view_count: {
           type: DataTypes.INTEGER,
           allowNull: false,
+          defaultValue: 0,
         },
         favorite_count: {
           type: DataTypes.INTEGER,
           allowNull: false,
+          defaultValue: 0,
         },
         status: {
           type: DataTypes.BOOLEAN,

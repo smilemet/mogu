@@ -10,6 +10,8 @@ import search from "./search/index.js";
 import seek from "./seek/index.js";
 import user from "./user/index.js";
 
+import test from "./test/index.js";
+
 const api = express.Router();
 
 api.get("/", (req, res) => {
@@ -25,5 +27,7 @@ api.use("/product", product);
 api.use("/search", search);
 api.use("/seek", seek);
 api.use("/user", user);
+
+api.use("/test", test);
 
 export default api;

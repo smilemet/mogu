@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import styled from "styled-components";
 
@@ -9,53 +10,9 @@ import ProductItem from "../components/ProductItem.js";
 import SeekItem from "../components/SeekItem.js";
 import SideNav from "../components/SideNav";
 
-const MainContainer = styled.main`
-  margin-top: 3.7rem;
-
-  .section-title {
-    text-align: center;
-    background-color: ${(props) => props.theme.ivory};
-
-    img {
-      max-width: 100%;
-    }
-  }
-
-  .section-main {
-    padding: 2.2rem 0;
-
-    .categories {
-      margin-bottom: 2.5rem;
-
-      li {
-        margin-right: 2rem;
-        font-size: 1rem;
-        font-weight: bold;
-      }
-    }
-
-    .posts {
-      margin-bottom: 2.5rem;
-      padding: 1rem 0;
-
-      h2 {
-        margin-bottom: 1rem;
-        font-size: 1rem;
-        font-weight: bold;
-      }
-    }
-  }
-
-  @media ${(props) => props.theme.desktop} {
-    .posts ul {
-      li:last-of-type {
-        display: none;
-      }
-    }
-  }
-`;
-
 const Main = () => {
+  const category = useSelector((state) => state.category);
+
   return (
     <MainContainer>
       <section className="section-title">
@@ -68,15 +25,13 @@ const Main = () => {
             <SideNav />
 
             <ul className="categories flex-box">
-              {Array(6)
-                .fill(true)
-                .map((v) => {
-                  return (
-                    <li>
-                      <Link to="/">#카테고리명</Link>
-                    </li>
-                  );
-                })}
+              {category.data?.map((v) => {
+                return (
+                  <li>
+                    <Link to="/">{`#${v}`}</Link>
+                  </li>
+                );
+              })}
             </ul>
 
             <div className="posts">
@@ -137,5 +92,51 @@ const Main = () => {
     </MainContainer>
   );
 };
+
+const MainContainer = styled.main`
+  margin-top: 3.7rem;
+
+  .section-title {
+    text-align: center;
+    background-color: ${(props) => props.theme.ivory};
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .section-main {
+    padding: 2.2rem 0;
+
+    .categories {
+      margin-bottom: 2.5rem;
+
+      li {
+        margin-right: 2rem;
+        font-size: 1rem;
+        font-weight: bold;
+      }
+    }
+
+    .posts {
+      margin-bottom: 2.5rem;
+      padding: 1rem 0;
+
+      h2 {
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        font-weight: bold;
+      }
+    }
+  }
+
+  @media ${(props) => props.theme.desktop} {
+    .posts ul {
+      li:last-of-type {
+        display: none;
+      }
+    }
+  }
+`;
 
 export default Main;

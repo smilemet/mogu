@@ -14,9 +14,16 @@ export default class category extends Model {
         name: {
           type: DataTypes.STRING(10),
           allowNull: false,
+          unique: true,
         },
       },
-      { sequelize, tableName: "category", timestamps: true, updatedAt: false, indexes: [] }
+      {
+        sequelize,
+        tableName: "category",
+        timestamps: true,
+        updatedAt: false,
+        indexes: [],
+      }
     );
   }
 }

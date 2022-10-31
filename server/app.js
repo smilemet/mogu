@@ -35,7 +35,7 @@ app.use(
   cors({
     origin: [process.env.LOCAL, process.env.CLIENT_URL],
     credentials: true,
-    // exposedHeaders : ['total-count']
+    exposedHeaders: ["total-count"],
   })
 );
 
@@ -70,14 +70,14 @@ app.use((req, res, next) => {
   next();
 });
 
-sequelize
-  .sync({ force: false }) //true면 서버 실행마다 테이블 재생성
-  .then(() => {
-    console.log("데이터베이스 연결 성공!!");
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+// sequelize
+//   .sync({ force: true }) //true면 서버 실행마다 테이블 재생성
+//   .then(() => {
+//     console.log("데이터베이스 연결 성공!!");
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//   });
 
 // 에러 핸들링
 app.use((err, req, res, next) => {

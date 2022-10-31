@@ -14,6 +14,7 @@ export default class role extends Model {
         authority: {
           type: DataTypes.STRING(255),
           allowNull: false,
+          unique: true,
         },
       },
       { sequelize, tableName: "role", timestamps: false, indexes: [] }
