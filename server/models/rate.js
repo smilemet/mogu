@@ -23,6 +23,10 @@ export default class rate extends Model {
           type: DataTypes.TINYINT,
           allowNull: true,
         },
+        total: {
+          type: DataTypes.FLOAT,
+          allowNull: true,
+        },
         comment: {
           type: DataTypes.TEXT,
           allowNull: true,

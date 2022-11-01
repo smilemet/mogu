@@ -1,8 +1,10 @@
 import express from "express";
-import { getProduct } from "./product.ctrl.js";
+import { getProducts, getProduct } from "./product.ctrl.js";
 
 const router = express.Router();
 
-router.get("/", getProduct);
+router.get("/", getProducts);
+
+router.get("/:id", getProduct);
 
 export default router;

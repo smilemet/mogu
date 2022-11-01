@@ -1,77 +1,104 @@
 import { db, sequelize } from "../../models/index.js";
 
-const { product, tag, category } = db;
+const { product, product_image, product_item, product_qna, tag, category, user, rate, order } = db;
+
+// literal query
+const ratedAvg = `(SELECT AVG(total) FROM rate WHERE receiver_id=writer.id)`;
+const ratedCount = `(SELECT COUNT(*) FROM rate WHERE receiver_id=writer.id)`;
+const orderCount = `(SELECT COUNT(*) FROM \`order\` WHERE product_id=product.id)`;
 
 /**
  * 공구모아요 게시글 가져오기
- * GET /api/product
+ * @method GET /api/product
  */
-export const getProduct = async (req, res) => {
+export const getProducts = async (req, res) => {
+  const size = parseInt(req.query.size) || 30;
+  const page = parseInt(req.query.page) || 1;
+  const { sort, category: _category, status } = req.query;
+
   let result = null;
+  let where = {};
+
+  let order;
+
+  if (sort === "views") {
+    order = sequelize.literal(`view_count DESC`);
+  } else if (sort === "ordered") {
+    order = sequelize.literal(`order_count DESC`);
+  } else {
+    order = sequelize.literal(`createdAt DESC`);
+  }
 
   try {
-    const size = parseInt(req.query.size) || 30;
-    const page = parseInt(req.query.page) || 1;
-    const order = req.query.order || ["createdAt", "DESC"];
-    const categoryName = req.query.category || null;
-
-    // 특정 카테고리 게시글 가져오기
-    if (categoryName) {
-      const categoryId = await category.findOne({
-        where: {
-          name: categoryName,
-        },
-      });
-
-      result = await product.findAll({
-        where: {
-          category_id: categoryId.id,
-        },
-        order: [order],
-        limit: size,
-        offset: size * (page - 1),
-      });
-    }
-    // 전체 게시글 가져오기
-    else {
-      result = await product.findAll({
-        order: [order],
-        limit: size,
-        offset: size * (page - 1),
-      });
+    if (_category) {
+      const categoryId = await category.findOne({ where: { name: _category } });
+      where = { ...where, category_id: categoryId.id }; // 카테고리 조건 추가
     }
 
-    // 결과 되돌리기 전에 href 등 추가속성 붙여줘야 함
+    if (status) {
+      where = { ...where, status: status }; // 상태 조건 추가
+    }
+
+    result = await product.findAll({
+      where,
+      attributes: {
+        exclude: ["user_id", "tag_id", "category_id"],
+        include: [[sequelize.literal(orderCount), "order_count"]],
+      },
+      include: [
+        {
+          model: product_image,
+          as: "images",
+          attributes: ["url"],
+          where: { order: 1 },
+          required: false,
+        },
+        {
+          model: user,
+          as: "writer",
+          attributes: [
+            "id",
+            "nickname",
+            "user_icon",
+            [sequelize.literal(ratedAvg), "rated_score"],
+            [sequelize.literal(ratedCount), "rated_count"],
+          ],
+        },
+        { model: category, as: "category", attributes: ["name"] },
+        { model: tag, as: "tags", attributes: ["name"], through: { attributes: [] } },
+      ],
+      order: [order],
+      limit: size,
+      offset: size * (page - 1),
+    });
+
     res.send(result);
   } catch (err) {
-    console.error(err);
+    res.json({
+      status: "error",
+      massage: `${err}`,
+    });
   }
 };
 
 /**
  * 공구모아요 새 게시글 추가하기
- * POST /api/product
+ * @method POST /api/product
  */
 export const addProduct = async (req, res) => {
-  let result = null;
   const newProduct = req.body;
+  const tagList = newProduct.tagList;
+  const qnaList = newProduct.qnaList;
 
-  // 새 태그가 기존 데이터와 중복되는지 1억만개 중에서 검색하기
-
-  // 새 태그를 map으로 돌기
-  // 해당 태그가 기존에 존재하는지 검색하기
-  // 검색결과 없으면 새 태그 추가하기
-
-  newProduct.newTaglist.map((item) => {
-    try {
-      // let check = await tag.findOne({ where: { name: item } });
-    } catch (err) {
-      console.error(err);
-    }
-  });
+  // qna 추가
+  // 판매상품 정보 추가
+  // 입금정보
 
   try {
-    result = await product.create({
+    tagList.forEach((tag_name) => findOrCreateTag(tag_name)); // 새 태그 추가
+
+    // product 테이블에 데이터 추가하기
+    const newpost = await product.create({
       title: newProduct.title,
       content: newProduct.content,
       process: newProduct.process,
@@ -85,10 +112,100 @@ export const addProduct = async (req, res) => {
       tag_id: newProduct.tag_id,
     });
 
-    res.json({
+    qnaList.forEach((qnaSet) => addQna(qnaSet, newpost.id)); // 새 qna 추가
+
+    await res.json({
       massage: "ok",
     });
   } catch (err) {
-    console.error(err);
+    res.json({
+      status: "error",
+      massage: `${err}`,
+    });
+  }
+};
+
+/**
+ * 공구모아요 게시글 (1개) 가져오기
+ * @method GET /api/product/{id}
+ */
+export const getProduct = async (req, res) => {
+  const { id } = req.params;
+
+  let result = null;
+
+  try {
+    result = await product.findOne({
+      where: { id },
+      attributes: {
+        exclude: ["user_id", "tag_id", "category_id"],
+        include: [[sequelize.literal(orderCount), "order_count"]],
+      },
+      include: [
+        {
+          model: product_image,
+          as: "images",
+          attributes: ["url"],
+          order: ["order"],
+          required: false,
+        },
+        {
+          model: user,
+          as: "writer",
+          attributes: [
+            "id",
+            "nickname",
+            "user_icon",
+            [sequelize.literal(ratedAvg), "rated_score"],
+            [sequelize.literal(ratedCount), "rated_count"],
+          ],
+        },
+        { model: category, as: "category", attributes: ["name"] },
+        { model: tag, as: "tags", attributes: ["name"], through: { attributes: [] } },
+      ],
+    });
+
+    res.send(result);
+  } catch (err) {
+    res.json({
+      status: "error",
+      massage: `${err}`,
+    });
+  }
+};
+
+/**
+ * 태그 테이블에서 아이템을 검색하고 없으면 새 아이템으로 추가
+ * @param {string} tag_name 태그명
+ */
+const findOrCreateTag = async (tag_name) => {
+  try {
+    await tag.findOrCreate({
+      where: { name: tag_name },
+    });
+  } catch (err) {
+    res.json({
+      status: "error",
+      massage: `${err}`,
+    });
+  }
+};
+
+/**
+ * qna 테이블에 새 데이터 추가
+ * @param {object} qnaSet 질답묶음
+ * @param {number} product_id 게시글 id
+ */
+const addQna = async (qnaSet, product_id) => {
+  try {
+    await qna.create({
+      question: qnaSet.question,
+      answer: qnaSet.answer,
+    });
+  } catch (err) {
+    res.json({
+      status: "error",
+      massage: `${err}`,
+    });
   }
 };

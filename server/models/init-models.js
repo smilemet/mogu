@@ -77,7 +77,7 @@ const initModel = (sequelize) => {
   tag.hasMany(product, { as: "product", foreignKey: "tag_id" });
 
   product_image.belongsTo(product, { as: "product", foreignKey: "product_id" });
-  product.hasMany(product_image, { as: "product_image", foreignKey: "product_id" });
+  product.hasMany(product_image, { as: "images", foreignKey: "product_id" });
 
   product_item.belongsTo(product, { as: "product", foreignKey: "product_id" });
   product.hasMany(product_item, { as: "product_item", foreignKey: "product_id" });
@@ -88,8 +88,8 @@ const initModel = (sequelize) => {
   product_account.belongsTo(product, { as: "product", foreignKey: "product_id" });
   product.hasMany(product_account, { as: "product_account", foreignKey: "product_id" });
 
-  tag.belongsToMany(product, { through: product_tag, foreignKey: "tag_id" });
-  product.belongsToMany(tag, { through: product_tag, foreignKey: "product_id" });
+  tag.belongsToMany(product, { as: "products", through: product_tag, foreignKey: "tag_id" });
+  product.belongsToMany(tag, { as: "tags", through: product_tag, foreignKey: "product_id" });
 
   user.belongsToMany(seek, { through: want, foreignKey: "user_id" });
   seek.belongsToMany(user, { through: want, foreignKey: "seek_id" });
@@ -110,9 +110,9 @@ const initModel = (sequelize) => {
   product.hasMany(comment, { as: "comment", foreignKey: "product_id" });
 
   rate.belongsTo(user, { as: "sender", foreignKey: "sender_id" });
-  user.hasMany(rate, { as: "rate_send", foreignKey: "sender_id" });
+  user.hasMany(rate, { as: "rating", foreignKey: "sender_id" });
   rate.belongsTo(user, { as: "receiver", foreignKey: "receiver_id" });
-  user.hasMany(rate, { as: "rate_receive", foreignKey: "receiver_id" });
+  user.hasMany(rate, { as: "rated", foreignKey: "receiver_id" });
   rate.belongsTo(order, { as: "order", foreignKey: "order_id" });
   order.hasMany(rate, { as: "rate", foreignKey: "order_id" });
 
@@ -120,6 +120,8 @@ const initModel = (sequelize) => {
   user.hasMany(order, { as: "order_sell", foreignKey: "seller_id" });
   order.belongsTo(user, { as: "buyer", foreignKey: "buyer_id" });
   user.hasMany(order, { as: "order_buy", foreignKey: "buyer_id" });
+  order.belongsTo(product, { as: "product", foreignKey: "product_id" });
+  product.hasMany(order, { as: "ordered", foreignKey: "product_id" });
 
   order_item.belongsTo(order, { as: "order", foreignKey: "order_id" });
   order.hasMany(order_item, { as: "order_item", foreignKey: "order_id" });
@@ -133,14 +135,20 @@ const initModel = (sequelize) => {
   order.hasMany(address, { as: "address", foreignKey: "order_id" });
 
   return {
+    role,
     user,
     user_address,
     user_account,
+    user_role,
     follow,
     product,
     product_image,
     product_item,
+    product_qna,
+    product_tag,
+    product_account,
     seek,
+    seek_tag,
     favorite,
     want,
     category,
