@@ -40,11 +40,6 @@ export default class product extends Model {
           allowNull: false,
           defaultValue: 0,
         },
-        favorite_count: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-          defaultValue: 0,
-        },
         status: {
           type: DataTypes.BOOLEAN,
           allowNull: false,

@@ -24,7 +24,7 @@ export default class seek extends Model {
           allowNull: false,
           defaultValue: 0,
         },
-        img_url: {
+        thumbnail: {
           type: DataTypes.TEXT,
           allowNull: true,
         },
