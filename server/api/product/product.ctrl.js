@@ -81,7 +81,7 @@ export const getProducts = async (req, res) => {
     res.send(result);
   } catch (err) {
     res.json({
-      status: "error",
+      status: "error : getProducts",
       massage: `${err}`,
     });
   }
@@ -121,11 +121,11 @@ export const addProduct = async (req, res) => {
     qnaList.forEach((qnaSet) => addQna(qnaSet, newpost.id)); // 새 qna 추가
 
     await res.json({
-      massage: "ok",
+      success: "true",
     });
   } catch (err) {
     res.json({
-      status: "error",
+      success: "false",
       massage: `${err}`,
     });
   }
@@ -174,7 +174,7 @@ export const getProduct = async (req, res) => {
     res.send(result);
   } catch (err) {
     res.json({
-      status: "error",
+      success: "false",
       massage: `${err}`,
     });
   }
@@ -191,7 +191,7 @@ const findOrCreateTag = async (tag_name) => {
     });
   } catch (err) {
     res.json({
-      status: "error",
+      success: "false",
       massage: `${err}`,
     });
   }
@@ -210,7 +210,7 @@ const addQna = async (qnaSet, product_id) => {
     });
   } catch (err) {
     res.json({
-      status: "error",
+      success: "false",
       massage: `${err}`,
     });
   }

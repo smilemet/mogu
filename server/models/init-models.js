@@ -1,30 +1,34 @@
 import _sequelize from "sequelize";
 const DataTypes = _sequelize.DataTypes;
 
-import _user from "./user.js";
-import _user_address from "./user_address.js";
-import _user_account from "./user_account.js";
-import _user_role from "./user_role.js";
-import _role from "./role.js";
-import _follow from "./follow.js";
-import _product from "./product.js";
-import _product_image from "./product_image.js";
-import _product_item from "./product_item.js";
-import _product_qna from "./product_qna.js";
-import _product_account from "./product_account.js";
-import _seek from "./seek.js";
-import _favorite from "./favorite.js";
-import _want from "./want.js";
-import _category from "./category.js";
-import _tag from "./tag.js";
-import _product_tag from "./product_tag.js";
-import _seek_tag from "./seek_tag.js";
-import _comment from "./comment.js";
-import _rate from "./rate.js";
-import _order from "./order.js";
-import _order_item from "./order_item.js";
-import _deposit from "./deposit.js";
-import _address from "./address.js";
+import _user from "./user/user.js";
+import _user_address from "./user/user_address.js";
+import _user_account from "./user/user_account.js";
+import _user_role from "./user/user_role.js";
+import _role from "./user/role.js";
+import _follow from "./user/follow.js";
+import _rate from "./user/rate.js";
+
+import _product from "./product/product.js";
+import _product_image from "./product/product_image.js";
+import _product_item from "./product/product_item.js";
+import _product_qna from "./product/product_qna.js";
+import _product_account from "./product/product_account.js";
+import _product_tag from "./product/product_tag.js";
+import _favorite from "./product/favorite.js";
+import _comment from "./product/comment.js";
+
+import _seek from "./seek/seek.js";
+import _seek_tag from "./seek/seek_tag.js";
+import _want from "./seek/want.js";
+
+import _category from "./category/category.js";
+import _tag from "./category/tag.js";
+
+import _order from "./order/order.js";
+import _order_item from "./order/order_item.js";
+import _deposit from "./order/deposit.js";
+import _address from "./order/address.js";
 
 const initModel = (sequelize) => {
   const user = _user.init(sequelize, DataTypes);
@@ -33,20 +37,24 @@ const initModel = (sequelize) => {
   const user_role = _user_role.init(sequelize, DataTypes);
   const role = _role.init(sequelize, DataTypes);
   const follow = _follow.init(sequelize, DataTypes);
+  const rate = _rate.init(sequelize, DataTypes);
+
   const product = _product.init(sequelize, DataTypes);
   const product_image = _product_image.init(sequelize, DataTypes);
   const product_item = _product_item.init(sequelize, DataTypes);
   const product_qna = _product_qna.init(sequelize, DataTypes);
   const product_account = _product_account.init(sequelize, DataTypes);
-  const seek = _seek.init(sequelize, DataTypes);
+  const product_tag = _product_tag.init(sequelize, DataTypes);
   const favorite = _favorite.init(sequelize, DataTypes);
+  const comment = _comment.init(sequelize, DataTypes);
+
+  const seek = _seek.init(sequelize, DataTypes);
+  const seek_tag = _seek_tag.init(sequelize, DataTypes);
   const want = _want.init(sequelize, DataTypes);
+
   const category = _category.init(sequelize, DataTypes);
   const tag = _tag.init(sequelize, DataTypes);
-  const product_tag = _product_tag.init(sequelize, DataTypes);
-  const seek_tag = _seek_tag.init(sequelize, DataTypes);
-  const comment = _comment.init(sequelize, DataTypes);
-  const rate = _rate.init(sequelize, DataTypes);
+
   const order = _order.init(sequelize, DataTypes);
   const order_item = _order_item.init(sequelize, DataTypes);
   const deposit = _deposit.init(sequelize, DataTypes);
@@ -65,6 +73,13 @@ const initModel = (sequelize) => {
   user.hasMany(follow, { as: "follow_follower", foreignKey: "follower_id" });
   follow.belongsTo(user, { as: "followee", foreignKey: "followee_id" });
   user.hasMany(follow, { as: "follow_followee", foreignKey: "followee_id" });
+
+  rate.belongsTo(user, { as: "sender", foreignKey: "sender_id" });
+  user.hasMany(rate, { as: "rating", foreignKey: "sender_id" });
+  rate.belongsTo(user, { as: "receiver", foreignKey: "receiver_id" });
+  user.hasMany(rate, { as: "rated", foreignKey: "receiver_id" });
+  rate.belongsTo(order, { as: "order", foreignKey: "order_id" });
+  order.hasMany(rate, { as: "rate", foreignKey: "order_id" });
 
   user.belongsToMany(product, { through: favorite, foreignKey: "user_id" });
   product.belongsToMany(user, { through: favorite, foreignKey: "product_id" });
@@ -108,13 +123,6 @@ const initModel = (sequelize) => {
   user.hasMany(comment, { as: "comment", foreignKey: "user_id" });
   comment.belongsTo(product, { as: "product", foreignKey: "product_id" });
   product.hasMany(comment, { as: "comment", foreignKey: "product_id" });
-
-  rate.belongsTo(user, { as: "sender", foreignKey: "sender_id" });
-  user.hasMany(rate, { as: "rating", foreignKey: "sender_id" });
-  rate.belongsTo(user, { as: "receiver", foreignKey: "receiver_id" });
-  user.hasMany(rate, { as: "rated", foreignKey: "receiver_id" });
-  rate.belongsTo(order, { as: "order", foreignKey: "order_id" });
-  order.hasMany(rate, { as: "rate", foreignKey: "order_id" });
 
   order.belongsTo(user, { as: "seller", foreignKey: "seller_id" });
   user.hasMany(order, { as: "order_sell", foreignKey: "seller_id" });

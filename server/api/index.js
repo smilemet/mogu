@@ -3,7 +3,7 @@ import express from "express";
 import auth from "./auth/index.js";
 import category from "./category/index.js";
 import host from "./host/index.js";
-import image from "./image/index.js";
+import upload from "./upload/index.js";
 import order from "./order/index.js";
 import product from "./product/index.js";
 import search from "./search/index.js";
@@ -21,7 +21,7 @@ api.get("/", (req, res) => {
 api.use("/auth", auth);
 api.use("/category", category);
 api.use("/host", host);
-api.use("/image", image);
+api.use("/upload", upload);
 api.use("/order", order);
 api.use("/product", product);
 api.use("/search", search);
