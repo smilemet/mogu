@@ -8,6 +8,7 @@ import _user_role from "./user/user_role.js";
 import _role from "./user/role.js";
 import _follow from "./user/follow.js";
 import _rate from "./user/rate.js";
+import _report from "./user/report.js";
 
 import _product from "./product/product.js";
 import _product_image from "./product/product_image.js";
@@ -38,6 +39,7 @@ const initModel = (sequelize) => {
   const role = _role.init(sequelize, DataTypes);
   const follow = _follow.init(sequelize, DataTypes);
   const rate = _rate.init(sequelize, DataTypes);
+  const report = _report.init(sequelize, DataTypes);
 
   const product = _product.init(sequelize, DataTypes);
   const product_image = _product_image.init(sequelize, DataTypes);
@@ -81,7 +83,10 @@ const initModel = (sequelize) => {
   rate.belongsTo(order, { as: "order", foreignKey: "order_id" });
   order.hasMany(rate, { as: "rate", foreignKey: "order_id" });
 
-  user.belongsToMany(product, { through: favorite, foreignKey: "user_id" });
+  user.belongsToMany(user, { through: report, as: "reporter", foreignKey: "reporter_id" }); // 두 열이 모두 같은 값일 수 없도록 제약하는 방법 찾아보기
+  user.belongsToMany(user, { through: report, as: "reportee", foreignKey: "reportee_id" });
+
+  user.belongsToMany(report, { through: favorite, foreignKey: "user_id" });
   product.belongsToMany(user, { through: favorite, foreignKey: "product_id" });
 
   product.belongsTo(user, { as: "writer", foreignKey: "user_id" });
@@ -149,6 +154,7 @@ const initModel = (sequelize) => {
     user_account,
     user_role,
     follow,
+    report,
     product,
     product_image,
     product_item,

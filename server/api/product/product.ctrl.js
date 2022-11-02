@@ -81,7 +81,7 @@ export const getProducts = async (req, res) => {
     res.send(result);
   } catch (err) {
     res.json({
-      status: "error : getProducts",
+      success: "false",
       massage: `${err}`,
     });
   }

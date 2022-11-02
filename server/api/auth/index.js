@@ -1,22 +1,17 @@
 import express from "express";
-import {} from "./auth.ctrl.js";
+import { login, tokenVerify, tokenRefresh } from "./auth.ctrl.js";
+import authMiddleware from "../../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.json("auth");
-});
+router.get("/", (req, res) => res.json("auth"));
 
-router.get("/login", (req, res) => {
-  res.json("hello");
-});
+router.post("/login", login);
 
-router.get("/join");
+router.use("/verify", authMiddleware);
+router.get("/verify", tokenVerify);
 
-router.get("/login");
-
-router.get("/login");
-
-// router.post("login", login);
+router.use("/refresh", authMiddleware);
+router.get("/refresh", tokenRefresh);
 
 export default router;

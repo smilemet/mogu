@@ -33,15 +33,18 @@ export default class user extends Model {
           allowNull: false,
           defaultValue: 0,
         },
-        report: {
-          type: DataTypes.TINYINT(30),
-          allowNull: false,
-          defaultValue: 0,
-        },
         auth: {
           type: DataTypes.BOOLEAN,
           allowNull: false,
           defaultValue: 0,
+        },
+        platform: {
+          type: DataTypes.STRING(20),
+          allowNull: false,
+        },
+        refresh_token: {
+          type: DataTypes.TEXT,
+          allowNull: true,
         },
       },
       {
