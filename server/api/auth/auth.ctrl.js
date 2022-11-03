@@ -1,13 +1,17 @@
+import ejs from "ejs";
+import crypto from "crypto";
+import nodemailer from "nodemailer";
+
 import { db } from "../../models/index.js";
 import { generateToken, generateRefreshToken } from "../../utils/Jwt.js";
-
-import { createSalt, createHashedPassword } from "../../utils/Encrypto.js";
+import RegexHelper from "../../utils/RegexHelper.js";
 
 import dotenv from "dotenv";
 import { join, resolve } from "path";
 
-const { user } = db;
 dotenv.config({ path: join(resolve(), "../config.env") });
+
+const { user, verify_email } = db;
 
 /**
  * email, password로 API에 로그인하고 token 리턴하기
@@ -47,7 +51,7 @@ export const login = async (req, res) => {
 };
 
 /**
- * 토큰의 유효성 검사하기
+ * token의 유효성 검사 후 token의 주인인 user 리턴하기
  * header에 x-access-token 필요
  * @method GET /api/auth/verify
  */
@@ -97,10 +101,101 @@ export const tokenRefresh = async (req, res) => {
 };
 
 /**
- * token을 받아 token의 주인인 user 리턴하기
- * header에 x-access-token 필요
- * @method GET /api/auth/me
+ * 이메일로 인증된 url을 전송한다.
  */
-export const me = async (req, res) => {
-  const { user_id, password } = req.body;
+export const sendEmail = async (req, res) => {
+  const { email, type } = req.body;
+  let statusNo;
+
+  try {
+    RegexHelper.value(email, "이메일을 입력하세요.");
+    RegexHelper.email(email, "이메일 형식이 맞지 않습니다.");
+
+    const length = parseInt(process.env.MAIL_HASH_LENGTH);
+    const url = process.env.CLIENT_URL;
+
+    // 인증용 해시코드 생성
+    const code = crypto.randomBytes(length).toString("base64");
+
+    let sendedEmail = await verify_email.findOne({ where: { email } });
+
+    // 재전송여부 판별
+    if (sendedEmail) {
+      await verify_email.update(
+        {
+          code: code,
+          expiresIn: new Date() + 1 * 60 * 60 * 1000, // 유효시간 1시간
+        },
+        { where: { email } }
+      );
+    } else {
+      await verify_email.create({
+        email: email,
+        code: code,
+        expiresIn: new Date() + 1 * 60 * 60 * 1000,
+      });
+    }
+
+    let emailTemplate;
+    let emailTitle;
+
+    // 메일 템플릿 준비
+    if (type === "register") {
+      ejs.renderFile(
+        "./api/auth/register.ejs",
+        { email: email, url: `${url}/account/join/${code}` },
+        (err, data) => {
+          if (err) console.error(err);
+          emailTemplate = data;
+        }
+      );
+
+      console.log(emailTemplate);
+
+      emailTitle = "[모구] 회원가입 인증메일입니다.";
+    } else if (type === "reset") {
+      ejs.renderFile("./reset.ejs", { url: url }, (err, data) => {
+        if (err) console.error(err);
+        emailTemplate = data;
+      });
+
+      emailTitle = "[모구] 비밀번호를 재설정해주세요.";
+    } else {
+      statusNo = 500;
+      throw new Error("잘못된 접근입니다.");
+    }
+
+    let transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      secure: true,
+      auth: {
+        user: process.env.MAIL_CLIENT,
+        pass: process.env.MAIL_CLIENT_PW,
+      },
+    });
+
+    let mailOptions = {
+      from: "모구<mogu.manager@gmail.com>",
+      to: email,
+      subject: emailTitle,
+      html: emailTemplate,
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        statusNo = 500;
+        throw new Error("이메일 전송에 실패했습니다.");
+      }
+    });
+
+    res.json({
+      sucess: true,
+    });
+  } catch (err) {
+    res.status(statusNo).json({
+      sucess: false,
+      errror: err.message,
+    });
+  }
 };

@@ -31,7 +31,7 @@ const getUser = async((req, res) => {
  * @method POST /api/user/:id
  */
 const createUser = async((req, res) => {
-  const { user_id, password } = req.body;
+  const { email, password } = req.body;
 });
 
 /**

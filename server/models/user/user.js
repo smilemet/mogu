@@ -20,6 +20,10 @@ export default class user extends Model {
           type: DataTypes.STRING(255),
           allowNull: false,
         },
+        salt: {
+          type: DataTypes.TEXT,
+          allowNull: false,
+        },
         nickname: {
           type: DataTypes.STRING(20),
           allowNull: false,

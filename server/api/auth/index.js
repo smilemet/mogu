@@ -1,5 +1,5 @@
 import express from "express";
-import { login, tokenVerify, tokenRefresh } from "./auth.ctrl.js";
+import { login, tokenVerify, tokenRefresh, sendEmail } from "./auth.ctrl.js";
 import authMiddleware from "../../middlewares/authMiddleware.js";
 
 const router = express.Router();
@@ -13,5 +13,7 @@ router.get("/verify", tokenVerify);
 
 router.use("/refresh", authMiddleware);
 router.get("/refresh", tokenRefresh);
+
+router.post("/email/send", sendEmail);
 
 export default router;

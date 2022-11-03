@@ -19,7 +19,8 @@ const algorithm = process.env.PW_HASH_ALG;
  * @return 만들어진 소금 문자열
  */
 const createSalt = async () => {
-  return await randomBytesPromise(length);
+  const salt = await randomBytesPromise(length);
+  return salt.toString("base64");
 };
 
 /**
