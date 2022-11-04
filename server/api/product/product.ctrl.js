@@ -180,6 +180,8 @@ export const getProduct = async (req, res) => {
   }
 };
 
+export const getQna = async (req, res, next) => {};
+
 /**
  * 태그 테이블에서 아이템을 검색하고 없으면 새 아이템으로 추가
  * @param {string} tag_name 태그명

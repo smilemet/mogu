@@ -22,6 +22,7 @@ const authMiddleware = (req, res, next) => {
   try {
     jwt.verify(token, secret, (err, decoded) => {
       if (err) throw new Error("유효하지 않은 토큰입니다.");
+
       req.decoded = decoded;
       req.token = token;
       next();

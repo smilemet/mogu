@@ -32,19 +32,25 @@ export default class user extends Model {
           type: DataTypes.TEXT,
           allowNull: true,
         },
-        status: {
+        platform: {
+          type: DataTypes.STRING(20),
+          allowNull: false,
+        },
+        banned: {
           type: DataTypes.BOOLEAN,
           allowNull: false,
           defaultValue: 0,
         },
         auth: {
+          // 본인인증여부
           type: DataTypes.BOOLEAN,
           allowNull: false,
           defaultValue: 0,
         },
-        platform: {
-          type: DataTypes.STRING(20),
+        withdraw: {
+          type: DataTypes.BOOLEAN,
           allowNull: false,
+          defaultValue: 0,
         },
         refresh_token: {
           type: DataTypes.TEXT,
