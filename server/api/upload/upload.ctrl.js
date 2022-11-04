@@ -1,3 +1,5 @@
+import { existsSync, unlinkSync } from "fs";
+
 import { db } from "../../models/index.js";
 const { user } = db;
 
@@ -6,33 +8,30 @@ const { user } = db;
  * @method POST /api/upload/icon
  */
 export const uploadUserIcon = async (req, res, next) => {
-  // 이미지 업로드
-  // const { id } = req.body.id;
-  const id = 1;
+  const { id } = req.body;
 
   try {
-    // if (!id) throw new Error("아이디가 없습니다.");
+    if (!id) throw new Error("아이디가 없습니다.");
 
-    const { user_icon: prevImg } = await user.findOne({
+    const { user_icon: prevIcon } = await user.findOne({
       where: { id },
       attributes: ["user_icon"],
     });
 
-    // if (prevImg) {
-    //   const url =
-    // }
+    // 기존에 등록된 이미지 삭제
+    if (prevIcon) {
+      if (existsSync(prevIcon)) unlinkSync(prevIcon);
+    }
 
-    await user.update(
-      {
-        user_icon: req.file.path,
-      },
-      { where: { id } }
-    );
+    await user.update({ user_icon: req.file.path }, { where: { id } });
 
-    res.send(req.file.path);
+    res.json({
+      success: true,
+      path: req.file.path,
+    });
   } catch (err) {
     res.json({
-      status: "error : ",
+      status: 401,
       massage: `${err}`,
     });
   }

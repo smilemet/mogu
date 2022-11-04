@@ -35,7 +35,7 @@ export const generateRefreshToken = (user) => {
   const { email } = user;
 
   return new Promise((resolve, reject) => {
-    jwt.sign({ email }, secret, { expiresIn: "7h" }, (err, token) => {
+    jwt.sign({ email }, secret, { expiresIn: "7d" }, (err, token) => {
       if (err) reject(err);
       resolve(token);
     });

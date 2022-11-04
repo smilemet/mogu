@@ -29,6 +29,7 @@ server/seeders/
 Test.js
 **/test/
 **/_files/
+**/uploads
 
 yarn.lock
 

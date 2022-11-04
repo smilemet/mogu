@@ -60,7 +60,7 @@ export const tokenVerify = async (req, res, next) => {
 
   let signedUser = null;
   try {
-    signedUser = await user.findOne({ where: { email } });
+    signedUser = await user.findOne({ where: { id } });
   } catch (err) {
     next(err);
   }
