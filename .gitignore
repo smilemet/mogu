@@ -24,6 +24,7 @@
 
 server/migrations/
 server/seeders/
+**/.vscode/
 
 Test.js
 **/test/

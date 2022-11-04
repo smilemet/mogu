@@ -102,6 +102,7 @@ export const tokenRefresh = async (req, res) => {
 
 /**
  * 이메일로 인증된 url을 전송한다.
+ * @method POST /api/email/send
  */
 export const sendEmail = async (req, res) => {
   const { email, type } = req.body;
@@ -137,33 +138,28 @@ export const sendEmail = async (req, res) => {
     }
 
     let emailTemplate;
-    let emailTitle;
+    let emailTitle, emailContent;
 
     // 메일 템플릿 준비
     if (type === "register") {
-      ejs.renderFile(
-        "./api/auth/register.ejs",
-        { email: email, url: `${url}/account/join/${code}` },
-        (err, data) => {
-          if (err) console.error(err);
-          emailTemplate = data;
-        }
-      );
-
-      console.log(emailTemplate);
-
       emailTitle = "[모구] 회원가입 인증메일입니다.";
+      emailContent = "회원가입을 마쳐주세요!";
     } else if (type === "reset") {
-      ejs.renderFile("./reset.ejs", { url: url }, (err, data) => {
-        if (err) console.error(err);
-        emailTemplate = data;
-      });
-
       emailTitle = "[모구] 비밀번호를 재설정해주세요.";
+      emailContent = "비밀번호를 변경해주세요!";
     } else {
       statusNo = 500;
       throw new Error("잘못된 접근입니다.");
     }
+
+    ejs.renderFile(
+      "./api/auth/mail.ejs",
+      { content: emailContent, url: `${url}/join/${code}` },
+      (err, data) => {
+        if (err) console.error(err);
+        emailTemplate = data;
+      }
+    );
 
     let transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
