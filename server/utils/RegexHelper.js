@@ -1,4 +1,4 @@
-import BadRequestException from './BadRequestException.js';
+import BadRequestException from "./BadRequestException.js";
 
 class RegexHelper {
   /**
@@ -14,7 +14,7 @@ class RegexHelper {
       content === false ||
       content === undefined ||
       content === null ||
-      (typeof content === 'string' && content.trim().length === 0)
+      (typeof content === "string" && content.trim().length === 0)
     ) {
       throw new BadRequestException(msg);
     }
@@ -67,7 +67,7 @@ class RegexHelper {
 
     const nowYear = new Date().getFullYear();
 
-    if (content > nowYear || content < nowYear - 100 || typeof content !== 'number') {
+    if (content > nowYear || content < nowYear - 100 || typeof content !== "number") {
       throw new BadRequestException(msg, field);
     }
   }
@@ -79,7 +79,7 @@ class RegexHelper {
   gender(field, msg) {
     const content = field;
 
-    if (content !== 'F' && field !== 'M') {
+    if (content !== "F" && field !== "M") {
       throw new BadRequestException(msg, field);
     }
   }
@@ -110,7 +110,11 @@ class RegexHelper {
    * */
 
   password(field, msg) {
-    return this.field(field, msg, /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/);
+    return this.field(
+      field,
+      msg,
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/
+    );
   }
 
   /**
@@ -146,6 +150,14 @@ class RegexHelper {
   kor(field, msg) {
     return this.field(field, msg, /^[ㄱ-ㅎ가-힣]*$/);
   }
+  /**
+   * 한글, 영문으로만 이루어졌는지 검사하기 위해 field()를 간접적으로 호출한다.
+   * @param {string}  field  검사할 대상
+   * @param {string}  msg       표시할 메시지
+   */
+  engKor(field, msg) {
+    return this.field(field, msg, /^[ㄱ-ㅎ가-힣a-zA-z]*$/);
+  }
 
   /**
    * 영문과 숫자로 이루어졌는지 검사하기 위해 field()를 간접적으로 호출한다.
@@ -171,7 +183,11 @@ class RegexHelper {
    * @param {string}  msg       표시할 메시지
    */
   email(field, msg) {
-    return this.field(field, msg, /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[az]{2})?)$/i);
+    return this.field(
+      field,
+      msg,
+      /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[az]{2})?)$/i
+    );
   }
 
   /**
