@@ -12,11 +12,14 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [input, setInput] = useState({});
-  const [alertMsg, setAlertMsg] = useState("");
-
   const emailRef = useRef();
   const passwordRef = useRef();
+
+  const { data: loginResult } = useSelector((state) => state.auth);
+  console.log(loginResult);
+
+  const [input, setInput] = useState({});
+  const [alertMsg, setAlertMsg] = useState("");
 
   /** 로그인 */
   const onLogin = useCallback(
@@ -26,11 +29,12 @@ const Login = () => {
       const email = emailRef.current.value.trim();
       const password = passwordRef.current.value;
 
-      try {
-        const { payload } = await dispatch(setLogin({ email, password }));
-        const { data } = payload;
+      dispatch(setLogin({ email, password }));
 
-        if (!data.success) throw new Error(data.message);
+      console.log(loginResult);
+
+      try {
+        if (loginResult && !loginResult.success) throw new Error(loginResult.message);
 
         navigate("/");
       } catch (err) {
@@ -41,7 +45,7 @@ const Login = () => {
         });
       }
     },
-    [dispatch, navigate]
+    [dispatch, navigate, loginResult]
   );
 
   /** 입력값 확인 */
@@ -51,23 +55,25 @@ const Login = () => {
       let inputValue = e.currentTarget.value.trim();
 
       if (inputType === "email") {
+        if (input.email === inputValue) return;
         setInput({ ...input, email: inputValue });
 
-        if (!RegexHelperTF.value(inputValue))
-          return setAlertMsg({ ...alertMsg, email: "이메일을 입력해주세요." });
-        else setAlertMsg({ ...alertMsg, email: null });
+        RegexHelperTF.value(inputValue)
+          ? setAlertMsg({ ...alertMsg, email: null })
+          : setAlertMsg({ ...alertMsg, email: "이메일을 입력해주세요." });
 
-        if (!RegexHelperTF.email(inputValue))
-          return setAlertMsg({ ...alertMsg, email: "이메일을 확인해주세요." });
-        else setAlertMsg({ ...alertMsg, email: null });
+        RegexHelperTF.email(inputValue)
+          ? setAlertMsg({ ...alertMsg, email: null })
+          : setAlertMsg({ ...alertMsg, email: "이메일을 확인해주세요." });
       }
 
       if (inputType === "password") {
+        if (input.password === inputValue) return;
         setInput({ ...input, password: inputValue });
 
-        if (!RegexHelperTF.value(inputValue))
-          return setAlertMsg({ ...alertMsg, password: "비밀번호를 입력해주세요." });
-        else setAlertMsg({ ...alertMsg, password: null });
+        RegexHelperTF.value(inputValue)
+          ? setAlertMsg({ ...alertMsg, password: null })
+          : setAlertMsg({ ...alertMsg, password: "비밀번호를 입력해주세요." });
       }
     },
     [alertMsg, input]

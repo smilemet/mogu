@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true; // cors 설정
 
 axios.interceptors.request.use(
   (request) => {
-    request.headers["x-access-token"] = window.localStorage.getItem("moguAccessToken");
+    request.headers["x-access-token"] = window.localStorage.getItem("moguToken");
 
     return request;
   },

@@ -13,20 +13,22 @@ export const setLogin = createAsyncThunk(
     try {
       if (!payload) throw new Error("아이디와 비밀번호가 입력되지 않았습니다.");
 
-      result = await axios.post("/auth/login", {
+      const { data } = await axios.post("/auth/login", {
         email: payload.email,
         password: payload.password,
       });
 
-      if (result) {
+      if (data) {
         localStorage.setItem(
           "moguToken",
           JSON.stringify({
-            accessToken: result.data.accessToken,
-            refreshToken: result.data.refreshToken,
+            accessToken: data.accessToken,
+            refreshToken: data.refreshToken,
           })
         );
       }
+
+      result = data;
     } catch (err) {
       result = rejectWithValue(err.response);
     }
@@ -49,14 +51,14 @@ const AuthSlice = createSlice({
     },
     [setLogin.fulfilled]: (state, { payload }) => {
       return {
-        data: payload?.data,
+        data: payload,
         loading: false,
         error: null,
       };
     },
     [setLogin.rejected]: (state, { payload }) => {
       return {
-        data: payload?.data,
+        data: payload,
         loading: false,
         error: {
           code: payload?.status ? payload.status : 500,

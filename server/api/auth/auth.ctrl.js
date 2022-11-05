@@ -43,14 +43,14 @@ export const login = async (req, res) => {
     await user.update({ refresh_token: refreshToken }, { where: { id: signedUser.id } });
 
     res.json({
-      sucess: true,
+      success: true,
       accessToken,
       refreshToken,
     });
   } catch (err) {
     res.json({
       status: 403,
-      sucess: false,
+      success: false,
       message: err.message,
     });
   }
@@ -72,7 +72,7 @@ export const tokenVerify = async (req, res, next) => {
   }
 
   res.json({
-    sucess: true,
+    success: true,
     signedUser,
   });
 };
@@ -94,7 +94,7 @@ export const tokenRefresh = async (req, res) => {
       const accessToken = await generateToken(signedUser);
 
       res.json({
-        sucess: true,
+        success: true,
         accessToken,
       });
     } else {
@@ -102,7 +102,7 @@ export const tokenRefresh = async (req, res) => {
       throw new Error("유효하지 않은 토큰입니다.");
     }
   } catch (err) {
-    res.status(401).json({ sucess: false, message: err });
+    res.status(401).json({ success: false, message: err });
   }
 };
 
