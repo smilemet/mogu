@@ -26,10 +26,15 @@ const createSalt = async () => {
 /**
  * 패스워드를 암호화한다.
  * @param password  해시할 패스워드
+ * @param prevSalt  기존 소금이 있다면 첨부(로그인용)
  * @return          해시된 패스워드, 소금
  */
-const createHashedPassword = async (password) => {
-  const salt = await createSalt();
+const createHashedPassword = async (password, prevSalt = null) => {
+  let salt = null;
+
+  if (prevSalt) salt = prevSalt;
+  else salt = await createSalt();
+
   const key = await pbkdf2Promise(password, salt, iterations, keylen, algorithm);
   const hashedPassword = key.toString("base64");
 

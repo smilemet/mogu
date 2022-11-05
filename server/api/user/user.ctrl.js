@@ -152,7 +152,7 @@ export const updateUser = async (req, res) => {
         "비밀번호는 영문자, 특수문자 및 숫자가 포함된 8~16자로 입력해주세요."
       );
 
-      const { salt, hashedPassword } = await createHashedPassword(password);
+      const { hashedPassword, salt } = await createHashedPassword(password);
 
       await user.update({ password: hashedPassword, salt }, { where: { id } });
 

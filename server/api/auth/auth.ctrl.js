@@ -4,6 +4,7 @@ import nodemailer from "nodemailer";
 
 import { db } from "../../models/index.js";
 import { generateToken, generateRefreshToken } from "../../utils/Jwt.js";
+import { createHashedPassword } from "../../utils/Encrypto.js";
 import RegexHelper from "../../utils/RegexHelper.js";
 
 import dotenv from "dotenv";
@@ -24,12 +25,16 @@ export const login = async (req, res) => {
     let signedUser = null;
     signedUser = await user.findOne({ where: { email } });
 
-    if (
-      signedUser === null ||
-      signedUser.platform !== "local" ||
-      signedUser.password !== encrypt(password)
-    )
+    // 유저가 존재하지 않거나 소셜로그인 유저일 경우 에러 반환
+    if (signedUser === null || signedUser.platform !== "local")
       throw new Error("아이디와 비밀번호를 확인해주세요.");
+
+    // 비밀번호 체크
+    const { hashedPassword } = await createHashedPassword(password, signedUser.salt);
+
+    if (signedUser.password !== hashedPassword) {
+      throw new Error("아이디와 비밀번호를 확인해주세요.");
+    }
 
     // 로그인 성공
     const accessToken = await generateToken(signedUser);
@@ -43,9 +48,10 @@ export const login = async (req, res) => {
       refreshToken,
     });
   } catch (err) {
-    res.status(403).json({
+    res.json({
+      status: 403,
       sucess: false,
-      message: `${err}`,
+      message: err.message,
     });
   }
 };
@@ -106,7 +112,7 @@ export const tokenRefresh = async (req, res) => {
  */
 export const sendEmail = async (req, res) => {
   const { email, type } = req.body;
-  let statusNo;
+  let statusNo = 403;
 
   try {
     RegexHelper.value(email, "이메일을 입력하세요.");
@@ -189,7 +195,8 @@ export const sendEmail = async (req, res) => {
       sucess: true,
     });
   } catch (err) {
-    res.status(statusNo).json({
+    res.json({
+      status: statusNo,
       sucess: false,
       errror: err.message,
     });
