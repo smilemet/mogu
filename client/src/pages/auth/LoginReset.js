@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import titleImg from "../assets/img/title.png";
+import titleImg from "../../assets/img/title.png";
 
 const LoginResetContainer = styled.main`
   padding-top: 4rem;

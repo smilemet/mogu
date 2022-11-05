@@ -122,7 +122,8 @@ export const sendEmail = async (req, res) => {
     const url = process.env.CLIENT_URL;
 
     // 인증용 해시코드 생성
-    const code = crypto.randomBytes(length).toString("base64");
+    let code = crypto.randomBytes(length).toString("base64");
+    code = code.replace(/\//, "a"); // '/'문자가 섞일 경우 a로 대치
 
     let sendedEmail = await verify_email.findOne({ where: { email } });
 
@@ -131,7 +132,7 @@ export const sendEmail = async (req, res) => {
       await verify_email.update(
         {
           code: code,
-          expiresIn: new Date() + 1 * 60 * 60 * 1000, // 유효시간 1시간
+          expiresIn: new Date(Date.now() + 1 * 60 * 60 * 1000), // 유효시간 1시간
         },
         { where: { email } }
       );
@@ -139,7 +140,7 @@ export const sendEmail = async (req, res) => {
       await verify_email.create({
         email: email,
         code: code,
-        expiresIn: new Date() + 1 * 60 * 60 * 1000,
+        expiresIn: new Date(Date.now() + 1 * 60 * 60 * 1000),
       });
     }
 
@@ -154,13 +155,13 @@ export const sendEmail = async (req, res) => {
       emailTitle = "[모구] 비밀번호를 재설정해주세요.";
       emailContent = "비밀번호를 변경해주세요!";
     } else {
-      statusNo = 500;
+      statusNo = 404;
       throw new Error("잘못된 접근입니다.");
     }
 
     ejs.renderFile(
       "./api/auth/mail.ejs",
-      { content: emailContent, url: `${url}/join/${code}` },
+      { content: emailContent, url: `${url}/account/join/${code}` },
       (err, data) => {
         if (err) console.error(err);
         emailTemplate = data;
@@ -192,13 +193,50 @@ export const sendEmail = async (req, res) => {
     });
 
     res.json({
-      sucess: true,
+      success: true,
     });
   } catch (err) {
     res.json({
       status: statusNo,
-      sucess: false,
-      errror: err.message,
+      success: false,
+      error: err.message,
+    });
+  }
+};
+
+/**
+ * 인증 링크가 유효한지 확인하고 해당 email을 반환한다.
+ * @method GET /api/email/verify
+ */
+export const verifyEmail = async (req, res) => {
+  const code = req.params.code;
+  let statusNo = 404;
+
+  try {
+    const targetInfo = await verify_email.findOne({
+      where: { code },
+      attributes: ["email", "expiresIn"],
+    });
+
+    if (!targetInfo) throw new Error("잘못된 주소입니다.");
+
+    let now = Date.now();
+    let expireTime = targetInfo.expiresIn.getTime();
+
+    if (now > expireTime) {
+      statusNo = 403;
+      throw new Error("인증 시간이 만료되었습니다.");
+    }
+
+    res.json({
+      success: true,
+      email: targetInfo.email,
+    });
+  } catch (err) {
+    res.json({
+      status: statusNo,
+      success: false,
+      error: err.message,
     });
   }
 };

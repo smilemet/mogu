@@ -8,11 +8,11 @@ import Seek from "../pages/Seek.js";
 import ProductDetail from "../pages/ProductDetail.js";
 import SeekDetail from "../pages/SeekDetail.js";
 
-import Login from "../pages/Login.js";
-import LoginReset from "../pages/LoginReset.js";
-import LoginNewPw from "../pages/LoginNewPw.js";
-import Join from "../pages/Join.js";
-import JoinInfo from "../pages/JoinInfo.js";
+import Login from "../pages/auth/Login.js";
+import LoginReset from "../pages/auth/LoginReset.js";
+import LoginNewPw from "../pages/auth/LoginNewPw.js";
+import Join from "../pages/auth/Join.js";
+import JoinInfo from "../pages/auth/JoinInfo.js";
 
 import UserPage from "../pages/UserPage.js";
 import Favorite from "../pages/Favorite.js";
@@ -65,9 +65,9 @@ const Router = () => {
 
         <Route path="/account/login" element={<Login />} />
         <Route path="/account/password/reset" element={<LoginReset />} />
-        <Route path="/account/password/reset/token" element={<LoginNewPw />} />
+        <Route path="/account/password/reset/:token" element={<LoginNewPw />} />
         <Route path="/account/join" element={<Join />} />
-        <Route path="/account/join/token" element={<JoinInfo />} />
+        <Route path="/account/join/:code" element={<JoinInfo />} />
       </Routes>
     </>
   );

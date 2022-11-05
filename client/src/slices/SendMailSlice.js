@@ -2,31 +2,21 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../config/axios.js";
 
 /**
- * 로그인을 시도하고 성공 시 토큰을 발급하여 localStorage에 저장한다.
- * @param payload 아이디와 비밀번호
+ * 주어진 이메일로 인증 메일을 전송한다.
+ * @param payload 이메일 주소, 유형(회원가입 or 비밀번호 재설정)
  */
-export const setLogin = createAsyncThunk(
-  "AuthSlice/setLogin",
+export const sendMail = createAsyncThunk(
+  "SendMailSlice/sendMail",
   async (payload = null, { rejectWithValue }) => {
     let result = null;
 
     try {
-      if (!payload) throw new Error("아이디와 비밀번호가 입력되지 않았습니다.");
+      if (!payload) throw new Error("이메일 주소가 입력되지 않았습니다.");
 
-      result = await axios.post("/auth/login", {
+      result = await axios.post("/auth/email/send", {
         email: payload.email,
-        password: payload.password,
+        type: payload.type,
       });
-
-      if (result) {
-        localStorage.setItem(
-          "moguToken",
-          JSON.stringify({
-            accessToken: result.data.accessToken,
-            refreshToken: result.data.refreshToken,
-          })
-        );
-      }
     } catch (err) {
       result = rejectWithValue(err.response);
     }
@@ -35,8 +25,8 @@ export const setLogin = createAsyncThunk(
   }
 );
 
-const AuthSlice = createSlice({
-  name: "auth",
+const SendMailSlice = createSlice({
+  name: "mail",
   initialState: {
     data: null,
     loading: false,
@@ -44,17 +34,17 @@ const AuthSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    [setLogin.pending]: (state, { payload }) => {
+    [sendMail.pending]: (state, { payload }) => {
       return { state, loading: true };
     },
-    [setLogin.fulfilled]: (state, { payload }) => {
+    [sendMail.fulfilled]: (state, { payload }) => {
       return {
         data: payload?.data,
         loading: false,
         error: null,
       };
     },
-    [setLogin.rejected]: (state, { payload }) => {
+    [sendMail.rejected]: (state, { payload }) => {
       return {
         data: payload?.data,
         loading: false,
@@ -67,4 +57,4 @@ const AuthSlice = createSlice({
   },
 });
 
-export default AuthSlice.reducer;
+export default SendMailSlice.reducer;

@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import RegexHelperTF from "../utils/RegexHelperTF.js";
-import { setLogin } from "../slices/AuthSlice.js";
+import RegexHelperTF from "../../utils/RegexHelperTF.js";
+import { setLogin } from "../../slices/AuthSlice.js";
 
 import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -24,14 +23,14 @@ const Login = () => {
     async (e) => {
       e.preventDefault();
 
-      const email = emailRef.current.value;
+      const email = emailRef.current.value.trim();
       const password = passwordRef.current.value;
 
       try {
         const { payload } = await dispatch(setLogin({ email, password }));
         const { data } = payload;
 
-        if (data.status === 403) throw new Error(data.message);
+        if (!data.success) throw new Error(data.message);
 
         navigate("/");
       } catch (err) {
