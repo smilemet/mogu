@@ -6,6 +6,48 @@ import bookmarkFill from "../../assets/img/bookmark-fill.png";
 import fakeImg from "../../assets/img/fakeImg.png";
 import { Link } from "react-router-dom";
 
+const ListItem = (props) => {
+  console.log(props.tags);
+  return (
+    <ListItemContainer>
+      <img className="bookmark" src={bookmark} alt="즐겨찾기 하기" />
+      <Link to={props.url}>
+        <div className="thumbnail">
+          <img className="item-img" src={props.thumbnail} alt="" />
+        </div>
+        <div className="info flex-box">
+          <div className="user flex-box">
+            <img className="icon" src={fakeImg} alt="유저 아이콘" />
+            <span className="name">{props.name}</span>
+          </div>
+          <div className="mark">
+            <span>★</span>
+            <span>{props.join}</span>
+          </div>
+        </div>
+        <p className="title">{props.title}</p>
+        <div className="tags">
+          {props?.tags ? (
+            <>
+              <span className="category">{props.tags[0]}</span>
+              {props.tags[1] ? <span>{props.tags[1]}</span> : null}
+            </>
+          ) : null}
+        </div>
+      </Link>
+    </ListItemContainer>
+  );
+};
+
+ListItem.defaultProps = {
+  url: "/product/detail",
+  thumbnail: fakeImg,
+  name: "",
+  join: 0,
+  title: "",
+  category: [""],
+};
+
 const ListItemContainer = styled.li`
   width: 100%;
   position: relative;
@@ -34,13 +76,21 @@ const ListItemContainer = styled.li`
     color: ${(props) => props.theme.darkGray};
     font-size: ${(props) => props.theme.smallFont};
     align-items: center;
+    justify-content: space-between;
 
-    .icon {
-      ${(props) => props.theme.icon}
-    }
+    .user {
+      align-items: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
-    .name {
-      ${(props) => props.theme.textOverflow};
+      .icon {
+        ${(props) => props.theme.icon}
+      }
+
+      .name {
+        ${(props) => props.theme.textOverflow};
+      }
     }
 
     .mark {
@@ -59,7 +109,7 @@ const ListItemContainer = styled.li`
     ${(props) => props.theme.textOverflow};
   }
 
-  .category {
+  .tags {
     margin-top: 1.4rem;
 
     span {
@@ -69,43 +119,12 @@ const ListItemContainer = styled.li`
       font-size: ${(props) => props.theme.smallFont};
       border-radius: 0.3rem;
       background-color: ${(props) => props.theme.lightGray};
+
+      &.category {
+        background-color: ${(props) => props.theme.pointColorToneDown};
+      }
     }
   }
 `;
-
-const ListItem = (props) => {
-  return (
-    <ListItemContainer>
-      <img className="bookmark" src={bookmark} alt="즐겨찾기 하기" />
-      <Link to={props.url}>
-        <div className="thumbnail">
-          <img className="item-img" src={props.thumbnail} alt="" />
-        </div>
-        <div className="info flex-box">
-          <img className="icon" src={fakeImg} alt="유저 아이콘" />
-          <span className="name">{props.name}</span>
-          <div className="mark">
-            <span>★</span>
-            <span>{props.join}</span>
-          </div>
-        </div>
-        <p className="title">{props.title}</p>
-        <div className="category">
-          <span>{props.category[0]}</span>
-          {props.category[1] ? <span>{props.category[0]}</span> : null}
-        </div>
-      </Link>
-    </ListItemContainer>
-  );
-};
-
-ListItem.defaultProps = {
-  url: "/product/detail",
-  thumbnail: fakeImg,
-  name: "이름이름이름이름이름이름이름이름이름이름이름",
-  join: 0,
-  title: "타이틀타이틀타이틀타이틀타이틀타이틀타이틀타이틀",
-  category: ["카테고리", "카테고리", "카테고리", "카테고리"],
-};
 
 export default ListItem;

@@ -5,7 +5,11 @@ const URL = "/product";
 
 /**
  * 쿼리 조건에 맞는 공구모아요 게시글을 가져온다.
- * @param payload 쿼리 조건(size(d: 30), page(d: 1), sort, [category, status])
+ * @param payload size : 불러올 목록 수, 기본값 30
+ * @param payload page : 페이지네이션
+ * @param payload sort : views, favorite, ordered, 기본값 createdAt
+ * @param payload category : 카테고리 (선택)
+ * @param payload ongoing : 모집중인 게시글만 가져오기 T/F (선택)
  */
 export const getProductList = createAsyncThunk(
   "ProductSlice/getProductList",
@@ -13,9 +17,17 @@ export const getProductList = createAsyncThunk(
     let result = null;
 
     try {
-      result = await axios.get(URL);
+      const { data } = await axios.get(URL, {
+        params: {
+          size: payload.size,
+          page: payload.page,
+          sort: payload.sort,
+          category: payload.category,
+          ongoing: payload.ongoing,
+        },
+      });
 
-      console.log();
+      result = data;
     } catch (err) {
       result = rejectWithValue(err.response);
     }
@@ -25,7 +37,7 @@ export const getProductList = createAsyncThunk(
 );
 
 const ProductSlice = createSlice({
-  name: "",
+  name: "productList",
   initialState: {
     data: null,
     loading: false,
@@ -38,14 +50,14 @@ const ProductSlice = createSlice({
     },
     [getProductList.fulfilled]: (state, { payload }) => {
       return {
-        data: payload?.data,
+        data: payload,
         loading: false,
         error: null,
       };
     },
     [getProductList.rejected]: (state, { payload }) => {
       return {
-        data: payload?.data,
+        data: payload,
         loading: false,
         error: {
           code: payload?.status ? payload.status : 500,

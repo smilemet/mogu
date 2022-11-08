@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useInsertionEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components";
 
@@ -8,15 +8,24 @@ import notice1 from "../assets/img/notice.png";
 import GridList from "../components/GridList";
 import ProductItem from "../components/ProductItem.js";
 import SeekItem from "../components/SeekItem.js";
-import SideNav from "../components/SideNav";
+import SideNav from "../components/SideNav.js";
+
+import { getProductList1, getProductList2, getProductList3 } from "../slices/ProductsSlice.js";
 
 const Main = () => {
-  const category = useSelector((state) => state.category);
+  const dispatch = useDispatch();
 
-  const [populars, setPopulars] = useState();
-  const [recommends, setRecommends] = useState();
-  const [seeks, setSeeks] = useState();
-  const [news, setNews] = useState();
+  const category = useSelector((state) => state.category);
+  const { data: productLists } = useSelector((state) => state.productLists);
+
+  const templateArr = Array(6).fill(true);
+
+  /** 페이지 마운트 시 section별 게시글 로딩 */
+  useEffect(() => {
+    dispatch(getProductList1({ size: 6, sort: "views", ongoing: true }));
+    dispatch(getProductList2({ size: 6, sort: "createdAt", ongoing: true }));
+    dispatch(getProductList3({ size: 6, sort: "random", ongoing: true }));
+  }, [dispatch]);
 
   return (
     <MainContainer>
@@ -41,33 +50,25 @@ const Main = () => {
 
             <div className="posts">
               <h2>지금 인기 있는 공구</h2>
-              <GridList data={Array(6).fill(true)}>
-                <ProductItem
-                // url=""
-                // name="이름"
-                // join="숫자주세요"
-                // title="타이틀"
-                // category={["카테1", "카테2"]}
-                />
-              </GridList>
+              {productLists?.list1 ? (
+                <GridList data={productLists.list1} type="product"></GridList>
+              ) : (
+                <GridList data={templateArr}></GridList>
+              )}
             </div>
 
             <div className="posts ">
-              <h2>이런 공구는 어때요?</h2>
-              <GridList data={Array(6).fill(true)}>
-                <ProductItem
-                // url=""
-                // name="이름"
-                // join="숫자주세요"
-                // title="타이틀"
-                // category={["카테1", "카테2"]}
-                />
-              </GridList>
+              <h2>새로 등록된 공구</h2>
+              {productLists?.list2 ? (
+                <GridList data={productLists.list2} type="product"></GridList>
+              ) : (
+                <GridList data={templateArr}></GridList>
+              )}
             </div>
 
             <div className="posts ">
               <h2>총대 찾아요</h2>
-              <GridList data={Array(6).fill(true)}>
+              <GridList data={templateArr}>
                 <SeekItem
                 // url=""
                 // name="이름"
@@ -79,17 +80,12 @@ const Main = () => {
             </div>
 
             <div className="posts ">
-              <h2>새로 등록된 공구</h2>
-
-              <GridList data={Array(6).fill(true)}>
-                <ProductItem
-                // url=""
-                // name="이름"
-                // join="숫자주세요"
-                // title="타이틀"
-                // category={["카테1", "카테2"]}
-                />
-              </GridList>
+              <h2>이런 공구는 어때요?</h2>
+              {productLists?.list3 ? (
+                <GridList data={productLists.list3} type="product"></GridList>
+              ) : (
+                <GridList data={templateArr}></GridList>
+              )}
             </div>
           </div>
         </section>

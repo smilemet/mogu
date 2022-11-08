@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import ProductItem from "./ProductItem";
+import SeekItem from "./SeekItem";
 
 const GridListContainer = styled.ul`
   display: grid;
@@ -17,10 +19,20 @@ const GridListContainer = styled.ul`
 `;
 
 const GridList = ({ children, ...props }) => {
-  return (
+  return props.type === "product" ? (
     <GridListContainer>
       {props.data.map((v, i) => {
-        return <React.Fragment key={i}>{children}</React.Fragment>;
+        const tags = [v.category.name, v.tags[0]?.name, v.tags[1]?.name];
+
+        return (
+          <ProductItem url="" name={v.writer.nickname} join={v.favorite_count} title={v.title} tags={tags} />
+        );
+      })}
+    </GridListContainer>
+  ) : (
+    <GridListContainer>
+      {props.data.map((v, i) => {
+        return <SeekItem url="" name="이름" join="숫자주세요" title="타이틀" category={["카테1", "카테2"]} />;
       })}
     </GridListContainer>
   );

@@ -14,6 +14,7 @@ const orderCount = `(SELECT COUNT(*) FROM \`order\` WHERE product_id=product.id)
  * @method GET /api/product
  */
 export const getProducts = async (req, res) => {
+  console.log(req.query);
   const size = parseInt(req.query.size) || 30;
   const page = parseInt(req.query.page) || 1;
   const { sort, category: _category, ongoing } = req.query;
@@ -29,6 +30,8 @@ export const getProducts = async (req, res) => {
     order = sequelize.literal(`favorite_count DESC`); // 즐겨찾기수
   } else if (sort === "ordered") {
     order = sequelize.literal(`order_count DESC`); // 주문수
+  } else if (sort === "random") {
+    order = sequelize.literal(`rand()`); // 랜덤
   } else {
     order = sequelize.literal(`createdAt DESC`); // 최신순
   }
@@ -43,7 +46,7 @@ export const getProducts = async (req, res) => {
       where = {
         ...where,
         end_date: {
-          [Op.lte]: new Date("2022-10-02T08:00:22.000Z"),
+          [Op.lte]: new Date("2022-10-02T08:00:22.000Z"), // 마감되지 않은 글 검색 조건 추가
         },
       };
     }
@@ -51,7 +54,7 @@ export const getProducts = async (req, res) => {
     result = await product.findAll({
       where,
       attributes: {
-        exclude: ["user_id", "tag_id", "category_id"],
+        exclude: ["content", "user_id", "tag_id", "category_id"],
         include: [
           [sequelize.literal(orderCount), "order_count"],
           [sequelize.literal(favoriteCount), "favorite_count"],
