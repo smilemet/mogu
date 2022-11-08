@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../config/axios.js";
 
+const URL = "/auth/email/send";
+
 /**
  * 주어진 이메일로 인증 메일을 전송한다.
  * @param payload 이메일 주소, 유형(회원가입 or 비밀번호 재설정)
@@ -13,7 +15,7 @@ export const sendMail = createAsyncThunk(
     try {
       if (!payload) throw new Error("이메일 주소가 입력되지 않았습니다.");
 
-      result = await axios.post("/auth/email/send", {
+      result = await axios.post(URL, {
         email: payload.email,
         type: payload.type,
       });

@@ -1,8 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../config/axios";
 
-const URL = "http://localhost:3001/api/category";
+const URL = "/category";
 
+/**
+ * 카테고리명을 모두 불러온다.
+ * @param payload null
+ */
 export const getCategory = createAsyncThunk(
   "CategorySlice/getCategory",
   async (payload = null, { rejectWithValue }) => {
@@ -10,6 +14,7 @@ export const getCategory = createAsyncThunk(
 
     try {
       let { data } = await axios.get(URL);
+
       result = data.map((item) => {
         return item.name;
       });

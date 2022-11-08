@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -12,6 +12,11 @@ import SideNav from "../components/SideNav";
 
 const Main = () => {
   const category = useSelector((state) => state.category);
+
+  const [populars, setPopulars] = useState();
+  const [recommends, setRecommends] = useState();
+  const [seeks, setSeeks] = useState();
+  const [news, setNews] = useState();
 
   return (
     <MainContainer>
