@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import MyInfo from "../components/MyInfo.js";
-import OrderItem from "../components/OrderItem.js";
-import Selection2 from "../components/Selection2.js";
+import MyInfo from "../../components/MyInfo.js";
+import OrderItem from "../../components/OrderItem.js";
+import Selection2 from "../../components/Selection2.js";
 
 const RecordBuyDetailContainer = styled.div`
   padding-top: 6rem;

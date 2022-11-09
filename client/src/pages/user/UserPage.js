@@ -2,15 +2,15 @@ import React, { useCallback, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import GridList from "../components/GridList.js";
-import ProductItem from "../components/ProductItem.js";
-import AfterComment from "../components/AfterComment.js";
+import GridList from "../../components/GridList.js";
+import ProductItem from "../../components/ProductItem.js";
+import AfterComment from "../../components/AfterComment.js";
 
-import fakeImg from "../assets/img/fakeImg.png";
-import optionIcon from "../assets/img/option-icon.png";
-import moreArrow from "../assets/img/more-arrow.png";
-import MyInfo from "../components/MyInfo.js";
-import SeekItem from "../components/SeekItem.js";
+import fakeImg from "../../assets/img/fakeImg.png";
+import optionIcon from "../../assets/img/option-icon.png";
+import moreArrow from "../../assets/img/more-arrow.png";
+import MyInfo from "../../components/MyInfo.js";
+import SeekItem from "../../components/SeekItem.js";
 
 const UserPageContainer = styled.main`
   padding-top: 1rem;
@@ -206,13 +206,7 @@ const UserPage = () => {
 
           <section className="user-post">
             <nav className="flex-box">
-              <input
-                type="radio"
-                id="product-tab"
-                name="tab-item"
-                onClick={onChangeTab}
-                defaultChecked
-              />
+              <input type="radio" id="product-tab" name="tab-item" onClick={onChangeTab} defaultChecked />
               <label className="tab-item" htmlFor="product-tab">
                 공구모아요
               </label>

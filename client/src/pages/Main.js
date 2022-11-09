@@ -6,26 +6,31 @@ import styled from "styled-components";
 
 import notice1 from "../assets/img/notice.png";
 import GridList from "../components/GridList";
-import ProductItem from "../components/ProductItem.js";
-import SeekItem from "../components/SeekItem.js";
 import SideNav from "../components/SideNav.js";
 
-import { getProductList1, getProductList2, getProductList3 } from "../slices/ProductsSlice.js";
+import { getProductPopular, getProductNews, getProductRecommend } from "../slices/ProductsSlice.js";
+import { getSeekList } from "../slices/SeekSlice.js";
 
 const Main = () => {
   const dispatch = useDispatch();
 
   const category = useSelector((state) => state.category);
   const { data: productLists } = useSelector((state) => state.productLists);
+  const { data: seekList } = useSelector((state) => state.seekList);
 
   const templateArr = Array(6).fill(true);
 
   /** 페이지 마운트 시 section별 게시글 로딩 */
   useEffect(() => {
-    dispatch(getProductList1({ size: 6, sort: "views", ongoing: true }));
-    dispatch(getProductList2({ size: 6, sort: "createdAt", ongoing: true }));
-    dispatch(getProductList3({ size: 6, sort: "random", ongoing: true }));
+    dispatch(getProductPopular());
+    dispatch(getProductNews());
+    dispatch(getProductRecommend());
+    dispatch(getSeekList({ size: 6, page: 1, sort: "random", ongoing: true }));
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log(seekList);
+  }, [seekList]);
 
   return (
     <MainContainer>
@@ -50,41 +55,33 @@ const Main = () => {
 
             <div className="posts">
               <h2>지금 인기 있는 공구</h2>
-              {productLists?.list1 ? (
-                <GridList data={productLists.list1} type="product"></GridList>
+              {productLists?.popular ? (
+                <GridList data={productLists.popular} type="product" />
               ) : (
-                <GridList data={templateArr}></GridList>
+                <GridList data={templateArr} />
               )}
             </div>
 
             <div className="posts ">
               <h2>새로 등록된 공구</h2>
-              {productLists?.list2 ? (
-                <GridList data={productLists.list2} type="product"></GridList>
+              {productLists?.news ? (
+                <GridList data={productLists.news} type="product" />
               ) : (
-                <GridList data={templateArr}></GridList>
+                <GridList data={templateArr} />
               )}
             </div>
 
             <div className="posts ">
               <h2>총대 찾아요</h2>
-              <GridList data={templateArr}>
-                <SeekItem
-                // url=""
-                // name="이름"
-                // join="숫자주세요"
-                // title="타이틀"
-                // category={["카테1", "카테2"]}
-                />
-              </GridList>
+              {seekList ? <GridList data={seekList} type="seek" /> : <GridList data={templateArr} />}
             </div>
 
             <div className="posts ">
               <h2>이런 공구는 어때요?</h2>
-              {productLists?.list3 ? (
-                <GridList data={productLists.list3} type="product"></GridList>
+              {productLists?.recommend ? (
+                <GridList data={productLists.recommend} type="product" />
               ) : (
-                <GridList data={templateArr}></GridList>
+                <GridList data={templateArr} />
               )}
             </div>
           </div>

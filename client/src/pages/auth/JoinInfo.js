@@ -34,23 +34,24 @@ const JoinInfo = () => {
     if (verifyResult?.email) {
       setNoticeMsg("이메일이 인증되었습니다.");
     } else {
-      let timerInterval;
+      setNoticeMsg("인증 유효시간이 지났습니다.");
+      // let timerInterval;
 
-      Swal.fire({
-        title: "이메일 유효시간 만료",
-        html: "3초 뒤 이메일 인증 페이지로 이동합니다.",
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: () => Swal.showLoading(),
-        willClose: () => clearInterval(timerInterval),
-      }).then((result) => {
-        if (result.dismiss === Swal.DismissReason.timer) {
-        }
-      });
+      // Swal.fire({
+      //   title: "이메일 유효시간 만료",
+      //   html: "3초 뒤 이메일 인증 페이지로 이동합니다.",
+      //   timer: 3000,
+      //   timerProgressBar: true,
+      //   didOpen: () => Swal.showLoading(),
+      //   willClose: () => clearInterval(timerInterval),
+      // }).then((result) => {
+      //   if (result.dismiss === Swal.DismissReason.timer) {
+      //   }
+      // });
 
-      setTimeout(() => {
-        navigate("/account/join");
-      }, 3000);
+      // setTimeout(() => {
+      //   navigate("/account/join");
+      // }, 3000);
     }
   }, [verifyResult, navigate]);
 

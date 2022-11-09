@@ -7,7 +7,6 @@ import fakeImg from "../../assets/img/fakeImg.png";
 import { Link } from "react-router-dom";
 
 const ListItem = (props) => {
-  console.log(props.tags);
   return (
     <ListItemContainer>
       <img className="bookmark" src={bookmark} alt="즐겨찾기 하기" />

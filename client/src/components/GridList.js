@@ -21,18 +21,44 @@ const GridListContainer = styled.ul`
 const GridList = ({ children, ...props }) => {
   return props.type === "product" ? (
     <GridListContainer>
-      {props.data.map((v, i) => {
+      {props.data?.map((v, i) => {
+        const tags = [v.category.name, v.tags[0]?.name, v.tags[1]?.name];
+
+        console.log(v.id);
+
+        return (
+          <ProductItem
+            url={`/product/${v.id}`}
+            name={v.writer.nickname}
+            join={v.favorite_count}
+            title={v.title}
+            tags={tags}
+            key={`${v.title}${i}`}
+          />
+        );
+      })}
+    </GridListContainer>
+  ) : props.type === "seek" ? (
+    <GridListContainer>
+      {props.data?.map((v, i) => {
         const tags = [v.category.name, v.tags[0]?.name, v.tags[1]?.name];
 
         return (
-          <ProductItem url="" name={v.writer.nickname} join={v.favorite_count} title={v.title} tags={tags} />
+          <SeekItem
+            url={`/seek/${v.id}`}
+            name={v.writer.nickname}
+            join={v.favorite_count}
+            title={v.title}
+            tags={tags}
+            key={`${v.title}${i}`}
+          />
         );
       })}
     </GridListContainer>
   ) : (
     <GridListContainer>
-      {props.data.map((v, i) => {
-        return <SeekItem url="" name="이름" join="숫자주세요" title="타이틀" category={["카테1", "카테2"]} />;
+      {props.data?.map((v, i) => {
+        return <SeekItem />;
       })}
     </GridListContainer>
   );

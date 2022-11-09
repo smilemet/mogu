@@ -14,10 +14,10 @@ const wantCount = `(SELECT COUNT(*) FROM want WHERE seek_id=seek.id)`;
 export const getSeeks = async (req, res) => {
   const size = parseInt(req.query.size) || 30;
   const page = parseInt(req.query.page) || 1;
-  const { sort, category: _category, status } = req.query;
+  const { sort, category: _category } = req.query;
 
   let result = null;
-  let where = {};
+  let where = { status: 0 }; // 삭제된 글 제외
 
   let order;
 
@@ -25,6 +25,8 @@ export const getSeeks = async (req, res) => {
     order = sequelize.literal(`view_count DESC`); // 조회수
   } else if (sort === "favorite") {
     order = sequelize.literal(`want_count DESC`); // 원해요 수
+  } else if (sort === "random") {
+    order = sequelize.literal(`rand()`); // 랜덤
   } else {
     order = sequelize.literal(`createdAt DESC`); // 최신순
   }
@@ -33,10 +35,6 @@ export const getSeeks = async (req, res) => {
     if (_category) {
       const categoryId = await category.findOne({ where: { name: _category } });
       where = { ...where, category_id: categoryId.id }; // 카테고리 조건 추가
-    }
-
-    if (status) {
-      where = { ...where, status: status }; // 상태 조건 추가
     }
 
     result = await seek.findAll({

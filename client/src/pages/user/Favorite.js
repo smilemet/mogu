@@ -1,8 +1,8 @@
 import React from "react";
 
-import GridList from "../components/GridList.js";
-import MypageList from "../components/layout/MypageList.js";
-import ProductItem from "../components/ProductItem.js";
+import GridList from "../../components/GridList.js";
+import MypageList from "../../components/layout/MypageList.js";
+import ProductItem from "../../components/ProductItem.js";
 
 const Favorite = () => {
   const option = [

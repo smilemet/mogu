@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import OrderJoin from "../components/OrderJoin";
+import OrderJoin from "../../components/OrderJoin";
 
 const RecordSellCheckContainer = styled.main`
   padding-top: 6rem;

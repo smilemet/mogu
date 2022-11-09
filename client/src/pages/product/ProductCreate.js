@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import CreateHeading from "../components/CreateHeading.js";
-import QnaAdd from "../components/QnaAdd.js";
-import SelectionAdd from "../components/SelectionAdd.js";
+import CreateHeading from "../../components/CreateHeading.js";
+import QnaAdd from "../../components/QnaAdd.js";
+import SelectionAdd from "../../components/SelectionAdd.js";
 
 const ProductCreateContainer = styled.main`
   ${(props) => props.theme.mainPadding}

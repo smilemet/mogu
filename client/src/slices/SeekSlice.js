@@ -1,18 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../config/axios";
 
-const URL = "/product";
+const URL = "/seek";
 
 /**
  * 쿼리 조건에 맞는 공구모아요 게시글을 가져온다.
  * @param payload size : 불러올 목록 수 || 기본값 30
  * @param payload page : 페이지네이션 || 기본값 1
- * @param payload sort : views, favorite, ordered, random || 기본값 createdAt
+ * @param payload sort : views, favorite, random || 기본값 createdAt
  * @param payload category : 카테고리 (선택)
- * @param payload ongoing : 모집중인 게시글만 가져오기 T/F (선택)
  */
-export const getProductList = createAsyncThunk(
-  "ProductSlice/getProductList",
+export const getSeekList = createAsyncThunk(
+  "SeekSlice/getSeekList",
   async (payload = null, { rejectWithValue }) => {
     let result = null;
 
@@ -36,8 +35,8 @@ export const getProductList = createAsyncThunk(
   }
 );
 
-const ProductSlice = createSlice({
-  name: "productList",
+const SeekSlice = createSlice({
+  name: "seekList",
   initialState: {
     data: null,
     loading: false,
@@ -45,17 +44,17 @@ const ProductSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    [getProductList.pending]: (state, { payload }) => {
+    [getSeekList.pending]: (state, { payload }) => {
       return { state, loading: true };
     },
-    [getProductList.fulfilled]: (state, { payload }) => {
+    [getSeekList.fulfilled]: (state, { payload }) => {
       return {
         data: payload,
         loading: false,
         error: null,
       };
     },
-    [getProductList.rejected]: (state, { payload }) => {
+    [getSeekList.rejected]: (state, { payload }) => {
       return {
         data: payload,
         loading: false,
@@ -68,4 +67,4 @@ const ProductSlice = createSlice({
   },
 });
 
-export default ProductSlice.reducer;
+export default SeekSlice.reducer;

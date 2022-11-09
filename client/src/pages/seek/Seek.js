@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
-import GridList from "../components/GridList.js";
-import SeekItem from "../components/SeekItem.js";
+import GridList from "../../components/GridList.js";
+import SeekItem from "../../components/SeekItem.js";
 
 const Seek = () => {
   const category = useSelector((state) => state.category);
@@ -29,9 +29,17 @@ const Seek = () => {
         <section className="section-main">
           <div className="inner">
             <div className="posts">
+              <div>
+                <h2>#총대찾아요</h2>
+              </div>
               <div className="flex-box">
                 <p>'어쩌고' 검색 결과입니다.</p>
-                <h2>#총대찾아요</h2>
+                <select>
+                  <option value="createdAt">최신순</option>
+                  <option value="views">조회수순</option>
+                  <option value="favorite">좋아요순</option>
+                  <option value="ordered">주문순</option>
+                </select>
               </div>
               <GridList data={Array(25).fill(true)}>
                 <SeekItem

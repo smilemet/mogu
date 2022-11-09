@@ -1,7 +1,7 @@
 import React from "react";
-import OrderList from "../components/OrderList.js";
+import OrderList from "../../components/OrderList.js";
 
-const RecordBuy = () => {
+const RecordSell = () => {
   const orderItem = {
     orderno: 23879,
     createAt: "날짜",
@@ -18,9 +18,9 @@ const RecordBuy = () => {
 
   return (
     <>
-      <OrderList pageTitle="주문내역" data={Array(5).fill(orderItem)} />
+      <OrderList pageTitle="판매내역" data={Array(5).fill(orderItem)} />
     </>
   );
 };
 
-export default RecordBuy;
+export default RecordSell;

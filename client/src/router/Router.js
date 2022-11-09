@@ -3,10 +3,13 @@ import { Routes, Route } from "react-router-dom";
 
 import Layout from "../components/layout/Layout.js";
 import Main from "../pages/Main.js";
-import Product from "../pages/Product.js";
-import Seek from "../pages/Seek.js";
-import ProductDetail from "../pages/ProductDetail.js";
-import SeekDetail from "../pages/SeekDetail.js";
+
+import Product from "../pages/product/Product.js";
+import ProductCreate from "../pages/product/ProductCreate.js";
+import ProductDetail from "../pages/product/ProductDetail.js";
+
+import Seek from "../pages/seek/Seek.js";
+import SeekDetail from "../pages/seek/SeekDetail.js";
 
 import Login from "../pages/auth/Login.js";
 import LoginReset from "../pages/auth/LoginReset.js";
@@ -14,19 +17,19 @@ import LoginNewPw from "../pages/auth/LoginNewPw.js";
 import Join from "../pages/auth/Join.js";
 import JoinInfo from "../pages/auth/JoinInfo.js";
 
-import UserPage from "../pages/UserPage.js";
-import Favorite from "../pages/Favorite.js";
-import UserEdit from "../pages/UserEdit.js";
-import RecordBuy from "../pages/RecordBuy.js";
-import RecordSell from "../pages/RecordSell.js";
-import ProductCreate from "../pages/ProductCreate.js";
+import UserPage from "../pages/user/UserPage.js";
+import Favorite from "../pages/user/Favorite.js";
+import UserEdit from "../pages/user/UserEdit.js";
+import RecordBuy from "../pages/user/RecordBuy.js";
+import RecordSell from "../pages/user/RecordSell.js";
 
-import RecordBuyDetail from "../pages/RecordBuyDetail.js";
-import RecordSellDetail from "../pages/RecordSelllDetail.js";
-import RecordSellCheck from "../pages/RecordSellCheck.js";
+import RecordBuyDetail from "../pages/user/RecordBuyDetail.js";
+import RecordSellDetail from "../pages/user/RecordSelllDetail.js";
+import RecordSellCheck from "../pages/user/RecordSellCheck.js";
 
-import Order from "../pages/Order.js";
-import OrderSuccess from "../pages/OrderSuccess.js";
+import Order from "../pages/order/Order.js";
+import OrderSuccess from "../pages/order/OrderSuccess.js";
+
 import NotFound from "../pages/NotFound.js";
 
 const Router = () => {
@@ -38,7 +41,7 @@ const Router = () => {
           <Route path="/product" element={<Product />} />
           <Route path="/seek" element={<Seek />} />
 
-          <Route path="/product/detail" element={<ProductDetail />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/seek/detail" element={<SeekDetail />} />
 
           <Route path="/product/write" element={<ProductCreate />} />

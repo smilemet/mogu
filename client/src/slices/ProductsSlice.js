@@ -5,25 +5,25 @@ const URL = "/product";
 
 /**
  * 메인 화면에서 여러 productList를 동시에 가져올 때 사용하는 thunk
- * @param payload size : 불러올 목록 수, 기본값 30
- * @param payload page : 페이지네이션
- * @param payload sort : views, favorite, ordered, 기본값 createdAt
+ * sort : 조회수순
+ * @param payload size : 불러올 목록 수 || 기본값 30
+ * @param payload page : 페이지네이션 || 기본값 1
+ * @param payload sort : views, favorite, ordered, random || 기본값 createdAt
  * @param payload category : 카테고리 (선택)
  * @param payload ongoing : 모집중인 게시글만 가져오기 T/F (선택)
  */
-export const getProductList1 = createAsyncThunk(
-  "ProductSlice/getProductList",
+export const getProductPopular = createAsyncThunk(
+  "ProductsSlice/getProductPopular",
   async (payload = null, { rejectWithValue }) => {
     let result = null;
 
     try {
       const { data } = await axios.get(URL, {
         params: {
-          size: payload.size,
-          page: payload.page,
-          sort: payload.sort,
-          category: payload.category,
-          ongoing: payload.ongoing,
+          size: 6,
+          page: 1,
+          sort: "views",
+          ongoing: true,
         },
       });
 
@@ -38,21 +38,21 @@ export const getProductList1 = createAsyncThunk(
 
 /**
  * 메인 화면에서 여러 productList를 동시에 가져올 때 사용하는 thunk
+ * sort : 조회수순
  * @param payload 위와 동일
  */
-export const getProductList2 = createAsyncThunk(
-  "ProductSlice/getProductList2",
+export const getProductNews = createAsyncThunk(
+  "ProductsSlice/getProductNews",
   async (payload = null, { rejectWithValue }) => {
     let result = null;
 
     try {
       const { data } = await axios.get(URL, {
         params: {
-          size: payload.size,
-          page: payload.page,
-          sort: payload.sort,
-          category: payload.category,
-          ongoing: payload.ongoing,
+          size: 6,
+          page: 1,
+          sort: "createdAt",
+          ongoing: true,
         },
       });
 
@@ -67,21 +67,21 @@ export const getProductList2 = createAsyncThunk(
 
 /**
  * 메인 화면에서 여러 productList를 동시에 가져올 때 사용하는 thunk
+ * sort : 랜덤게시글
  * @param payload 위와 동일
  */
-export const getProductList3 = createAsyncThunk(
-  "ProductSlice/getProductList3",
+export const getProductRecommend = createAsyncThunk(
+  "ProductsSlice/getProductRecommend",
   async (payload = null, { rejectWithValue }) => {
     let result = null;
 
     try {
       const { data } = await axios.get(URL, {
         params: {
-          size: payload.size,
-          page: payload.page,
-          sort: payload.sort,
-          category: payload.category,
-          ongoing: payload.ongoing,
+          size: 6,
+          page: 1,
+          sort: "random",
+          ongoing: true,
         },
       });
 
@@ -103,19 +103,19 @@ const ProductsSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    [getProductList1.pending]: (state, { payload }) => {
+    [getProductPopular.pending]: (state, { payload }) => {
       return { ...state.data, loading: true };
     },
-    [getProductList1.fulfilled]: (state, { payload }) => {
+    [getProductPopular.fulfilled]: (state, { payload }) => {
       return {
-        data: { ...state.data, list1: payload },
+        data: { ...state.data, popular: payload },
         loading: false,
         error: null,
       };
     },
-    [getProductList1.rejected]: (state, { payload }) => {
+    [getProductPopular.rejected]: (state, { payload }) => {
       return {
-        data: { ...state.data, list1: payload },
+        data: { ...state.data, popular: payload },
         loading: false,
         error: {
           code: payload?.status ? payload.status : 500,
@@ -123,19 +123,19 @@ const ProductsSlice = createSlice({
         },
       };
     },
-    [getProductList2.pending]: (state, { payload }) => {
+    [getProductNews.pending]: (state, { payload }) => {
       return { ...state, loading: true };
     },
-    [getProductList2.fulfilled]: (state, { payload }) => {
+    [getProductNews.fulfilled]: (state, { payload }) => {
       return {
-        data: { ...state.data, list2: payload },
+        data: { ...state.data, news: payload },
         loading: false,
         error: null,
       };
     },
-    [getProductList2.rejected]: (state, { payload }) => {
+    [getProductNews.rejected]: (state, { payload }) => {
       return {
-        data: { ...state.data, list2: payload },
+        data: { ...state.data, news: payload },
         loading: false,
         error: {
           code: payload?.status ? payload.status : 500,
@@ -143,19 +143,19 @@ const ProductsSlice = createSlice({
         },
       };
     },
-    [getProductList3.pending]: (state, { payload }) => {
+    [getProductRecommend.pending]: (state, { payload }) => {
       return { ...state, loading: true };
     },
-    [getProductList3.fulfilled]: (state, { payload }) => {
+    [getProductRecommend.fulfilled]: (state, { payload }) => {
       return {
-        data: { ...state.data, list3: payload },
+        data: { ...state.data, recommend: payload },
         loading: false,
         error: null,
       };
     },
-    [getProductList3.rejected]: (state, { payload }) => {
+    [getProductRecommend.rejected]: (state, { payload }) => {
       return {
-        data: { ...state.data, list3: payload },
+        data: { ...state.data, recommend: payload },
         loading: false,
         error: {
           code: payload?.status ? payload.status : 500,

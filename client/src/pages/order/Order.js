@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
-import Selection2 from "../components/Selection2";
+import Selection2 from "../../components/Selection2";
 
 const OrderContainer = styled.main`
   ${(props) => props.theme.mainPadding}
@@ -94,9 +94,7 @@ const Order = () => {
           <section className="notice-section">
             <h2>입금을 완료해주세요!</h2>
             <p>48시간 내에 아래 계좌로 입금이 완료되지 않으면 주문이 취소됩니다.</p>
-            <p className="alert">
-              *이 창을 닫으면 계좌번호를 다시 열람할 수 없으니 꼭 바로 입금해주세요!
-            </p>
+            <p className="alert">*이 창을 닫으면 계좌번호를 다시 열람할 수 없으니 꼭 바로 입금해주세요!</p>
 
             <div className="accout">
               <p>한국은행 123-112233-321321</p>
@@ -127,11 +125,7 @@ const Order = () => {
                 예금주
                 <span className="alert">*</span>
               </label>
-              <input
-                type="text"
-                id="accountname"
-                placeholder="ex) 1차 입금 > 현물도착 > 2차 입금"
-              />
+              <input type="text" id="accountname" placeholder="ex) 1차 입금 > 현물도착 > 2차 입금" />
 
               <label htmlFor="deposit">
                 입금액
