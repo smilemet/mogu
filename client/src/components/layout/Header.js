@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,6 +9,7 @@ import SearchBox from "../SearchBox.js";
 import useWindowWidth from "../../hooks/useWindowWidth.js";
 
 import { verifyToken } from "../../slices/AuthSlice";
+import UserMenu from "../UserMenu";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -17,11 +18,15 @@ const Header = () => {
   const location = useLocation();
 
   const isLogin = useSelector((state) => state.auth.isLogin);
+  const [isOpen, setIsOpen] = useState(false);
   const [menu, setMenu] = useState({ gonggu: "공구모아요", chongdae: "총대구해요" });
 
   // const token = JSONlocalStorage.getItem("moguToken")
 
-  // // 로그인 상태 체크
+  /** 유저 아이콘 클릭 시 메뉴 팝업 */
+  const onOpenMenu = useCallback(() => {
+    setIsOpen(!isOpen);
+  }, [isOpen]);
 
   return (
     <HeaderContainer>
@@ -55,7 +60,8 @@ const Header = () => {
         </div>
 
         <div className="login">
-          {isLogin ? <Link to="/account/login">로그인 됨!</Link> : <Link to="/account/login">로그인</Link>}
+          {isLogin ? <div onClick={onOpenMenu}>로그인 됨!</div> : <Link to="/account/login">로그인</Link>}
+          {isLogin && isOpen && <UserMenu />}
         </div>
       </div>
     </HeaderContainer>
@@ -108,6 +114,7 @@ const HeaderContainer = styled.header`
     }
 
     .login {
+      position: relative;
       flex-shrink: 0;
       text-align: right;
       width: 10%;

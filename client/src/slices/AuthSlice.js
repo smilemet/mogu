@@ -11,13 +11,11 @@ export const verifyToken = createAsyncThunk(
     let result = null;
 
     try {
-      const { data } = await axios.get("/auth/verify", {
-        params: {
-          token: payload,
-        },
-      });
+      const {
+        data: { signedUser },
+      } = await axios.get("/auth/verify", { params: { token: payload } });
 
-      result = data;
+      result = signedUser;
     } catch (err) {
       result = rejectWithValue(err.response);
     }
@@ -33,6 +31,7 @@ const AuthSlice = createSlice({
     loading: false,
     error: null,
     isLogin: false,
+    userId: null,
   },
   reducers: {},
   extraReducers: {
@@ -40,14 +39,18 @@ const AuthSlice = createSlice({
       return { ...state, loading: true };
     },
     [verifyToken.fulfilled]: (state, { payload }) => {
+      console.log(payload);
       return {
+        data: payload,
         loading: false,
         error: null,
         isLogin: true,
+        userId: payload.id,
       };
     },
     [verifyToken.rejected]: (state, { payload }) => {
       return {
+        data: payload,
         loading: false,
         error: {
           code: payload?.status ? payload.status : 500,

@@ -15,8 +15,8 @@ const App = () => {
   /** 앱 조작 시 토큰 유효성 검사 */
   useEffect(() => {
     const token = localStorage.getItem("moguAccessToken");
+
     dispatch(verifyToken(token));
-    console.log("test");
   }, [dispatch]);
 
   /** 앱 초기 구동 시 카테고리 목록 가져오기 */

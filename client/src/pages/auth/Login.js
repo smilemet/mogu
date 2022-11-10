@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import RegexHelperTF from "../../utils/RegexHelperTF.js";
@@ -41,7 +41,7 @@ const Login = () => {
           localStorage.setItem("moguAccessToken", data.accessToken);
           localStorage.setItem("moguRefreshToken", data.refreshToken);
 
-          navigate("/");
+          window.location.href = process.env.REACT_APP_ORIGIN;
         }
       } catch (err) {
         Swal.fire({

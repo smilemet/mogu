@@ -15,7 +15,7 @@ dotenv.config({ path: join(resolve(), "../config.env") });
 const { user, verify_email, role } = db;
 
 /**
- * email, password로 API에 로그인하고 token 리턴하기
+ * email, password로 API에 로그인하고 token 리턴
  * @method POST /api/auth/login
  */
 export const login = async (req, res) => {
@@ -28,6 +28,9 @@ export const login = async (req, res) => {
     // 유저가 존재하지 않거나 소셜로그인 유저일 경우 에러 반환
     if (signedUser === null || signedUser.platform !== "local")
       throw new Error("아이디와 비밀번호를 확인해주세요.");
+
+    // 정지된 유저일 경우 에러 반환
+    if (signedUser.dataValues.banned) throw new Error("정지된 유저입니다.");
 
     // 비밀번호 체크
     const { hashedPassword } = await createHashedPassword(password, signedUser.salt);
@@ -57,7 +60,30 @@ export const login = async (req, res) => {
 };
 
 /**
- * token의 유효성 검사 후 token의 주인인 user 리턴하기
+ * 로그아웃을 진행하고 user 테이블에서 refresh token 삭제
+ * header에 x-access-token 필요
+ * @method GET /api/auth/verify
+ */
+export const logout = async (req, res) => {
+  const { id } = req.decoded;
+
+  try {
+    await user.update({ refresh_token: null }, { where: { id } });
+
+    res.json({
+      success: true,
+    });
+  } catch (err) {
+    res.json({
+      status: 403,
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+/**
+ * token의 유효성 검사 후 token의 주인인 user 리턴
  * header에 x-access-token 필요
  * @method GET /api/auth/verify
  */
@@ -89,7 +115,7 @@ export const verifyToken = async (req, res, next) => {
 };
 
 /**
- * 기존의 token을 이용하여 새로운 token 발급하기
+ * 기존의 token을 이용하여 새로운 token 발급
  * header에 x-access-token 필요
  * @method GET /api/auth/refresh
  */
@@ -118,7 +144,7 @@ export const tokenRefresh = async (req, res) => {
 };
 
 /**
- * 이메일로 인증된 url을 전송한다.
+ * 이메일로 인증된 url을 전송
  * @method POST /api/email/send
  */
 export const sendEmail = async (req, res) => {
@@ -216,7 +242,7 @@ export const sendEmail = async (req, res) => {
 };
 
 /**
- * 인증 링크가 유효한지 확인하고 해당 email을 반환한다.
+ * 인증 링크가 유효한지 확인하고 해당 email을 반환
  * @method GET /api/email/verify
  */
 export const verifyEmail = async (req, res) => {
