@@ -19,14 +19,14 @@ export default class seek extends Model {
           type: DataTypes.TEXT,
           allowNull: false,
         },
+        thumbnail: {
+          type: DataTypes.TEXT,
+          allowNull: true,
+        },
         view_count: {
           type: DataTypes.INTEGER,
           allowNull: false,
           defaultValue: 0,
-        },
-        thumbnail: {
-          type: DataTypes.TEXT,
-          allowNull: true,
         },
         status: {
           type: DataTypes.BOOLEAN,

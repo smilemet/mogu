@@ -39,12 +39,12 @@ const ListItem = (props) => {
 };
 
 ListItem.defaultProps = {
-  url: "/product/detail",
+  url: "/",
   thumbnail: fakeImg,
-  name: "",
+  name: "　",
   join: 0,
-  title: "",
-  category: [""],
+  title: "　",
+  tags: ["　", "　"],
 };
 
 const ListItemContainer = styled.li`
@@ -109,7 +109,7 @@ const ListItemContainer = styled.li`
   }
 
   .tags {
-    margin-top: 1.4rem;
+    margin-top: 1rem;
 
     span {
       display: inline-block;

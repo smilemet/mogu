@@ -25,12 +25,8 @@ const Main = () => {
     dispatch(getProductPopular());
     dispatch(getProductNews());
     dispatch(getProductRecommend());
-    dispatch(getSeekList({ size: 6, page: 1, sort: "random", ongoing: true }));
+    dispatch(getSeekList({ size: 6, page: 1, sort: "random" }));
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log(seekList);
-  }, [seekList]);
 
   return (
     <MainContainer>

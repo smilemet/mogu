@@ -62,13 +62,6 @@ export const getProducts = async (req, res) => {
       },
       include: [
         {
-          model: product_image,
-          as: "images",
-          attributes: ["url"],
-          where: { order: 1 },
-          required: false,
-        },
-        {
           model: user,
           as: "writer",
           attributes: [

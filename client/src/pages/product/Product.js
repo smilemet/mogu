@@ -13,7 +13,6 @@ const Product = () => {
   const category = useSelector((state) => state.category);
   const { data: productList } = useSelector((state) => state.productList);
 
-  const [page, setPage] = useState(1);
   const [sorting, setSorting] = useState("createdAt");
 
   const templateArr = Array(30).fill(true);
@@ -28,17 +27,17 @@ const Product = () => {
     async (payload) => {
       let option = {};
 
-      if (!payload) option = { size: 30, page: page, sort: sorting }; // 기본값
+      if (!payload) option = { size: 30, page: 1, sort: sorting }; // 기본값
 
       dispatch(getProductList(option));
     },
-    [dispatch]
+    [dispatch, sorting]
   );
 
   /** 페이지 마운트 시 공구모아요 게시글 로딩 */
   useEffect(() => {
     getList();
-  }, [dispatch, sorting]);
+  }, [getList]);
 
   return (
     <ProductContainer>
@@ -46,9 +45,9 @@ const Product = () => {
         <section className="section-category">
           <div className="inner">
             <ul className="categories flex-box">
-              {category.data?.map((v) => {
+              {category.data?.map((v, i) => {
                 return (
-                  <li>
+                  <li key={i}>
                     <Link to="/">{`#${v}`}</Link>
                   </li>
                 );

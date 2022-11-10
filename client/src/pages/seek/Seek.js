@@ -1,13 +1,45 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 import GridList from "../../components/GridList.js";
-import SeekItem from "../../components/SeekItem.js";
+
+import { getSeekList } from "../../slices/SeekSlice.js";
 
 const Seek = () => {
+  const dispatch = useDispatch();
+
   const category = useSelector((state) => state.category);
+  const { data: seekList } = useSelector((state) => state.seekList);
+
+  const [sorting, setSorting] = useState("createdAt");
+
+  const templateArr = Array(30).fill(true);
+
+  /** 정렬 옵션 변경 */
+  const onSorting = (e) => {
+    setSorting(e.currentTarget.value);
+  };
+
+  /** 게시글 데이터 취득 */
+  const getList = useCallback(
+    async (payload) => {
+      let option = {};
+
+      if (!payload) option = { size: 30, page: 1, sort: sorting };
+
+      dispatch(getSeekList(option));
+
+      console.log(test);
+    },
+    [dispatch, sorting]
+  );
+
+  /** 페이지 마운트 시 총대찾아요 게시글 로딩 */
+  useEffect(() => {
+    getList();
+  }, [getList]);
 
   return (
     <SeekContainer>
@@ -34,22 +66,14 @@ const Seek = () => {
               </div>
               <div className="flex-box">
                 <p>'어쩌고' 검색 결과입니다.</p>
-                <select>
+                <select onChange={onSorting}>
                   <option value="createdAt">최신순</option>
                   <option value="views">조회수순</option>
                   <option value="favorite">좋아요순</option>
                   <option value="ordered">주문순</option>
                 </select>
               </div>
-              <GridList data={Array(25).fill(true)}>
-                <SeekItem
-                // url=""
-                // name="이름"
-                // join="숫자주세요"
-                // title="타이틀"
-                // category={["카테1", "카테2"]}
-                />
-              </GridList>
+              {seekList ? <GridList data={seekList} type="seek" /> : <GridList data={templateArr} />}
             </div>
           </div>
         </section>

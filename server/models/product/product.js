@@ -35,6 +35,10 @@ export default class product extends Model {
           type: DataTypes.DATE,
           allowNull: false,
         },
+        thumbnail: {
+          type: DataTypes.TEXT,
+          allowNull: true,
+        },
         view_count: {
           type: DataTypes.INTEGER,
           allowNull: false,
