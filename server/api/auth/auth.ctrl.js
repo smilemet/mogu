@@ -3,7 +3,7 @@ import crypto from "crypto";
 import nodemailer from "nodemailer";
 
 import { db } from "../../models/index.js";
-import { generateToken, generateRefreshToken } from "../../utils/Jwt.js";
+import { signToken, signRefreshToken } from "../../utils/Jwt.js";
 import { createHashedPassword } from "../../utils/Encrypto.js";
 import RegexHelper from "../../utils/RegexHelper.js";
 
@@ -12,7 +12,7 @@ import { join, resolve } from "path";
 
 dotenv.config({ path: join(resolve(), "../config.env") });
 
-const { user, verify_email } = db;
+const { user, verify_email, role } = db;
 
 /**
  * email, password로 API에 로그인하고 token 리턴하기
@@ -37,8 +37,8 @@ export const login = async (req, res) => {
     }
 
     // 로그인 성공
-    const accessToken = await generateToken(signedUser);
-    const refreshToken = await generateRefreshToken(signedUser);
+    const accessToken = await signToken(signedUser);
+    const refreshToken = await signRefreshToken(signedUser);
 
     await user.update({ refresh_token: refreshToken }, { where: { id: signedUser.id } });
 
@@ -61,12 +61,23 @@ export const login = async (req, res) => {
  * header에 x-access-token 필요
  * @method GET /api/auth/verify
  */
-export const tokenVerify = async (req, res, next) => {
+export const verifyToken = async (req, res, next) => {
   const { id } = req.decoded;
 
   let signedUser = null;
+
   try {
-    signedUser = await user.findOne({ where: { id } });
+    signedUser = await user.findOne({
+      where: { id },
+      attributes: { exclude: ["password", "salt"] },
+      include: [
+        {
+          model: role,
+          attributes: ["authority"],
+          through: { attributes: [] },
+        },
+      ],
+    });
   } catch (err) {
     next(err);
   }
@@ -91,7 +102,7 @@ export const tokenRefresh = async (req, res) => {
 
     if (signedUser !== null && signedUser.refresh_token === req.token) {
       // 리프레시 토큰 인증 성공
-      const accessToken = await generateToken(signedUser);
+      const accessToken = await signToken(signedUser);
 
       res.json({
         success: true,
@@ -99,7 +110,7 @@ export const tokenRefresh = async (req, res) => {
       });
     } else {
       // 리프레시 토큰 인증 실패
-      throw new Error("유효하지 않은 토큰입니다.");
+      throw new Error("유효하지 않은 리프레시 토큰입니다.");
     }
   } catch (err) {
     res.status(401).json({ success: false, message: err });

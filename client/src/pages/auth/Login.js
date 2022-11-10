@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import RegexHelperTF from "../../utils/RegexHelperTF.js";
-import { setLogin } from "../../slices/AuthSlice.js";
+
+import axios from "../../config/axios.js";
 
 import Swal from "sweetalert2";
 
@@ -15,13 +16,13 @@ const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const { data: loginResult } = useSelector((state) => state.auth);
-  console.log(loginResult);
-
   const [input, setInput] = useState({});
   const [alertMsg, setAlertMsg] = useState("");
 
-  /** 로그인 */
+  /**
+   * 로그인을 시도하고 성공 시 토큰을 발급하여 localStorage에 저장한다.
+   * @param payload 아이디와 비밀번호
+   */
   const onLogin = useCallback(
     async (e) => {
       e.preventDefault();
@@ -29,14 +30,19 @@ const Login = () => {
       const email = emailRef.current.value.trim();
       const password = passwordRef.current.value;
 
-      dispatch(setLogin({ email, password }));
-
-      console.log(loginResult);
-
       try {
-        if (loginResult && !loginResult.success) throw new Error(loginResult.message);
+        if (!email || !password) throw new Error("아이디와 비밀번호를 입력해주세요.");
 
-        navigate("/");
+        const { data } = await axios.post("/auth/login", { email, password });
+
+        if (data.status >= 300) throw new Error(data.message); // catch
+
+        if (data) {
+          localStorage.setItem("moguAccessToken", data.accessToken);
+          localStorage.setItem("moguRefreshToken", data.refreshToken);
+
+          navigate("/");
+        }
       } catch (err) {
         Swal.fire({
           icon: "error",
@@ -45,7 +51,7 @@ const Login = () => {
         });
       }
     },
-    [dispatch, navigate, loginResult]
+    [navigate]
   );
 
   /** 입력값 확인 */

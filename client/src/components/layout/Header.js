@@ -1,11 +1,66 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components";
 
 import title from "../../assets/img/title2.png";
 import SearchBox from "../SearchBox.js";
-import useWindowWidth from "../../hooks/useWindowWidth";
+import useWindowWidth from "../../hooks/useWindowWidth.js";
+
+import { verifyToken } from "../../slices/AuthSlice";
+
+const Header = () => {
+  const dispatch = useDispatch();
+
+  const windowWidth = useWindowWidth();
+  const location = useLocation();
+
+  const isLogin = useSelector((state) => state.auth.isLogin);
+  const [menu, setMenu] = useState({ gonggu: "공구모아요", chongdae: "총대구해요" });
+
+  // const token = JSONlocalStorage.getItem("moguToken")
+
+  // // 로그인 상태 체크
+
+  return (
+    <HeaderContainer>
+      <div className="inner flex-box">
+        <div className="title">
+          <Link to="/">
+            <img src={title} alt="모구" />
+            <h1 className="blind-text">MOGU!</h1>
+          </Link>
+        </div>
+
+        <nav className="navbar flex-box">
+          <NavLink to="/product" className="menu">
+            {windowWidth <= 550 ? <p>공구</p> : <p>공구모아요</p>}
+            <div
+              className="under-bar"
+              style={{ display: location.pathname === "/product" ? "block" : "none" }}
+            />
+          </NavLink>
+          <NavLink to="/seek" className="menu">
+            {windowWidth <= 550 ? <p>총대</p> : <p>총대구해요</p>}
+            <div
+              className="under-bar"
+              style={{ display: location.pathname === "/seek" ? "block" : "none" }}
+            />
+          </NavLink>
+        </nav>
+
+        <div className="search-box">
+          <SearchBox />
+        </div>
+
+        <div className="login">
+          {isLogin ? <Link to="/account/login">로그인 됨!</Link> : <Link to="/account/login">로그인</Link>}
+        </div>
+      </div>
+    </HeaderContainer>
+  );
+};
 
 const HeaderContainer = styled.header`
   width: 100%;
@@ -86,49 +141,5 @@ const HeaderContainer = styled.header`
     }
   }
 `;
-
-const Header = () => {
-  const [menu, setMenu] = useState({ gonggu: "공구모아요", chongdae: "총대구해요" });
-  const windowWidth = useWindowWidth();
-  const location = useLocation();
-
-  return (
-    <HeaderContainer>
-      <div className="inner flex-box">
-        <div className="title">
-          <Link to="/">
-            <img src={title} alt="모구" />
-            <h1 className="blind-text">MOGU!</h1>
-          </Link>
-        </div>
-
-        <nav className="navbar flex-box">
-          <NavLink to="/product" className="menu">
-            {windowWidth <= 550 ? <p>공구</p> : <p>공구모아요</p>}
-            <div
-              className="under-bar"
-              style={{ display: location.pathname === "/product" ? "block" : "none" }}
-            />
-          </NavLink>
-          <NavLink to="/seek" className="menu">
-            {windowWidth <= 550 ? <p>총대</p> : <p>총대구해요</p>}
-            <div
-              className="under-bar"
-              style={{ display: location.pathname === "/seek" ? "block" : "none" }}
-            />
-          </NavLink>
-        </nav>
-
-        <div className="search-box">
-          <SearchBox />
-        </div>
-
-        <div className="login">
-          <Link to="/account/login">로그인</Link>
-        </div>
-      </div>
-    </HeaderContainer>
-  );
-};
 
 export default Header;

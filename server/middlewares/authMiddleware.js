@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import { join, resolve } from "path";
 
 dotenv.config({ path: join(resolve(), "../config.env") });
-const secret = process.env.SECRET_KEY;
+const secret = process.env.JWT_SECRET;
 
 /**
  * JWT 유효성을 검사하고, 완료되면 유저 정보를 디코딩한다.
@@ -12,12 +12,7 @@ const secret = process.env.SECRET_KEY;
 const authMiddleware = (req, res, next) => {
   const token = req.query.token || req.headers["x-access-token"];
 
-  if (!token) {
-    return res.status(401).json({
-      success: false,
-      message: "토큰이 없습니다.",
-    });
-  }
+  if (!token) throw new Error("토큰이 없습니다.");
 
   try {
     jwt.verify(token, secret, (err, decoded) => {
@@ -25,10 +20,12 @@ const authMiddleware = (req, res, next) => {
 
       req.decoded = decoded;
       req.token = token;
+
       next();
     });
   } catch (err) {
-    resolve.status(401).json({
+    res.json({
+      statusno: 401,
       sucess: false,
       message: err.message,
     });
