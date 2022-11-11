@@ -8,7 +8,6 @@ import title from "../../assets/img/title2.png";
 import SearchBox from "../SearchBox.js";
 import useWindowWidth from "../../hooks/useWindowWidth.js";
 
-import { verifyToken } from "../../slices/AuthSlice";
 import UserMenu from "../UserMenu";
 
 const Header = () => {
@@ -20,8 +19,6 @@ const Header = () => {
   const isLogin = useSelector((state) => state.auth.isLogin);
   const [isOpen, setIsOpen] = useState(false);
   const [menu, setMenu] = useState({ gonggu: "공구모아요", chongdae: "총대구해요" });
-
-  // const token = JSONlocalStorage.getItem("moguToken")
 
   /** 유저 아이콘 클릭 시 메뉴 팝업 */
   const onOpenMenu = useCallback(() => {

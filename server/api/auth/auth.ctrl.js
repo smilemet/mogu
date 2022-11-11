@@ -155,12 +155,18 @@ export const sendEmail = async (req, res) => {
     RegexHelper.value(email, "이메일을 입력하세요.");
     RegexHelper.email(email, "이메일 형식이 맞지 않습니다.");
 
+    // 가입여부 확인
+    let signedUser = null;
+    signedUser = await user.findOne({ where: { email } });
+
+    if (signedUser) throw new Error("이미 가입된 이메일입니다.");
+
     const length = parseInt(process.env.MAIL_HASH_LENGTH);
     const url = process.env.CLIENT_URL;
 
     // 인증용 해시코드 생성
     let code = crypto.randomBytes(length).toString("base64");
-    code = code.replace(/\//, "a"); // '/'문자가 섞일 경우 a로 대치
+    code = code.replace(/\//g, "a"); // '/'문자가 섞일 경우 a로 대치
 
     let sendedEmail = await verify_email.findOne({ where: { email } });
 
@@ -247,7 +253,7 @@ export const sendEmail = async (req, res) => {
  */
 export const verifyEmail = async (req, res) => {
   const code = req.params.code;
-  let statusNo = 404;
+  let statusNo = 0;
 
   try {
     const targetInfo = await verify_email.findOne({
@@ -255,7 +261,10 @@ export const verifyEmail = async (req, res) => {
       attributes: ["email", "expiresIn"],
     });
 
-    if (!targetInfo) throw new Error("잘못된 주소입니다.");
+    if (!targetInfo) {
+      statusNo = 404;
+      throw new Error("잘못된 주소입니다.");
+    }
 
     let now = Date.now();
     let expireTime = targetInfo.expiresIn.getTime();

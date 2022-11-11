@@ -39,13 +39,12 @@ const AuthSlice = createSlice({
       return { ...state, loading: true };
     },
     [verifyToken.fulfilled]: (state, { payload }) => {
-      console.log(payload);
       return {
         data: payload,
         loading: false,
         error: null,
         isLogin: true,
-        userId: payload.id,
+        userId: payload?.id,
       };
     },
     [verifyToken.rejected]: (state, { payload }) => {

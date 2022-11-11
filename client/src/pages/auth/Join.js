@@ -1,50 +1,42 @@
-import React, { useCallback, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import axios from "../../config/axios";
 
-import titleImg from "../../assets/img/title.png";
-import { sendMail } from "../../slices/SendMailSlice.js";
+import { Link } from "react-router-dom";
 
 import Swal from "sweetalert2";
-import RegexHelperTF from "../../utils/RegexHelperTF";
+
+import titleImg from "../../assets/img/title.png";
+import RegexHelper from "../../utils/RegexHelper";
 
 const Join = () => {
-  const dispatch = useDispatch();
-
   const emailRef = useRef();
 
   const [isSended, setIsSended] = useState(false);
 
-  /** 이메일 전송 */
-  const onSendMail = useCallback(
-    async (e) => {
-      console.log(process.env.REACT_APP_API_URL);
-      e.preventDefault();
+  /** 올바른 이메일이 입력되었는지 확인하고, 인증 메일을 전송한다. */
+  const onSendMail = useCallback(async (e) => {
+    e.preventDefault();
 
-      const email = emailRef.current.value.trim();
+    const email = emailRef.current.value.trim();
 
-      try {
-        if (!email) throw new Error("이메일을 입력해주세요.");
-        if (!RegexHelperTF.email(email)) throw new Error("이메일을 확인해주세요.");
+    try {
+      if (!email) throw new Error("이메일을 입력해주세요.");
+      RegexHelper.email(email, "이메일을 확인해주세요.");
 
-        const { payload } = await dispatch(sendMail({ email, type: "register" }));
-        const { data } = payload;
+      const { data } = await axios.post("/auth/email/send", { email, type: "register" });
 
-        if (!data.success) throw new Error(data.message);
+      if (!data.success) throw new Error(data.error);
 
-        setIsSended(true);
-      } catch (err) {
-        setIsSended(false);
-        Swal.fire({
-          icon: "error",
-          text: err.message,
-          confirmButtonColor: "#cb54e5",
-        });
-      }
-    },
-    [dispatch]
-  );
+      setIsSended(true);
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        text: err.message,
+        confirmButtonColor: "#cb54e5",
+      });
+    }
+  }, []);
 
   return (
     <JoinContainer>

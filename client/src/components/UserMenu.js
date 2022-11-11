@@ -19,7 +19,9 @@ const UserMenu = () => {
       await axios.post("/auth/logout");
       localStorage.removeItem("moguAccessToken");
       localStorage.removeItem("moguRefrechToken");
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
 
     window.location.href = process.env.REACT_APP_ORIGIN;
   }, []);

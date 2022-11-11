@@ -8,7 +8,8 @@ import { join, resolve } from "path";
 
 dotenv.config({ path: join(resolve(), "../config.env") });
 
-const { user, user_account, user_address, product, seek, rate, product_image, category, tag } = db;
+const { user, user_account, user_address, product, seek, rate, product_image, category, tag, verify_email } =
+  db;
 
 /**
  * user 목록 가져오기
@@ -48,14 +49,14 @@ export const getUsers = async (req, res) => {
  * @method POST /api/user
  */
 export const createUser = async (req, res) => {
-  const { email, password, nickname } = req.body;
+  console.log(req);
+  const { email, password, nickname, platform } = req.body.params;
 
   try {
-    RegexHelper.value(password, "비밀번호를 입력하세요.");
-    RegexHelper.password(
-      password,
-      "비밀번호는 영문자, 특수문자 및 숫자가 포함된 8~16자로 입력해주세요."
-    );
+    RegexHelper.value(email, "이메일을 확인해주세요.");
+    RegexHelper.email(email, "이메일을 확인해주세요.");
+    RegexHelper.value(password, "비밀번호를 입력해주세요.");
+    RegexHelper.password(password, "비밀번호는 영문자, 특수문자 및 숫자가 포함된 8~16자로 입력해주세요.");
     RegexHelper.value(nickname, "닉네임을 입력해주세요.");
     RegexHelper.maxLength(nickname, 15, "닉네임은 15글자 이하로 입력해주세요.");
     RegexHelper.value(platform, "플랫폼 입력 오류입니다.");
@@ -75,12 +76,15 @@ export const createUser = async (req, res) => {
       platform: "local",
     });
 
-    res.json({
+    await verify_email.destroy({ where: { email } });
+
+    await res.json({
       success: true,
       newUser,
     });
   } catch (err) {
-    res.status(403).json({
+    res.json({
+      status: 403,
       success: false,
       message: err.message,
     });
@@ -147,10 +151,7 @@ export const updateUser = async (req, res) => {
 
     // 비밀번호 변경
     if (password) {
-      RegexHelper.password(
-        password,
-        "비밀번호는 영문자, 특수문자 및 숫자가 포함된 8~16자로 입력해주세요."
-      );
+      RegexHelper.password(password, "비밀번호는 영문자, 특수문자 및 숫자가 포함된 8~16자로 입력해주세요.");
 
       const { hashedPassword, salt } = await createHashedPassword(password);
 

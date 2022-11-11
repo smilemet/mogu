@@ -16,6 +16,7 @@ import LoginReset from "../pages/auth/LoginReset.js";
 import LoginNewPw from "../pages/auth/LoginNewPw.js";
 import Join from "../pages/auth/Join.js";
 import JoinInfo from "../pages/auth/JoinInfo.js";
+import JoinSuccess from "../pages/auth/JoinSuccess.js";
 
 import UserPage from "../pages/user/UserPage.js";
 import Favorite from "../pages/user/Favorite.js";
@@ -63,6 +64,8 @@ const Router = () => {
           <Route path="/mypage/sell/id" element={<RecordSellDetail />} />
           <Route path="/mypage/sell/id/check" element={<RecordSellCheck />} />
 
+          <Route path="/account/join/success" element={<JoinSuccess />} />
+
           <Route path="*" element={<NotFound />} />
         </Route>
 
@@ -70,7 +73,7 @@ const Router = () => {
         <Route path="/account/password/reset" element={<LoginReset />} />
         <Route path="/account/password/reset/:token" element={<LoginNewPw />} />
         <Route path="/account/join" element={<Join />} />
-        <Route path="/account/join/:code" element={<JoinInfo />} />
+        <Route path="/account/join/:hash" element={<JoinInfo />} />
       </Routes>
     </>
   );

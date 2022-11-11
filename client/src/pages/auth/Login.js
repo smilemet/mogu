@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import RegexHelperTF from "../../utils/RegexHelperTF.js";
+import RegexHelper from "../../utils/RegexHelper.js";
 
 import axios from "../../config/axios.js";
 
@@ -11,78 +11,70 @@ import Swal from "sweetalert2";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const [input, setInput] = useState({});
   const [alertMsg, setAlertMsg] = useState("");
 
   /**
    * 로그인을 시도하고 성공 시 토큰을 발급하여 localStorage에 저장한다.
    * @param payload 아이디와 비밀번호
    */
-  const onLogin = useCallback(
-    async (e) => {
-      e.preventDefault();
+  const onLogin = useCallback(async (e) => {
+    e.preventDefault();
 
-      const email = emailRef.current.value.trim();
-      const password = passwordRef.current.value;
+    const email = emailRef.current.value.trim();
+    const password = passwordRef.current.value.trim();
 
-      try {
-        if (!email || !password) throw new Error("아이디와 비밀번호를 입력해주세요.");
+    try {
+      if (!email || !password) throw new Error("아이디와 비밀번호를 입력해주세요.");
 
-        const { data } = await axios.post("/auth/login", { email, password });
+      const { data } = await axios.post("/auth/login", { email, password });
 
-        if (data.status >= 300) throw new Error(data.message); // catch
+      if (data.status >= 300) throw new Error(data.message); // catch
 
-        if (data) {
-          localStorage.setItem("moguAccessToken", data.accessToken);
-          localStorage.setItem("moguRefreshToken", data.refreshToken);
+      if (data) {
+        localStorage.setItem("moguAccessToken", data.accessToken);
+        localStorage.setItem("moguRefreshToken", data.refreshToken);
 
-          window.location.href = process.env.REACT_APP_ORIGIN;
-        }
-      } catch (err) {
-        Swal.fire({
-          icon: "error",
-          text: err.message,
-          confirmButtonColor: "#cb54e5",
-        });
+        window.location.href = process.env.REACT_APP_ORIGIN;
       }
-    },
-    [navigate]
-  );
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        text: err.message,
+        confirmButtonColor: "#cb54e5",
+      });
+    }
+  }, []);
 
-  /** 입력값 확인 */
+  /** input box 이동 시마다 regex체크를 진행한다. */
   const onCheck = useCallback(
     async (e) => {
       let inputType = e.currentTarget.dataset.type;
-      let inputValue = e.currentTarget.value.trim();
 
-      if (inputType === "email") {
-        if (input.email === inputValue) return;
-        setInput({ ...input, email: inputValue });
+      try {
+        const email = emailRef.current.value.trim();
+        const password = passwordRef.current.value.trim();
 
-        RegexHelperTF.value(inputValue)
-          ? setAlertMsg({ ...alertMsg, email: null })
-          : setAlertMsg({ ...alertMsg, email: "이메일을 입력해주세요." });
+        if (inputType === "email") {
+          RegexHelper.value(email, "이메일을 입력해주세요.");
+          RegexHelper.email(email, "이메일을 확인해주세요.");
+          setAlertMsg({ ...alertMsg, email: null });
+        }
 
-        RegexHelperTF.email(inputValue)
-          ? setAlertMsg({ ...alertMsg, email: null })
-          : setAlertMsg({ ...alertMsg, email: "이메일을 확인해주세요." });
-      }
-
-      if (inputType === "password") {
-        if (input.password === inputValue) return;
-        setInput({ ...input, password: inputValue });
-
-        RegexHelperTF.value(inputValue)
-          ? setAlertMsg({ ...alertMsg, password: null })
-          : setAlertMsg({ ...alertMsg, password: "비밀번호를 입력해주세요." });
+        if (inputType === "password") {
+          RegexHelper.value(password, "비밀번호를 입력해주세요.");
+          setAlertMsg({ ...alertMsg, password: null });
+        }
+      } catch (err) {
+        inputType === "email"
+          ? setAlertMsg({ ...alertMsg, email: err.message })
+          : setAlertMsg({ ...alertMsg, password: err.message });
       }
     },
-    [alertMsg, input]
+    [alertMsg]
   );
 
   return (
