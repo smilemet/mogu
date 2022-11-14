@@ -40,9 +40,9 @@ const Main = () => {
             <SideNav />
 
             <ul className="categories flex-box">
-              {category.data?.map((v) => {
+              {category.data?.map((v, i) => {
                 return (
-                  <li>
+                  <li key={i}>
                     <Link to="/">{`#${v}`}</Link>
                   </li>
                 );

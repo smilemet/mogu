@@ -39,7 +39,7 @@ export const getProductList = createAsyncThunk(
 const ProductSlice = createSlice({
   name: "productList",
   initialState: {
-    data: null,
+    productList: null,
     loading: false,
     error: null,
   },
@@ -50,14 +50,14 @@ const ProductSlice = createSlice({
     },
     [getProductList.fulfilled]: (state, { payload }) => {
       return {
-        data: payload,
+        productList: payload,
         loading: false,
         error: null,
       };
     },
     [getProductList.rejected]: (state, { payload }) => {
       return {
-        data: payload,
+        productList: payload,
         loading: false,
         error: {
           code: payload?.status ? payload.status : 500,

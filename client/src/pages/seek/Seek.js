@@ -24,14 +24,12 @@ const Seek = () => {
 
   /** 게시글 데이터 취득 */
   const getList = useCallback(
-    async (payload) => {
+    (payload) => {
       let option = {};
 
       if (!payload) option = { size: 30, page: 1, sort: sorting };
 
       dispatch(getSeekList(option));
-
-      console.log(test);
     },
     [dispatch, sorting]
   );
@@ -47,9 +45,9 @@ const Seek = () => {
         <section className="section-category">
           <div className="inner">
             <ul className="categories flex-box">
-              {category.data?.map((v) => {
+              {category.data?.map((v, i) => {
                 return (
-                  <li>
+                  <li key={i}>
                     <Link to="/">{`#${v}`}</Link>
                   </li>
                 );

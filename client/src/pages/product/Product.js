@@ -1,17 +1,26 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { FixedSizeGrid as Grid } from "react-window";
 
 import styled from "styled-components";
 import GridList from "../../components/GridList.js";
 
 import { getProductList } from "../../slices/ProductSlice.js";
+import { getSearch } from "../../slices/SearchSlice.js";
 
 const Product = () => {
   const dispatch = useDispatch();
 
+  /** header 검색창 결과 표시 */
+  const search = window.location.search;
+  const params = new URLSearchParams(search);
+  const query = params.get("query");
+
   const category = useSelector((state) => state.category);
-  const { data: productList } = useSelector((state) => state.productList);
+  const { searchResult } = useSelector((state) => state.search);
+  const { productList } = useSelector((state) => state.productList);
+  const [list, setList] = useState();
 
   const [sorting, setSorting] = useState("createdAt");
 
@@ -23,21 +32,21 @@ const Product = () => {
   };
 
   /** 게시글 데이터 취득 */
-  const getList = useCallback(
-    async (payload) => {
-      let option = {};
+  const getList = useCallback(async () => {
+    query ? dispatch(getSearch({ query, sort: sorting })) : dispatch(getProductList({ sort: sorting }));
+  }, [dispatch, query, sorting]);
 
-      if (!payload) option = { size: 30, page: 1, sort: sorting }; // 기본값
-
-      dispatch(getProductList(option));
-    },
-    [dispatch, sorting]
-  );
-
-  /** 페이지 마운트 시 공구모아요 게시글 로딩 */
+  /** 페이지 마운트 시 조회 or 검색 결과에 따른 공구모아요 게시글 로딩
+   * sort 결과가 바뀔때마다 새 목록을 출력한다.
+   */
   useEffect(() => {
     getList();
-  }, [getList]);
+  }, [query, dispatch, getList]);
+
+  /** 조회 or 검색 결과를 리스트로 출력 */
+  useEffect(() => {
+    query ? setList(searchResult) : setList(productList);
+  }, [query, searchResult, productList]);
 
   return (
     <ProductContainer>
@@ -63,7 +72,13 @@ const Product = () => {
                 <h2>#공구모아요</h2>
               </div>
               <div className="flex-box">
-                <p>'어쩌고' 검색 결과입니다.</p>
+                {query ? (
+                  <p>
+                    <span className="keyword">'{query}'</span> 검색 결과입니다.
+                  </p>
+                ) : (
+                  <></>
+                )}
                 <select onChange={onSorting}>
                   <option value="createdAt">최신순</option>
                   <option value="views">조회수순</option>
@@ -71,7 +86,7 @@ const Product = () => {
                   <option value="ordered">주문순</option>
                 </select>
               </div>
-              {productList ? <GridList data={productList} type="product" /> : <GridList data={templateArr} />}
+              {list ? <GridList data={list} type="product" /> : <GridList data={templateArr} />}
             </div>
           </div>
         </section>
@@ -107,6 +122,11 @@ const ProductContainer = styled.main`
 
         p {
           font-size: 1rem;
+
+          .keyword {
+            font-size: 1.2rem;
+            color: ${(props) => props.theme.pointColorDarker};
+          }
         }
 
         h2 {

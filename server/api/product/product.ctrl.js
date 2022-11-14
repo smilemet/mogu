@@ -14,7 +14,6 @@ const orderCount = `(SELECT COUNT(*) FROM \`order\` WHERE product_id=product.id)
  * @method GET /api/product
  */
 export const getProducts = async (req, res) => {
-  console.log(req.query);
   const size = parseInt(req.query.size) || 30;
   const page = parseInt(req.query.page) || 1;
   const { sort, category: _category, ongoing } = req.query;
@@ -22,7 +21,7 @@ export const getProducts = async (req, res) => {
   let result = null;
   let where = { status: 0 }; // 삭제된 글 제외
 
-  let order;
+  let order = null;
 
   if (sort === "views") {
     order = sequelize.literal(`view_count DESC`); // 조회수
@@ -84,7 +83,7 @@ export const getProducts = async (req, res) => {
   } catch (err) {
     res.json({
       success: "false",
-      massage: `${err}`,
+      massage: err,
     });
   }
 };

@@ -32,6 +32,7 @@ import Order from "../pages/order/Order.js";
 import OrderSuccess from "../pages/order/OrderSuccess.js";
 
 import NotFound from "../pages/NotFound.js";
+import Test from "../pages/Test.js";
 
 const Router = () => {
   return (
@@ -66,6 +67,7 @@ const Router = () => {
 
           <Route path="/account/join/success" element={<JoinSuccess />} />
 
+          <Route path="/test" element={<Test />} />
           <Route path="*" element={<NotFound />} />
         </Route>
 

@@ -18,7 +18,7 @@ const UserMenu = () => {
     try {
       await axios.post("/auth/logout");
       localStorage.removeItem("moguAccessToken");
-      localStorage.removeItem("moguRefrechToken");
+      localStorage.removeItem("moguRefreshToken");
     } catch (err) {
       console.error(err);
     }
