@@ -1,24 +1,21 @@
-import React, { useCallback, useEffect, useInsertionEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
-import notice1 from "../assets/img/notice.png";
-import GridList from "../components/GridList";
-import SideNav from "../components/SideNav.js";
-
-import { getProductPopular, getProductNews, getProductRecommend } from "../slices/ProductsSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductPopular, getProductNews, getProductRecommend } from "../slices/ProductSlice.js";
 import { getSeekList } from "../slices/SeekSlice.js";
+
+import SideNav from "../components/SideNav.js";
+import CategoryList from "../components/CategoryList.js";
+import GridList from "../components/GridList.js";
+
+import notice1 from "../assets/img/notice.png";
 
 const Main = () => {
   const dispatch = useDispatch();
 
-  const category = useSelector((state) => state.category);
-  const { data: productLists } = useSelector((state) => state.productLists);
+  const { popular, news, recommend } = useSelector((state) => state.productList);
   const { data: seekList } = useSelector((state) => state.seekList);
-
-  const templateArr = Array(6).fill(true);
 
   /** 페이지 마운트 시 section별 게시글 로딩 */
   useEffect(() => {
@@ -39,46 +36,26 @@ const Main = () => {
           <div className="inner">
             <SideNav />
 
-            <ul className="categories flex-box">
-              {category.data?.map((v, i) => {
-                return (
-                  <li key={i}>
-                    <Link to="/">{`#${v}`}</Link>
-                  </li>
-                );
-              })}
-            </ul>
+            <CategoryList />
 
             <div className="posts">
               <h2>지금 인기 있는 공구</h2>
-              {productLists?.popular ? (
-                <GridList data={productLists.popular} type="product" />
-              ) : (
-                <GridList data={templateArr} />
-              )}
+              <GridList data={popular} type="product" />
             </div>
 
             <div className="posts ">
               <h2>새로 등록된 공구</h2>
-              {productLists?.news ? (
-                <GridList data={productLists.news} type="product" />
-              ) : (
-                <GridList data={templateArr} />
-              )}
+              <GridList data={news} type="product" />
             </div>
 
             <div className="posts ">
               <h2>총대 찾아요</h2>
-              {seekList ? <GridList data={seekList} type="seek" /> : <GridList data={templateArr} />}
+              <GridList data={seekList} type="seek" />
             </div>
 
             <div className="posts ">
               <h2>이런 공구는 어때요?</h2>
-              {productLists?.recommend ? (
-                <GridList data={productLists.recommend} type="product" />
-              ) : (
-                <GridList data={templateArr} />
-              )}
+              <GridList data={recommend} type="product" />
             </div>
           </div>
         </section>
@@ -101,16 +78,6 @@ const MainContainer = styled.main`
 
   .section-main {
     padding: 2.2rem 0;
-
-    .categories {
-      margin-bottom: 2.5rem;
-
-      li {
-        margin-right: 2rem;
-        font-size: 1rem;
-        font-weight: bold;
-      }
-    }
 
     .posts {
       margin-bottom: 2.5rem;

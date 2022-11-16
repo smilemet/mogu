@@ -5,47 +5,55 @@ import ListItem from "./layout/ListItem.js";
 import ProductItem from "./ProductItem.js";
 import SeekItem from "./SeekItem.js";
 
-const GridList = ({ children, ...props }) => {
-  return props.type === "product" ? (
-    <GridListContainer>
-      {props.data?.map((v, i) => {
-        const tags = [v.category.name, v.tags[0]?.name, v.tags[1]?.name];
+const Wrapper = ({ type, item, tags, i }) => {
+  console.log(type, item, tags, i);
+  if (!item) return;
 
-        return (
-          <ProductItem
-            url={`/product/${v.id}`}
-            thumbnail={v.thumbnail}
-            name={v.writer.nickname}
-            join={v.favorite_count}
-            title={v.title}
-            tags={tags}
-            key={`${v.title}${i}`}
-          />
-        );
-      })}
-    </GridListContainer>
-  ) : props.type === "seek" ? (
-    <GridListContainer>
-      {props.data?.map((v, i) => {
-        const tags = [v.category.name, v.tags[0]?.name, v.tags[1]?.name];
+  if (type === "product") {
+    return (
+      <ProductItem
+        url={`/product/${item.id}`}
+        thumbnail={item.thumbnail}
+        name={item.writer.nickname}
+        join={item.favorite_count}
+        title={item.title}
+        tags={tags}
+        key={`${item.title}${i}`}
+      />
+    );
+  } else if (type === "seek") {
+    return (
+      <SeekItem
+        url={`/product/${item.id}`}
+        thumbnail={item.thumbnail}
+        name={item.writer.nickname}
+        join={item.favorite_count}
+        title={item.title}
+        tags={tags}
+        key={`${item.title}${i}`}
+      />
+    );
+  }
+};
 
-        return (
-          <SeekItem
-            url={`/seek/${v.id}`}
-            thumbnail={v.thumbnail}
-            name={v.writer.nickname}
-            join={v.favorite_count}
-            title={v.title}
-            tags={tags}
-            key={`${v.title}${i}`}
-          />
-        );
-      })}
-    </GridListContainer>
-  ) : (
+const GridList = ({ data, type }) => {
+  if (!data || !type) {
+    return (
+      <GridListContainer>
+        {Array(6)
+          .fill(true)
+          .map((v, i) => {
+            return <ListItem key={i} />;
+          })}
+      </GridListContainer>
+    );
+  }
+
+  return (
     <GridListContainer>
-      {props.data?.map((v, i) => {
-        return <ListItem key={i} />;
+      {data.map((item, i) => {
+        const tags = [item.category.name, item.tags[0]?.name, item.tags[1]?.name];
+        return <Wrapper item={item} tags={tags} i={i} type={type} />;
       })}
     </GridListContainer>
   );
